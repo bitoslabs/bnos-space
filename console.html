@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icon.svg">
-  <link rel="stylesheet" href="console.css">
+  <link rel="stylesheet" href="css/console.css">
 </head>
 <body>
 
@@ -22,6 +22,10 @@
   <div>
     <div class="logo"><span>⚡</span> BnOS Relay Console</div>
     <div class="subtitle">Nostr Debug &amp; Test Tool</div>
+    <div style="display:flex;gap:10px;margin-top:6px;">
+      <a href="index.html" style="color:#a78bfa;font-size:12px;text-decoration:none;">← Home</a>
+      <a href="https://app.bnos.space" target="_blank" rel="noopener" style="color:#a78bfa;font-size:12px;text-decoration:none;">Open App ↗</a>
+    </div>
   </div>
   <div class="identity-bar" id="identityBar">
     <button class="identity-login" onclick="openKeychainModal()">🔑 Login</button>
@@ -450,7 +454,7 @@
 <script src="js/core.js"></script>
 <script src="js/relay.js"></script>
 <script src="js/events.js"></script>
-<script src="console.js"></script>
+<script src="js/console.js"></script>
 <script>
   // Service Worker Registration
   if ('serviceWorker' in navigator) {
