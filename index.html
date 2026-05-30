@@ -3,192 +3,249 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title data-i18n="meta.title">
-      BnOS - Bitcoin Nostr Operating System | Lightning-Powered POS | Open
-      Source Business OS
-    </title>
-    <meta
-      name="description"
-      data-i18n="meta.description"
-      content="BnOS is a Lightning-Powered Point of Sale System & Business OS built on Nostr Protocol. Decentralized, sovereign, and privacy-first for modern businesses."
-    />
-    <meta
-      name="keywords"
-      data-i18n="meta.keywords"
-      content="BnOS, POS, Bitcoin, Lightning, Nostr, Point of Sale, Business OS, Decentralized | Bitcoin Nostr Operating System"
-    />
-    <meta property="og:title" data-i18n="meta.ogTitle" content="BnOS - Bitcoin Nostr Operating System" />
-    <meta
-      property="og:description"
-      data-i18n="meta.ogDesc"
-      content="Lightning-Powered Point of Sale built on Nostr Protocol. Decentralized, sovereign, and privacy-first."
-    />
+    <title>BnOS - Bitcoin Nostr Operating System | Lightning-Powered POS</title>
+    <meta name="description" content="BnOS is a Lightning-Powered Point of Sale System & Business OS built on Nostr Protocol. Decentralized, sovereign, and privacy-first for modern businesses." />
+    <meta name="keywords" content="BnOS, POS, Bitcoin, Lightning, Nostr, Point of Sale, Business OS, Decentralized" />
+    <meta property="og:title" content="BnOS - Bitcoin Nostr Operating System" />
+    <meta property="og:description" content="Lightning-Powered Point of Sale built on Nostr Protocol. Decentralized, sovereign, and privacy-first." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://bnos.space/" />
     <meta property="og:image" content="https://bnos.space/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:locale" content="en_US" />
-    <meta property="og:locale:alternate" content="lo_LA" />
-    <meta property="og:locale:alternate" content="th_TH" />
-    <meta
-      property="og:site_name"
-      content="BnOS - Bitcoin Nostr Operating System"
-    />
-
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:title"
-      data-i18n="meta.ogTitle"
-      content="BnOS - Bitcoin Nostr Operating System"
-    />
-    <meta
-      name="twitter:description"
-      data-i18n="meta.ogDesc"
-      content="Lightning-Powered Point of Sale built on Nostr Protocol. Decentralized, sovereign, and privacy-first."
-    />
+    <meta name="twitter:title" content="BnOS - Bitcoin Nostr Operating System" />
+    <meta name="twitter:description" content="Lightning-Powered Point of Sale built on Nostr Protocol. Decentralized, sovereign, and privacy-first." />
     <meta name="twitter:image" content="https://bnos.space/og-image.png" />
-    <meta name="twitter:site" content="@bnos_space" />
-
-    <!-- Language Alternates -->
     <link rel="canonical" href="https://bnos.space/" />
     <link rel="alternate" hreflang="en" href="https://bnos.space/?lang=en" />
     <link rel="alternate" hreflang="lo" href="https://bnos.space/?lang=lo" />
     <link rel="alternate" hreflang="th" href="https://bnos.space/?lang=th" />
     <link rel="alternate" hreflang="x-default" href="https://bnos.space/" />
-
-    <!-- Additional SEO -->
     <meta name="robots" content="index, follow" />
     <meta name="author" content="BnOS Team" />
     <meta name="theme-color" content="#f59e0b" />
-
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Included all fonts -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700;800&family=Noto+Sans+Lao:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700;800&family=Noto+Sans+Lao:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="css/fonts/stylesheet.css" />
     <link rel="stylesheet" href="css/style.css" />
     <style>
-      /* Dynamic font override handled in app.js */
       body {
-        font-family:
-          "Inter",
-          -apple-system,
-          BlinkMacSystemFont,
-          "Segoe UI",
-          Roboto,
-          sans-serif;
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      }
+
+      .landing-hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        padding: 120px 24px 80px;
+      }
+
+      .landing-hero .hero-bg {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse at 50% 0%, rgba(245, 158, 11, 0.15) 0%, transparent 60%),
+                    radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+      }
+
+      .landing-hero .hero-orb-1 {
+        position: absolute;
+        width: 600px;
+        height: 600px;
+        border-radius: 50%;
+        background: rgba(245, 158, 11, 0.08);
+        filter: blur(120px);
+        top: -200px;
+        right: -200px;
+        pointer-events: none;
+      }
+
+      .landing-hero .hero-orb-2 {
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        border-radius: 50%;
+        background: rgba(139, 92, 246, 0.06);
+        filter: blur(100px);
+        bottom: -150px;
+        left: -150px;
+        pointer-events: none;
+      }
+
+      .landing-content {
+        position: relative;
+        z-index: 1;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .landing-logo {
+        display: inline-flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 40px;
+      }
+
+      .landing-logo-icon {
+        width: 56px;
+        height: 56px;
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .landing-logo-icon svg {
+        width: 30px;
+        height: 30px;
+        fill: white;
+      }
+
+      .landing-logo-text {
+        font-size: 2.5rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        background: linear-gradient(135deg, #fff, #d1d5db);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .landing-title {
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-weight: 800;
+        line-height: 1.15;
+        margin-bottom: 20px;
+        letter-spacing: -0.03em;
+      }
+
+      .landing-title .highlight {
+        background: linear-gradient(135deg, #f59e0b, #fbbf24);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .landing-subtitle {
+        font-size: clamp(1rem, 2.5vw, 1.25rem);
+        color: #9ca3af;
+        line-height: 1.7;
+        margin-bottom: 48px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .landing-buttons {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .btn-console {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 16px 32px;
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        color: #000;
+        font-weight: 700;
+        font-size: 1.05rem;
+        border-radius: 12px;
+        text-decoration: none;
+        transition: transform 0.2s, box-shadow 0.2s;
+        box-shadow: 0 4px 24px rgba(245, 158, 11, 0.3);
+      }
+
+      .btn-console:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 32px rgba(245, 158, 11, 0.4);
+      }
+
+      .btn-console svg {
+        width: 20px;
+        height: 20px;
+        fill: currentColor;
+      }
+
+      .btn-docs {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 16px 32px;
+        background: rgba(255, 255, 255, 0.05);
+        color: #fff;
+        font-weight: 600;
+        font-size: 1.05rem;
+        border-radius: 12px;
+        text-decoration: none;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: transform 0.2s, background 0.2s;
+      }
+
+      .btn-docs:hover {
+        transform: translateY(-2px);
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .landing-pills {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 64px;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 100px;
+        color: #d1d5db;
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+
+      .pill .pill-icon {
+        font-size: 1.1rem;
+      }
+
+      .nav-landing .nav-cta {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        color: #000;
       }
     </style>
 
-    <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
-      [
-        {
-          "@context": "https://schema.org",
-          "@type": "SoftwareApplication",
-          "name": "BnOS",
-          "applicationCategory": "BusinessApplication",
-          "operatingSystem": "Web, PWA",
-          "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-          },
-          "description": "Lightning-Powered Point of Sale System built on Nostr Protocol. Decentralized, sovereign, and privacy-first for modern businesses.",
-          "url": "https://bnos.space",
-          "screenshot": "https://bnos.space/screenshot.png",
-          "featureList": [
-            "Lightning Network Payments",
-            "Non-Custodial Wallet",
-            "Nostr Protocol Integration",
-            "Offline-First Architecture",
-            "Real-time Analytics",
-            "Team Management"
-          ],
-          "inLanguage": ["en", "lo", "th"],
-          "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "5",
-            "ratingCount": "1"
-          },
-          "author": {
-            "@type": "Organization",
-            "name": "BnOS Team",
-            "url": "https://bnos.space"
-          }
-        },
-        {
-          "@context": "https://schema.org",
-          "@type": "Organization",
-          "name": "BnOS",
-          "url": "https://bnos.space",
-          "logo": "https://bnos.space/icon-192.png",
-          "sameAs": [
-            "https://github.com/locobit-space",
-            "https://twitter.com/bnos_space",
-            "https://yakihonne.com/profile/bnos@nostrcheck.me"
-          ]
-        },
-        {
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          "mainEntity": [
-            {
-              "@type": "Question",
-              "name": "What is BnOS?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "BnOS (Bitcoin Nostr Operating System) is a decentralized, lightning-powered Point of Sale (POS) and business operating system. It allows businesses to accept Bitcoin payments, manage inventory, and track sales without relying on centralized servers."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "Is BnOS free to use?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Yes, BnOS is open-source software. You can use the basic features for free. We do not charge transaction fees on your payments as they go directly to your wallet."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "Do I need a bank account to use BnOS?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "No, you do not need a traditional bank account. BnOS operates on the Bitcoin Lightning Network, allowing you to be your own bank and have full control over your funds."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "How does offline mode work?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "BnOS is built with a 'Local-First' architecture. This means all your data is stored locally on your device. You can continue to process sales and manage your shop without an internet connection. Data will sync with Nostr relays once you are back online."
-              }
-            }
-          ]
-        }
-      ]
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "BnOS",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web, PWA",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "description": "Lightning-Powered Point of Sale System built on Nostr Protocol. Decentralized, sovereign, and privacy-first for modern businesses.",
+        "url": "https://bnos.space",
+        "featureList": ["Lightning Network Payments","Non-Custodial Wallet","Nostr Protocol Integration","Offline-First Architecture","Real-time Analytics","Team Management"],
+        "inLanguage": ["en", "lo", "th"],
+        "author": { "@type": "Organization", "name": "BnOS Team", "url": "https://bnos.space" }
+      }
     </script>
-    <script type="module" src="js/app.js"></script>
   </head>
   <body>
-    <!-- Language Switcher -->
-    <div class="lang-switcher">
-      <a href="#" data-lang="en" class="active">EN</a>
-      <a href="#" data-lang="lo">ລາວ</a>
-      <a href="#" data-lang="th">ไทย</a>
-    </div>
-
     <!-- Navigation -->
-    <nav class="nav">
+    <nav class="nav nav-landing">
       <div class="nav-content">
-        <a href="#" class="nav-logo">
+        <a href="index.html" class="nav-logo">
           <div class="nav-logo-icon">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
@@ -203,304 +260,57 @@
         </div>
         <div class="nav-right">
           <ul class="nav-links">
-            <li>
-              <a href="#features" onclick="closeMobileMenu()" data-i18n="nav.features">Features</a>
-            </li>
-            <li>
-              <a href="#how-it-works" onclick="closeMobileMenu()" data-i18n="nav.howItWorks"
-                >How It Works</a
-              >
-            </li>
-            <li>
-              <a href="#technology" onclick="closeMobileMenu()" data-i18n="nav.technology">Technology</a>
-            </li>
-            <li><a href="#faq" onclick="closeMobileMenu()" data-i18n="nav.faq">FAQ</a></li>
-            <li>
-              <a href="manual.html" onclick="closeMobileMenu()" data-i18n="nav.docs"
-                >Documentation</a
-              >
-            </li>
+            <li><a href="console.html">Console</a></li>
+            <li><a href="manual.html">Documentation</a></li>
+            <li><a href="https://github.com/bitoslabs/BnOS" target="_blank" rel="noopener">GitHub</a></li>
           </ul>
-          <a href="https://app.bnos.space" class="nav-cta post-launch" data-i18n="nav.getStarted"
-            >Get Started</a
-          >
+          <a href="console.html" class="nav-cta">Open Console</a>
         </div>
       </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
+    <!-- Hero -->
+    <section class="landing-hero">
       <div class="hero-bg"></div>
       <div class="hero-orb hero-orb-1"></div>
       <div class="hero-orb hero-orb-2"></div>
-      <div class="hero-content">
-        <!-- Pre-launch: Show countdown -->
-        <div class="pre-launch">
-          <div class="hero-badge">
-            <div class="hero-badge-dot"></div>
-            <span class="hero-badge-text" data-i18n="hero.preLaunchBadge">Coming Soon</span>
-          </div>
-          <h1 class="hero-title">
-            <span data-i18n="hero.title1" style="display:inline">The Future of</span><br />
-            <span data-i18n="hero.title2">Business Operations</span>
-          </h1>
-          <p class="hero-subtitle" data-i18n="hero.subtitle">
-            Lightning-powered Point of Sale built on Nostr Protocol.
-            Decentralized, sovereign, and privacy-first for modern businesses.
-          </p>
-          <!-- Countdown -->
-          <div class="countdown-section">
-            <p class="countdown-label" data-i18n="hero.launchLabel">Launching In</p>
-            <div class="countdown" id="countdown">
-              <div class="countdown-item">
-                <span class="countdown-value" id="days">--</span>
-                <span class="countdown-unit" data-i18n="hero.days">Days</span>
-              </div>
-              <div class="countdown-item">
-                <span class="countdown-value" id="hours">--</span>
-                <span class="countdown-unit" data-i18n="hero.hours">Hours</span>
-              </div>
-              <div class="countdown-item">
-                <span class="countdown-value" id="minutes">--</span>
-                <span class="countdown-unit" data-i18n="hero.mins">Mins</span>
-              </div>
-              <div class="countdown-item">
-                <span class="countdown-value" id="seconds">--</span>
-                <span class="countdown-unit" data-i18n="hero.secs">Secs</span>
-              </div>
-            </div>
-            <div class="launch-date">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"
-                />
-              </svg>
-              <span data-i18n="hero.launchDate">January 1, 2026 • 09:09 AM</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Post-launch: Show landing content -->
-        <div class="post-launch">
-          <div class="hero-badge">
-            <div class="hero-badge-dot"></div>
-            <span class="hero-badge-text" data-i18n="hero.postLaunchBadge">🚀 We Are Live!</span>
-          </div>
-          <h1 class="hero-title">
-            <span data-i18n="hero.title1" style="display:inline">The Future of</span><br />
-            <span data-i18n="hero.title2">Business Operations</span>
-          </h1>
-          <p class="hero-subtitle" data-i18n="hero.subtitle">
-            Lightning-powered Point of Sale built on Nostr Protocol.
-            Decentralized, sovereign, and privacy-first for modern businesses.
-          </p>
-        </div>
-        <div class="hero-buttons post-launch">
-          <a href="https://app.bnos.space" class="btn-primary">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <div class="landing-content">
+        <div class="landing-logo">
+          <div class="landing-logo-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
             </svg>
-            <span data-i18n="hero.btnPrimary">Get Started</span>
-          </a>
-          <a href="manual.html" class="btn-secondary" data-i18n="hero.btnSecondary">Read Documentation</a>
+          </div>
+          <span class="landing-logo-text">BnOS</span>
         </div>
-      </div>
-    </section>
 
-    <!-- Features Section -->
-    <section class="features" id="features">
-      <div class="container">
-        <div class="section-header reveal">
-          <span class="section-tag" data-i18n="features.tag">Features</span>
-          <h2 class="section-title" data-i18n="features.title">Everything You Need</h2>
-          <p class="section-subtitle" data-i18n="features.subtitle">
-            A complete business operating system designed for the future of
-            commerce.
-          </p>
-        </div>
-        <div class="features-grid">
-          <div class="feature-card reveal reveal-delay-1">
-            <div class="feature-icon">⚡</div>
-            <h3 class="feature-title" data-i18n="features.items.0.title">Lightning Payments</h3>
-            <p class="feature-desc" data-i18n="features.items.0.desc">
-              Accept Bitcoin payments instantly with Lightning Network.
-              Near-zero fees and instant settlement.
-            </p>
-          </div>
-          <div class="feature-card reveal reveal-delay-2">
-            <div class="feature-icon">🔐</div>
-            <h3 class="feature-title" data-i18n="features.items.1.title">Non-Custodial</h3>
-            <p class="feature-desc" data-i18n="features.items.1.desc">
-              Your keys, your coins. We never hold your funds. Complete
-              financial sovereignty.
-            </p>
-          </div>
-          <div class="feature-card reveal reveal-delay-3">
-            <div class="feature-icon">🌐</div>
-            <h3 class="feature-title" data-i18n="features.items.2.title">Fully Decentralized</h3>
-            <p class="feature-desc" data-i18n="features.items.2.desc">
-              Built on Nostr Protocol. No central servers. Your data stays with
-              you.
-            </p>
-          </div>
-          <div class="feature-card reveal reveal-delay-1">
-            <div class="feature-icon">📱</div>
-            <h3 class="feature-title" data-i18n="features.items.3.title">Offline First</h3>
-            <p class="feature-desc" data-i18n="features.items.3.desc">
-              Works without internet connection. Sync when you're back online.
-              Never miss a sale.
-            </p>
-          </div>
-          <div class="feature-card reveal reveal-delay-2">
-            <div class="feature-icon">📊</div>
-            <h3 class="feature-title" data-i18n="features.items.4.title">Real-time Analytics</h3>
-            <p class="feature-desc" data-i18n="features.items.4.desc">
-              Comprehensive business insights. Track sales, inventory, and
-              customer behavior in real-time.
-            </p>
-          </div>
-          <div class="feature-card reveal reveal-delay-3">
-            <div class="feature-icon">👥</div>
-            <h3 class="feature-title" data-i18n="features.items.5.title">Team Management</h3>
-            <p class="feature-desc" data-i18n="features.items.5.desc">
-              Multi-user support with role-based permissions. Manage your team
-              effectively.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
+        <h1 class="landing-title">
+          <span class="highlight">Bitcoin Nostr</span><br />
+          Operating System
+        </h1>
 
-    <!-- How It Works -->
-    <section class="how-it-works" id="how-it-works">
-      <div class="container">
-        <div class="section-header reveal">
-          <span class="section-tag" data-i18n="howItWorks.tag">How It Works</span>
-          <h2 class="section-title" data-i18n="howItWorks.title">Get Started in Minutes</h2>
-          <p class="section-subtitle" data-i18n="howItWorks.subtitle">
-            Simple setup process to get your business running on BnOS.
-          </p>
-        </div>
-        <div class="steps">
-          <div class="step reveal reveal-delay-1">
-            <div class="step-number">1</div>
-            <h3 class="step-title" data-i18n="howItWorks.steps.0.title">Create Account</h3>
-            <p class="step-desc" data-i18n="howItWorks.steps.0.desc">
-              Sign up with your Nostr keys or create new ones. No email or
-              personal info required.
-            </p>
-          </div>
-          <div class="step reveal reveal-delay-2">
-            <div class="step-number">2</div>
-            <h3 class="step-title" data-i18n="howItWorks.steps.1.title">Setup Your Shop</h3>
-            <p class="step-desc" data-i18n="howItWorks.steps.1.desc">
-              Configure your business profile, add products, and set up your
-              Lightning wallet.
-            </p>
-          </div>
-          <div class="step reveal reveal-delay-3">
-            <div class="step-number">3</div>
-            <h3 class="step-title" data-i18n="howItWorks.steps.2.title">Start Selling</h3>
-            <p class="step-desc" data-i18n="howItWorks.steps.2.desc">
-              Accept payments, manage inventory, and grow your business with
-              complete sovereignty.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Technology Stack -->
-    <section class="tech-stack" id="technology">
-      <div class="container">
-        <div class="section-header reveal">
-          <span class="section-tag" data-i18n="tech.tag">Technology</span>
-          <h2 class="section-title" data-i18n="tech.title">Powered By</h2>
-          <p class="section-subtitle" data-i18n="tech.subtitle">
-            Built on cutting-edge decentralized technologies.
-          </p>
-        </div>
-        <div class="tech-grid">
-          <div class="tech-item reveal reveal-delay-1">
-            <div class="tech-icon">₿</div>
-            <span class="tech-name">Bitcoin</span>
-          </div>
-          <div class="tech-item reveal reveal-delay-2">
-            <div class="tech-icon">⚡</div>
-            <span class="tech-name">Lightning Network</span>
-          </div>
-          <div class="tech-item reveal reveal-delay-3">
-            <div class="tech-icon">🟣</div>
-            <span class="tech-name">Nostr Protocol</span>
-          </div>
-          <div class="tech-item reveal reveal-delay-4">
-            <div class="tech-icon">💾</div>
-            <span class="tech-name" data-i18n="tech.localFirst">Local-First</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq" id="faq">
-      <div class="container">
-        <div class="section-header reveal">
-          <span class="section-tag" data-i18n="faq.tag">FAQ</span>
-          <h2 class="section-title" data-i18n="faq.title">Frequently Asked Questions</h2>
-          <p class="section-subtitle" data-i18n="faq.subtitle">Common questions about BnOS.</p>
-        </div>
-        <div class="faq-grid">
-          <div class="faq-item reveal reveal-delay-1">
-            <h3 class="faq-question" data-i18n="faq.items.0.q">What is BnOS?</h3>
-            <p class="faq-answer" data-i18n="faq.items.0.a">
-              BnOS (Bitcoin Nostr Operating System) is a decentralized,
-              lightning-powered Point of Sale (POS) and business operating
-              system. It allows businesses to accept Bitcoin payments and manage
-              their operations without intermediaries.
-            </p>
-          </div>
-          <div class="faq-item reveal reveal-delay-2">
-            <h3 class="faq-question" data-i18n="faq.items.1.q">Is BnOS free to use?</h3>
-            <p class="faq-answer" data-i18n="faq.items.1.a">
-              Yes, BnOS is open-source software. You can use the basic features
-              for free. We do not charge transaction fees on your payments.
-            </p>
-          </div>
-          <div class="faq-item reveal reveal-delay-3">
-            <h3 class="faq-question" data-i18n="faq.items.2.q">Do I need a bank account?</h3>
-            <p class="faq-answer" data-i18n="faq.items.2.a">
-              No, you do not need a traditional bank account. BnOS operates on
-              the Bitcoin Lightning Network, allowing you to have full control
-              over your funds.
-            </p>
-          </div>
-          <div class="faq-item reveal reveal-delay-4">
-            <h3 class="faq-question" data-i18n="faq.items.3.q">How does offline mode work?</h3>
-            <p class="faq-answer" data-i18n="faq.items.3.a">
-              BnOS uses a 'Local-First' architecture. Data is stored on your
-              device first. You can process sales offline, and data will sync
-              with Nostr relays when you reconnect.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta" id="cta">
-      <div class="cta-orb"></div>
-      <div class="cta-content reveal">
-        <h2 class="cta-title" data-i18n="cta.title">Ready to Get Started?</h2>
-        <p class="cta-subtitle" data-i18n="cta.subtitle">
-          Join the waitlist and be among the first to experience the future of
-          business operations.
+        <p class="landing-subtitle">
+          Lightning-powered Point of Sale built on Nostr Protocol.
+          Decentralized, sovereign, and privacy-first for modern businesses.
         </p>
-        <a href="#" class="btn-primary">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-          </svg>
-          <span data-i18n="cta.btn">Join Waitlist</span>
-        </a>
+
+        <div class="landing-buttons">
+          <a href="console.html" class="btn-console">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+            </svg>
+            Open Console
+          </a>
+          <a href="manual.html" class="btn-docs">Read the Docs</a>
+        </div>
+
+        <div class="landing-pills">
+          <div class="pill"><span class="pill-icon">⚡</span> Lightning Payments</div>
+          <div class="pill"><span class="pill-icon">🔐</span> Non-Custodial</div>
+          <div class="pill"><span class="pill-icon">🌐</span> Decentralized</div>
+          <div class="pill"><span class="pill-icon">📱</span> Offline-First</div>
+          <div class="pill"><span class="pill-icon">📊</span> Real-time Analytics</div>
+        </div>
       </div>
     </section>
 
@@ -516,112 +326,55 @@
             </div>
             <span class="footer-logo-text">BnOS</span>
           </div>
-          <p class="footer-desc" data-i18n="footer.desc">
+          <p class="footer-desc">
             Lightning-powered Point of Sale built on Nostr Protocol.
             Decentralized, sovereign, and privacy-first.
           </p>
         </div>
         <div class="footer-column">
-          <h4 data-i18n="footer.cols.product">Product</h4>
+          <h4>Product</h4>
           <ul class="footer-links">
-            <li><a href="#features" data-i18n="footer.links.features">Features</a></li>
-            <li><a href="#how-it-works" data-i18n="footer.links.howItWorks">How It Works</a></li>
-            <li><a href="#technology" data-i18n="footer.links.tech">Technology</a></li>
-            <!-- <li><a href="#">Pricing</a></li> -->
+            <li><a href="console.html">Console</a></li>
+            <li><a href="manual.html">Documentation</a></li>
+            <li><a href="https://github.com/bitoslabs/BnOS">GitHub</a></li>
           </ul>
         </div>
         <div class="footer-column">
-          <h4 data-i18n="footer.cols.resources">Resources</h4>
+          <h4>Community</h4>
           <ul class="footer-links">
-            <li><a href="docs.bnos.space" data-i18n="footer.links.docs">Documentation</a></li>
-            <!-- <li><a href="#">API Reference</a></li> -->
-            <li><a href="#" data-i18n="footer.links.support">Support</a></li>
-            <li><a href="#" data-i18n="footer.links.blog">Blog</a></li>
+            <li><a href="https://discord.gg/aNwEQQF3w8" target="_blank" rel="noopener">Discord</a></li>
+            <li><a href="https://twitter.com/bnos_space" target="_blank" rel="noopener">Twitter</a></li>
+            <li><a href="https://yakihonne.com/profile/bnos@nostrcheck.me" target="_blank" rel="noopener">Nostr</a></li>
           </ul>
         </div>
         <div class="footer-column">
-          <h4 data-i18n="footer.cols.company">Company</h4>
+          <h4>Resources</h4>
           <ul class="footer-links">
-            <li><a href="#" data-i18n="footer.links.about">About Us</a></li>
-            <li><a href="#" data-i18n="footer.links.contact">Contact</a></li>
-            <li><a href="#" data-i18n="footer.links.privacy">Privacy Policy</a></li>
-            <li><a href="#" data-i18n="footer.links.terms">Terms of Service</a></li>
+            <li><a href="manual.html">Manual (EN)</a></li>
+            <li><a href="manual-lo.html">Manual (ລາວ)</a></li>
+            <li><a href="manual-th.html">Manual (ไทย)</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
-        <p class="footer-copyright" data-i18n="footer.copyright">
-          © 2026 BnOS. All rights reserved. Powered by Nostr & Bitcoin Lightning
-          Network.
+        <p class="footer-copyright">
+          &copy; 2026 BnOS. All rights reserved. Powered by Nostr &amp; Bitcoin Lightning Network.
         </p>
         <div class="footer-social">
-          <!-- discord -->
-          <a
-            href="https://discord.gg/aNwEQQF3w8"
-            target="_blank"
-            rel="noopener"
-            title="Discord"
-          >
-            <svg
-              viewBox="0 -28.5 256 256"
-              version="1.1"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-              preserveAspectRatio="xMidYMid"
-              fill="#000000"
-            >
-              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-              <g
-                id="SVGRepo_tracerCarrier"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></g>
-              <g id="SVGRepo_iconCarrier">
-                <g>
-                  <path
-                    d="M216.856339,16.5966031 C200.285002,8.84328665 182.566144,3.2084988 164.041564,0 C161.766523,4.11318106 159.108624,9.64549908 157.276099,14.0464379 C137.583995,11.0849896 118.072967,11.0849896 98.7430163,14.0464379 C96.9108417,9.64549908 94.1925838,4.11318106 91.8971895,0 C73.3526068,3.2084988 55.6133949,8.86399117 39.0420583,16.6376612 C5.61752293,67.146514 -3.4433191,116.400813 1.08711069,164.955721 C23.2560196,181.510915 44.7403634,191.567697 65.8621325,198.148576 C71.0772151,190.971126 75.7283628,183.341335 79.7352139,175.300261 C72.104019,172.400575 64.7949724,168.822202 57.8887866,164.667963 C59.7209612,163.310589 61.5131304,161.891452 63.2445898,160.431257 C105.36741,180.133187 151.134928,180.133187 192.754523,160.431257 C194.506336,161.891452 196.298154,163.310589 198.110326,164.667963 C191.183787,168.842556 183.854737,172.420929 176.223542,175.320965 C180.230393,183.341335 184.861538,190.991831 190.096624,198.16893 C211.238746,191.588051 232.743023,181.531619 254.911949,164.955721 C260.227747,108.668201 245.831087,59.8662432 216.856339,16.5966031 Z M85.4738752,135.09489 C72.8290281,135.09489 62.4592217,123.290155 62.4592217,108.914901 C62.4592217,94.5396472 72.607595,82.7145587 85.4738752,82.7145587 C98.3405064,82.7145587 108.709962,94.5189427 108.488529,108.914901 C108.508531,123.290155 98.3405064,135.09489 85.4738752,135.09489 Z M170.525237,135.09489 C157.88039,135.09489 147.510584,123.290155 147.510584,108.914901 C147.510584,94.5396472 157.658606,82.7145587 170.525237,82.7145587 C183.391518,82.7145587 193.761324,94.5189427 193.539891,108.914901 C193.539891,123.290155 183.391518,135.09489 170.525237,135.09489 Z"
-                    fill="#5865F2"
-                    fill-rule="nonzero"
-                  ></path>
-                </g>
-              </g>
+          <a href="https://discord.gg/aNwEQQF3w8" target="_blank" rel="noopener" title="Discord">
+            <svg viewBox="0 -28.5 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" fill="#000000">
+              <g><path d="M216.856339,16.5966031 C200.285002,8.84328665 182.566144,3.2084988 164.041564,0 C161.766523,4.11318106 159.108624,9.64549908 157.276099,14.0464379 C137.583995,11.0849896 118.072967,11.0849896 98.7430163,14.0464379 C96.9108417,9.64549908 94.1925838,4.11318106 91.8971895,0 C73.3526068,3.2084988 55.6133949,8.86399117 39.0420583,16.6376612 C5.61752293,67.146514 -3.4433191,116.400813 1.08711069,164.955721 C23.2560196,181.510915 44.7403634,191.567697 65.8621325,198.148576 C71.0772151,190.971126 75.7283628,183.341335 79.7352139,175.300261 C72.104019,172.400575 64.7949724,168.822202 57.8887866,164.667963 C59.7209612,163.310589 61.5131304,161.891452 63.2445898,160.431257 C105.36741,180.133187 151.134928,180.133187 192.754523,160.431257 C194.506336,161.891452 196.298154,163.310589 198.110326,164.667963 C191.183787,168.842556 183.854737,172.420929 176.223542,175.320965 C180.230393,183.341335 184.861538,190.991831 190.096624,198.16893 C211.238746,191.588051 232.743023,181.531619 254.911949,164.955721 C260.227747,108.668201 245.831087,59.8662432 216.856339,16.5966031 Z M85.4738752,135.09489 C72.8290281,135.09489 62.4592217,123.290155 62.4592217,108.914901 C62.4592217,94.5396472 72.607595,82.7145587 85.4738752,82.7145587 C98.3405064,82.7145587 108.709962,94.5189427 108.488529,108.914901 C108.508531,123.290155 98.3405064,135.09489 85.4738752,135.09489 Z M170.525237,135.09489 C157.88039,135.09489 147.510584,123.290155 147.510584,108.914901 C147.510584,94.5396472 157.658606,82.7145587 170.525237,82.7145587 C183.391518,82.7145587 193.761324,94.5189427 193.539891,108.914901 C193.539891,123.290155 183.391518,135.09489 170.525237,135.09489 Z" fill="#5865F2" fill-rule="nonzero"></path></g>
             </svg>
           </a>
-          <a
-            href="https://github.com/bitoslabs/BnOS"
-            target="_blank"
-            rel="noopener"
-            title="GitHub"
-          >
+          <a href="https://github.com/bitoslabs/BnOS" target="_blank" rel="noopener" title="GitHub">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"
-              />
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
             </svg>
           </a>
-          <a
-            href="https://yakihonne.com/profile/bnos@nostrcheck.me"
-            target="_blank"
-            rel="noopener"
-            title="Nostr"
-          >
+          <a href="https://yakihonne.com/profile/bnos@nostrcheck.me" target="_blank" rel="noopener" title="Nostr">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <circle
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                stroke-width="2"
-                fill="none"
-              />
-              <circle cx="12" cy="12" r="3" />
-            </svg>
-          </a>
-          <a href="#" target="_blank" rel="noopener" title="Bitcoin">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-1h-1v-2h1v-4H9v-2h2V7h2v1h1v2h-1v4h2v2h-2v1z"
-              />
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+              <circle cx="12" cy="12" r="3"/>
             </svg>
           </a>
         </div>
@@ -629,119 +382,18 @@
     </footer>
 
     <script>
-      // Mobile Menu Toggle
       function toggleMobileMenu() {
-        const navRight = document.querySelector(".nav-right");
-        const mobileToggle = document.querySelector(".nav-mobile-toggle");
-        navRight.classList.toggle("active");
-        mobileToggle.classList.toggle("active");
+        document.querySelector('.nav-right').classList.toggle('active');
+        document.querySelector('.nav-mobile-toggle').classList.toggle('active');
       }
-
       function closeMobileMenu() {
-        const navRight = document.querySelector(".nav-right");
-        const mobileToggle = document.querySelector(".nav-mobile-toggle");
-        navRight.classList.remove("active");
-        mobileToggle.classList.remove("active");
+        document.querySelector('.nav-right').classList.remove('active');
+        document.querySelector('.nav-mobile-toggle').classList.remove('active');
       }
-
-      // Close mobile menu when clicking outside
-      document.addEventListener("click", function (event) {
-        const navRight = document.querySelector(".nav-right");
-        const mobileToggle = document.querySelector(".nav-mobile-toggle");
-        const nav = document.querySelector(".nav");
-
-        if (
-          navRight.classList.contains("active") &&
-          !nav.contains(event.target)
-        ) {
-          closeMobileMenu();
-        }
-      });
-
-      // Launch date: January 1, 2026 09:09:00 AM (local time)
-      const launchDate = new Date("2026-01-01T09:09:00").getTime();
-
-      function checkLaunchStatus() {
-        const now = new Date().getTime();
-        const distance = launchDate - now;
-
-        if (distance < 0) {
-          // Post-launch
-          document.body.classList.remove("is-pre-launch");
-          document.body.classList.add("is-post-launch");
-          return true;
-        } else {
-          // Pre-launch
-          document.body.classList.remove("is-post-launch");
-          document.body.classList.add("is-pre-launch");
-          return false;
-        }
-      }
-
-      function updateCountdown() {
-        const now = new Date().getTime();
-        const distance = launchDate - now;
-
-        if (distance < 0) {
-          document.getElementById("days").textContent = "00";
-          document.getElementById("hours").textContent = "00";
-          document.getElementById("minutes").textContent = "00";
-          document.getElementById("seconds").textContent = "00";
-          return;
-        }
-
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor(
-          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
-        );
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        document.getElementById("days").textContent = String(days).padStart(
-          2,
-          "0",
-        );
-        document.getElementById("hours").textContent = String(hours).padStart(
-          2,
-          "0",
-        );
-        document.getElementById("minutes").textContent = String(
-          minutes,
-        ).padStart(2, "0");
-        document.getElementById("seconds").textContent = String(
-          seconds,
-        ).padStart(2, "0");
-      }
-
-      // Initial check
-      checkLaunchStatus();
-      updateCountdown();
-
-      // Update every second
-      setInterval(() => {
-        checkLaunchStatus();
-        updateCountdown();
-      }, 1000);
-
-      // Scroll Reveal Animation
-      const observerOptions = {
-        threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px",
-      };
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("active");
-            observer.unobserve(entry.target); // Only animate once
-          }
-        });
-      }, observerOptions);
-
-      document.addEventListener("DOMContentLoaded", () => {
-        document
-          .querySelectorAll(".reveal")
-          .forEach((el) => observer.observe(el));
+      document.addEventListener('click', function (e) {
+        const nav = document.querySelector('.nav');
+        const navRight = document.querySelector('.nav-right');
+        if (navRight && navRight.classList.contains('active') && !nav.contains(e.target)) closeMobileMenu();
       });
     </script>
   </body>
