@@ -13,6 +13,30 @@
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icon.svg">
   <link rel="stylesheet" href="css/console.css">
+  <style>
+    .console-nav {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-left: auto;
+      margin-right: 8px;
+    }
+    .console-nav-link {
+      color: #a78bfa;
+      font-size: 13px;
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 8px;
+      background: rgba(167, 139, 250, 0.1);
+      border: 1px solid rgba(167, 139, 250, 0.2);
+      transition: background 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+    .console-nav-link:hover {
+      background: rgba(167, 139, 250, 0.2);
+      border-color: rgba(167, 139, 250, 0.4);
+    }
+  </style>
 </head>
 <body>
 
@@ -22,10 +46,10 @@
   <div>
     <div class="logo"><span>⚡</span> BnOS Relay Console</div>
     <div class="subtitle">Nostr Debug &amp; Test Tool</div>
-    <div style="display:flex;gap:10px;margin-top:6px;">
-      <a href="index.html" style="color:#a78bfa;font-size:12px;text-decoration:none;">← Home</a>
-      <a href="https://app.bnos.space" target="_blank" rel="noopener" style="color:#a78bfa;font-size:12px;text-decoration:none;">Open App ↗</a>
-    </div>
+  </div>
+  <div class="console-nav">
+    <a href="index.html" class="console-nav-link">← Home</a>
+    <a href="https://app.bnos.space" target="_blank" rel="noopener" class="console-nav-link">Open App ↗</a>
   </div>
   <div class="identity-bar" id="identityBar">
     <button class="identity-login" onclick="openKeychainModal()">🔑 Login</button>
