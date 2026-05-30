@@ -11,7 +11,6 @@ const BECH32_CHARSET = 'qpzry9x8gf2tvdw0s3jn54khce6mua7l';
 const TIMELINE_MAX = 200;
 
 const DEFAULT_RELAYS = [
-  { url: 'ws://192.168.2.112:8080', label: 'Local', read: true, write: true, color: '#a855f7' },
   { url: 'wss://relay.damus.io',    label: 'Damus', read: true, write: true, color: '#3b82f6' },
   { url: 'wss://nos.lol',           label: 'nos.lol', read: true, write: true, color: '#22c55e' },
 ];
