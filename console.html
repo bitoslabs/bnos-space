@@ -75,11 +75,11 @@
     <button class="relay-manage-btn" onclick="openRelayManager()">⚙ Manage</button>
   </div>
   <div class="theme-picker" title="Pick color theme">
-    <div class="theme-dot active" data-theme="nostr" style="background:#a855f7;" onclick="setTheme('nostr')" title="Nostr Purple"></div>
-    <div class="theme-dot" data-theme="bitcoin" style="background:#f7931a;" onclick="setTheme('bitcoin')" title="Bitcoin Orange"></div>
-    <div class="theme-dot" data-theme="lightning" style="background:#fbbf24;" onclick="setTheme('lightning')" title="Lightning Yellow"></div>
-    <div class="theme-dot" data-theme="ocean" style="background:#3b82f6;" onclick="setTheme('ocean')" title="Ocean Blue"></div>
-    <div class="theme-dot" data-theme="cyber" style="background:#22c55e;" onclick="setTheme('cyber')" title="Cyber Green"></div>
+    <div class="theme-dot active" data-theme="nostr" style="background:#a855f7;" onclick="setColorTheme('nostr')" title="Nostr Purple"></div>
+    <div class="theme-dot" data-theme="bitcoin" style="background:#f7931a;" onclick="setColorTheme('bitcoin')" title="Bitcoin Orange"></div>
+    <div class="theme-dot" data-theme="lightning" style="background:#fbbf24;" onclick="setColorTheme('lightning')" title="Lightning Yellow"></div>
+    <div class="theme-dot" data-theme="ocean" style="background:#3b82f6;" onclick="setColorTheme('ocean')" title="Ocean Blue"></div>
+    <div class="theme-dot" data-theme="cyber" style="background:#22c55e;" onclick="setColorTheme('cyber')" title="Cyber Green"></div>
   </div>
   <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle theme">🌙</button>
   <span id="cryptoStatus" style="font-size:10px;padding:0 4px;"></span>
@@ -510,17 +510,10 @@
   }
 </script>
 <script>
-function setTheme(theme) {
-  document.documentElement.setAttribute('data-theme', theme);
-  localStorage.setItem('bnos_console_theme', theme);
-  document.querySelectorAll('.theme-dot').forEach(d => {
-    d.classList.toggle('active', d.dataset.theme === theme);
-  });
-}
-// Load saved theme
+// Load saved color theme
 (function() {
-  const saved = localStorage.getItem('bnos_console_theme') || 'nostr';
-  setTheme(saved);
+  const saved = localStorage.getItem('bnos_console_color') || 'nostr';
+  setColorTheme(saved);
 })();
 </script>
 </body>

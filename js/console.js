@@ -90,7 +90,10 @@ function initSidebarFilter() {
   });
 }
 
-// ── Theme ──
+function getColorTheme(){return document.documentElement.getAttribute('data-theme')||'nostr';}
+function setColorTheme(t){document.documentElement.setAttribute('data-theme',t);localStorage.setItem('bnos_console_color',t);document.querySelectorAll('.theme-dot').forEach(d=>{d.classList.toggle('active',d.dataset.theme===t);});}
+
+// ── Theme (dark/light) ──
 function getTheme(){return document.body.getAttribute('data-theme')||'dark';}
 function setTheme(t){document.body.setAttribute('data-theme',t);const b=document.getElementById('themeToggle');if(b)b.textContent=t==='light'?'☀️':'🌙';try{const r=localStorage.getItem(STORAGE_KEY);const s=r?JSON.parse(r):{};s.theme=t;localStorage.setItem(STORAGE_KEY,JSON.stringify(s));}catch{}}
 function toggleTheme(){setTheme(getTheme()==='dark'?'light':'dark');}

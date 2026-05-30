@@ -1187,6 +1187,11 @@ pre.raw-json {
   --header-from: #ffffff;
   --header-to: #f1f5f9;
 
+  /* Accent — adapts to color theme */
+  --accent: #9333ea;
+  --accent-hover: #7e22ce;
+  --accent-bg: rgba(147, 51, 234, 0.12);
+
   /* Code/json */
   --code-bg: #f1f5f9;
 
