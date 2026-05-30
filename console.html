@@ -53,6 +53,50 @@
     }
     .theme-dot:hover { transform: scale(1.2); }
     .theme-dot.active { border-color: #fff; transform: scale(1.15); }
+
+    /* Mobile responsive header */
+    .mobile-nav-dropdown {
+      display: none;
+      position: absolute;
+      top: var(--header-height, 52px);
+      left: 0;
+      right: 0;
+      background: var(--header-from, #0f172a);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 16px;
+      z-index: 99;
+      flex-direction: row;
+      gap: 8px;
+    }
+    .mobile-nav-dropdown a {
+      color: var(--accent, #a855f7);
+      font-size: 13px;
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      background: var(--accent-bg, rgba(168,85,247,0.1));
+      border: 1px solid rgba(168,85,247,0.2);
+      white-space: nowrap;
+    }
+    .mobile-nav-dropdown.open { display: flex; }
+    @media (max-width: 768px) {
+      .console-nav { display: none; }
+      .theme-picker { gap: 3px; }
+      .theme-dot { width: 14px; height: 14px; }
+      .identity-bar { margin-left: auto; }
+      .mobile-nav-dropdown { display: none; }
+      .mobile-nav-dropdown.open { display: flex; }
+    }
+    @media (min-width: 769px) {
+      .mobile-nav-dropdown { display: none !important; }
+    }
+    @media (max-width: 480px) {
+      .console-nav { display: none; }
+      .theme-picker { gap: 2px; }
+      .theme-dot { width: 12px; height: 12px; }
+      .relay-status-bar { display: none; }
+      #cryptoStatus { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -67,6 +111,11 @@
   <div class="console-nav">
     <a href="index.html" class="console-nav-link">← Home</a>
     <a href="https://app.bnos.space" target="_blank" rel="noopener" class="console-nav-link">Open App ↗</a>
+  </div>
+  <!-- Mobile nav links (shown in dropdown) -->
+  <div class="mobile-nav-dropdown" id="mobileNavDropdown">
+    <a href="index.html">← Home</a>
+    <a href="https://app.bnos.space" target="_blank" rel="noopener">Open App ↗</a>
   </div>
   <div class="identity-bar" id="identityBar">
     <button class="identity-login" onclick="openKeychainModal()">🔑 Login</button>
@@ -510,6 +559,21 @@
   }
 </script>
 <script>
+// Toggle mobile nav dropdown along with sidebar
+const origToggle = toggleSidebar;
+toggleSidebar = function() {
+  origToggle();
+  const dd = document.getElementById('mobileNavDropdown');
+  if (dd && window.innerWidth <= 768) dd.classList.toggle('open');
+};
+// Close dropdown when clicking outside
+document.addEventListener('click', function(e) {
+  const dd = document.getElementById('mobileNavDropdown');
+  const ham = document.getElementById('hamburgerBtn');
+  if (dd && dd.classList.contains('open') && !dd.contains(e.target) && !ham.contains(e.target)) {
+    dd.classList.remove('open');
+  }
+});
 // Load saved color theme
 (function() {
   const saved = localStorage.getItem('bnos_console_color') || 'nostr';
