@@ -5,22 +5,95 @@
 /* ------------------------------------------
    1. Custom Properties (Design Tokens)
    ------------------------------------------ */
-:root {
-  /* Backgrounds */
+
+/* Theme: Nostr Purple (default) */
+:root, [data-theme="nostr"] {
   --bg: #0a0e17;
   --bg2: #111827;
   --bg3: #1e293b;
-
-  /* Borders */
   --border: #334155;
   --border-hover: #475569;
-
-  /* Text */
   --text: #e2e8f0;
   --text2: #94a3b8;
   --text-dim: #475569;
+  --accent: #a855f7;
+  --accent-hover: #9333ea;
+  --accent-bg: rgba(168, 85, 247, 0.15);
+  --header-from: #0f172a;
+  --header-to: #1e1b4b;
+  --accent-label: "Nostr";
+}
 
-  /* Accent palette */
+/* Theme: Bitcoin Orange */
+[data-theme="bitcoin"] {
+  --bg: #0f0d09;
+  --bg2: #1a1610;
+  --bg3: #2a2318;
+  --border: #3d3526;
+  --border-hover: #544a36;
+  --text: #f5e6c8;
+  --text2: #b8a080;
+  --text-dim: #6b5d48;
+  --accent: #f7931a;
+  --accent-hover: #e8850f;
+  --accent-bg: rgba(247, 147, 26, 0.15);
+  --header-from: #1a1408;
+  --header-to: #2b1d06;
+}
+
+/* Theme: Lightning Yellow */
+[data-theme="lightning"] {
+  --bg: #0c0c08;
+  --bg2: #16160e;
+  --bg3: #22221a;
+  --border: #3a3a2a;
+  --border-hover: #505038;
+  --text: #f0ecd0;
+  --text2: #a8a478;
+  --text-dim: #6b6850;
+  --accent: #fbbf24;
+  --accent-hover: #f59e0b;
+  --accent-bg: rgba(251, 191, 36, 0.15);
+  --header-from: #141408;
+  --header-to: #262208;
+}
+
+/* Theme: Ocean Blue */
+[data-theme="ocean"] {
+  --bg: #0a0f1a;
+  --bg2: #0f1729;
+  --bg3: #1a2540;
+  --border: #253552;
+  --border-hover: #345070;
+  --text: #d0e0f5;
+  --text2: #7899bb;
+  --text-dim: #4a6580;
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+  --accent-bg: rgba(59, 130, 246, 0.15);
+  --header-from: #0a1628;
+  --header-to: #0c1d3a;
+}
+
+/* Theme: Cyber Green */
+[data-theme="cyber"] {
+  --bg: #050f0a;
+  --bg2: #0a1a12;
+  --bg3: #12281c;
+  --border: #1e4030;
+  --border-hover: #2a6045;
+  --text: #c8f5d8;
+  --text2: #70b888;
+  --text-dim: #407050;
+  --accent: #22c55e;
+  --accent-hover: #16a34a;
+  --accent-bg: rgba(34, 197, 94, 0.15);
+  --header-from: #061a0e;
+  --header-to: #0a2a16;
+}
+
+:root {
+  /* Accent palette (non-theme) */
   --green: #22c55e;
   --green-bg: rgba(34, 197, 94, 0.15);
   --green-bg-strong: rgba(34, 197, 94, 0.2);
@@ -84,7 +157,7 @@ body {
    3. Header
    ------------------------------------------ */
 .header {
-  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+  background: linear-gradient(135deg, var(--header-from) 0%, var(--header-to) 100%);
   border-bottom: 1px solid var(--border);
   padding: 10px 20px;
   display: flex;
@@ -102,7 +175,7 @@ body {
 }
 
 .header .logo span {
-  color: var(--purple);
+  color: var(--accent);
 }
 
 .header .subtitle {
@@ -186,9 +259,9 @@ body {
 }
 
 .relay-manage-btn:hover {
-  background: var(--purple);
+  background: var(--accent);
   color: white;
-  border-color: var(--purple);
+  border-color: var(--accent);
 }
 
 @keyframes pulse {
@@ -244,7 +317,7 @@ body {
 }
 
 .sidebar-search input:focus {
-  border-color: var(--purple);
+  border-color: var(--accent);
 }
 
 /* Sidebar: Add Custom Kind Button (Top Position) */
@@ -260,7 +333,7 @@ body {
   padding: 7px 10px;
   cursor: pointer;
   font-size: var(--fs-sm);
-  color: var(--purple);
+  color: var(--accent);
   transition: all var(--transition-fast);
   border: 1px dashed var(--border);
   background: transparent;
@@ -271,7 +344,7 @@ body {
 
 .sidebar-add-btn:hover {
   background: rgba(168, 85, 247, 0.08);
-  border-color: var(--purple);
+  border-color: var(--accent);
 }
 
 /* Sidebar: Sections */
@@ -312,7 +385,7 @@ body {
 
 .sidebar-item.active {
   background: var(--bg3);
-  border-left-color: var(--purple);
+  border-left-color: var(--accent);
 }
 
 .sidebar-item.hidden-by-filter {
@@ -402,8 +475,8 @@ body {
 }
 
 .tab.active {
-  color: var(--purple);
-  border-bottom-color: var(--purple);
+  color: var(--accent);
+  border-bottom-color: var(--accent);
 }
 
 /* ------------------------------------------
@@ -460,7 +533,7 @@ textarea {
 input:focus,
 select:focus,
 textarea:focus {
-  border-color: var(--purple);
+  border-color: var(--accent);
   box-shadow: 0 0 0 1px rgba(168, 85, 247, 0.25);
 }
 
@@ -508,14 +581,14 @@ button:active {
 }
 
 button.primary {
-  background: var(--purple);
-  border-color: var(--purple);
+  background: var(--accent);
+  border-color: var(--accent);
   color: white;
   font-weight: 600;
 }
 
 button.primary:hover {
-  background: var(--purple-hover);
+  background: var(--accent-hover);
 }
 
 button.danger {
@@ -577,7 +650,7 @@ button.green:hover {
 
 .ev-k0       { background: #1e3a5f; color: var(--blue); }
 .ev-k1       { background: #1e3a2f; color: var(--green); }
-.ev-k3       { background: #2d1e3a; color: var(--purple); }
+.ev-k3       { background: var(--accent-bg); color: var(--accent); }
 .ev-k4       { background: #3a1e2d; color: var(--pink); }
 .ev-k5       { background: #3a2d1e; color: var(--orange); }
 .ev-k7       { background: #1e3a3a; color: var(--cyan); }
@@ -656,7 +729,7 @@ button.green:hover {
 }
 
 .detail-content h3 {
-  color: var(--purple);
+  color: var(--accent);
   font-size: 14px;
   margin-bottom: 10px;
   padding-bottom: 6px;
@@ -786,13 +859,13 @@ pre.raw-json {
 }
 
 .chip:hover {
-  border-color: var(--purple);
+  border-color: var(--accent);
   color: var(--text);
 }
 
 .chip.active {
-  background: var(--purple);
-  border-color: var(--purple);
+  background: var(--accent);
+  border-color: var(--accent);
   color: white;
 }
 
@@ -816,7 +889,7 @@ pre.raw-json {
 }
 .saved-query-row:hover { background: var(--bg3); }
 .sq-name {
-  color: var(--purple);
+  color: var(--accent);
   cursor: pointer;
   font-weight: 600;
   font-size: 12px;
@@ -1051,8 +1124,8 @@ pre.raw-json {
   padding: 0;
 }
 .theme-toggle:hover {
-  background: var(--purple);
-  border-color: var(--purple);
+  background: var(--accent);
+  border-color: var(--accent);
   transform: rotate(20deg);
 }
 
@@ -1076,8 +1149,8 @@ pre.raw-json {
   transition: background 0.2s;
 }
 .hamburger:hover {
-  background: var(--purple);
-  border-color: var(--purple);
+  background: var(--accent);
+  border-color: var(--accent);
 }
 
 /* Sidebar overlay for mobile drawer */
@@ -1291,7 +1364,7 @@ pre.raw-json {
     gap: 2px;
   }
   .mobile-panel-tabs button.active {
-    color: var(--purple);
+    color: var(--accent);
   }
   .mobile-panel-tabs button span {
     font-size: 16px;
@@ -1444,7 +1517,7 @@ pre.raw-json {
   margin-left: auto;
 }
 .identity-login {
-  background: var(--purple);
+  background: var(--accent);
   color: white;
   border: none;
   padding: 5px 14px;
@@ -1467,7 +1540,7 @@ pre.raw-json {
   font-size: 12px;
   transition: border-color 0.15s;
 }
-.identity-pill:hover { border-color: var(--purple); }
+.identity-pill:hover { border-color: var(--accent); }
 .identity-pill.active { border-color: var(--green); }
 .identity-pill.ext { border-color: #f59e0b; }
 .identity-dot {
@@ -1496,7 +1569,7 @@ pre.raw-json {
   cursor: pointer;
   transition: all 0.15s;
 }
-.key-row:hover { border-color: var(--purple); background: var(--bg3); }
+.key-row:hover { border-color: var(--accent); background: var(--bg3); }
 .key-row.active { border-color: var(--green); background: rgba(34,197,94,0.08); }
 .key-status { font-size: 18px; }
 .key-info { flex: 1; min-width: 0; }
@@ -1585,7 +1658,7 @@ pre.raw-json {
   color: var(--text2);
 }
 .tl-pubkey { font-family: monospace; }
-.tl-tags { color: var(--purple); }
+.tl-tags { color: var(--accent); }
 
 /* Desktop: hide mobile-only elements */
 .mobile-panel-tabs,

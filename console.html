@@ -22,13 +22,13 @@
       margin-right: 8px;
     }
     .console-nav-link {
-      color: #a78bfa;
+      color: var(--accent, #a855f7);
       font-size: 13px;
       text-decoration: none;
       padding: 6px 14px;
       border-radius: 8px;
-      background: rgba(167, 139, 250, 0.1);
-      border: 1px solid rgba(167, 139, 250, 0.2);
+      background: var(--accent-bg, rgba(168,85,247,0.1));
+      border: 1px solid rgba(168,85,247,0.2);
       transition: background 0.2s, border-color 0.2s;
       white-space: nowrap;
     }
@@ -36,6 +36,23 @@
       background: rgba(167, 139, 250, 0.2);
       border-color: rgba(167, 139, 250, 0.4);
     }
+    /* Theme Picker */
+    .theme-picker {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      margin-left: 4px;
+    }
+    .theme-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform 0.15s, border-color 0.15s;
+    }
+    .theme-dot:hover { transform: scale(1.2); }
+    .theme-dot.active { border-color: #fff; transform: scale(1.15); }
   </style>
 </head>
 <body>
@@ -56,6 +73,13 @@
   </div>
   <div class="relay-status-bar" id="relayStatusBar">
     <button class="relay-manage-btn" onclick="openRelayManager()">⚙ Manage</button>
+  </div>
+  <div class="theme-picker" title="Pick color theme">
+    <div class="theme-dot active" data-theme="nostr" style="background:#a855f7;" onclick="setTheme('nostr')" title="Nostr Purple"></div>
+    <div class="theme-dot" data-theme="bitcoin" style="background:#f7931a;" onclick="setTheme('bitcoin')" title="Bitcoin Orange"></div>
+    <div class="theme-dot" data-theme="lightning" style="background:#fbbf24;" onclick="setTheme('lightning')" title="Lightning Yellow"></div>
+    <div class="theme-dot" data-theme="ocean" style="background:#3b82f6;" onclick="setTheme('ocean')" title="Ocean Blue"></div>
+    <div class="theme-dot" data-theme="cyber" style="background:#22c55e;" onclick="setTheme('cyber')" title="Cyber Green"></div>
   </div>
   <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle theme">🌙</button>
   <span id="cryptoStatus" style="font-size:10px;padding:0 4px;"></span>
@@ -484,6 +508,20 @@
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js').catch(e => console.warn('SW registration failed:', e));
   }
+</script>
+<script>
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('bnos_console_theme', theme);
+  document.querySelectorAll('.theme-dot').forEach(d => {
+    d.classList.toggle('active', d.dataset.theme === theme);
+  });
+}
+// Load saved theme
+(function() {
+  const saved = localStorage.getItem('bnos_console_theme') || 'nostr';
+  setTheme(saved);
+})();
 </script>
 </body>
 </html>
