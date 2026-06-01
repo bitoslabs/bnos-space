@@ -1,0 +1,18 @@
+{
+  "name": "BnOS Relay Console",
+  "short_name": "BnOS Relay",
+  "description": "Nostr relay debug & test tool for BnOS",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0a0e17",
+  "theme_color": "#a855f7",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

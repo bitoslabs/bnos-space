@@ -1,0 +1,28 @@
+# Nostr Relay Configuration
+
+[info]
+relay_url = "wss://192.168.2.112:8080/"
+name = "BnOS Local Relay"
+description = "Local Nostr relay for BnOS development"
+contact = "mailto:dev@bnos.space"
+
+[database]
+engine = "postgres"
+connection = "postgresql://nostr:nostr_secret_2024@db:5432/nostr_relay"
+
+[network]
+port = 8080
+address = "0.0.0.0"
+
+[limits]
+max_event_bytes = 65536
+max_subscriptions = 100
+max_filters = 100
+max_limit = 5000
+reject_future_seconds = 1800
+
+[diagnostics]
+publish = true
+
+[options]
+reject_future_seconds = 1800

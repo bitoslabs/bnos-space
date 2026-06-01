@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>BnOS Relay Console</title>
+  <meta name="theme-color" content="#a855f7">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="BnOS Relay">
+  <meta name="description" content="Nostr relay debug &amp; test tool for BnOS">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="stylesheet" href="css/console.css">
+  <style>
+    .console-nav {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-left: auto;
+      margin-right: 8px;
+    }
+    .console-nav-link {
+      color: var(--accent, #a855f7);
+      font-size: 13px;
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 8px;
+      background: var(--accent-bg, rgba(168,85,247,0.1));
+      border: 1px solid rgba(168,85,247,0.2);
+      transition: background 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+    .console-nav-link:hover {
+      background: rgba(167, 139, 250, 0.2);
+      border-color: rgba(167, 139, 250, 0.4);
+    }
+    /* Theme Picker */
+    .theme-picker {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      margin-left: 4px;
+    }
+    .theme-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform 0.15s, border-color 0.15s;
+    }
+    .theme-dot:hover { transform: scale(1.2); }
+    .theme-dot.active { border-color: #fff; transform: scale(1.15); }
+
+    /* Mobile responsive header */
+    .mobile-nav-dropdown {
+      display: none;
+      position: absolute;
+      top: var(--header-height, 52px);
+      left: 0;
+      right: 0;
+      background: var(--header-from, #0f172a);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 16px;
+      z-index: 99;
+      flex-direction: row;
+      gap: 8px;
+    }
+    .mobile-nav-dropdown a {
+      color: var(--accent, #a855f7);
+      font-size: 13px;
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      background: var(--accent-bg, rgba(168,85,247,0.1));
+      border: 1px solid rgba(168,85,247,0.2);
+      white-space: nowrap;
+    }
+    .mobile-nav-dropdown.open { display: flex; }
+    @media (max-width: 768px) {
+      .console-nav { display: none; }
+      .theme-picker { gap: 3px; }
+      .theme-dot { width: 14px; height: 14px; }
+      .identity-bar { margin-left: auto; }
+      .mobile-nav-dropdown { display: none; }
+      .mobile-nav-dropdown.open { display: flex; }
+    }
+    @media (min-width: 769px) {
+      .mobile-nav-dropdown { display: none !important; }
+    }
+    @media (max-width: 480px) {
+      .console-nav { display: none; }
+      .theme-picker { gap: 2px; }
+      .theme-dot { width: 12px; height: 12px; }
+      .relay-status-bar { display: none; }
+      #cryptoStatus { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <button class="hamburger" id="hamburgerBtn" onclick="toggleSidebar()">☰</button>
+  <div>
+    <div class="logo"><span>⚡</span> BnOS Relay Console</div>
+    <div class="subtitle">Nostr Debug &amp; Test Tool</div>
+  </div>
+  <div class="console-nav">
+    <a href="index.html" class="console-nav-link">← Home</a>
+    <a href="https://app.bnos.space" target="_blank" rel="noopener" class="console-nav-link">Open App ↗</a>
+  </div>
+  <!-- Mobile nav links (shown in dropdown) -->
+  <div class="mobile-nav-dropdown" id="mobileNavDropdown">
+    <a href="index.html">← Home</a>
+    <a href="https://app.bnos.space" target="_blank" rel="noopener">Open App ↗</a>
+  </div>
+  <div class="identity-bar" id="identityBar">
+    <button class="identity-login" onclick="openKeychainModal()">🔑 Login</button>
+  </div>
+  <div class="relay-status-bar" id="relayStatusBar">
+    <button class="relay-manage-btn" onclick="openRelayManager()">⚙ Manage</button>
+  </div>
+  <div class="theme-picker" title="Pick color theme">
+    <div class="theme-dot active" data-theme="nostr" style="background:#a855f7;" onclick="setColorTheme('nostr')" title="Nostr Purple"></div>
+    <div class="theme-dot" data-theme="bitcoin" style="background:#f7931a;" onclick="setColorTheme('bitcoin')" title="Bitcoin Orange"></div>
+    <div class="theme-dot" data-theme="lightning" style="background:#fbbf24;" onclick="setColorTheme('lightning')" title="Lightning Yellow"></div>
+    <div class="theme-dot" data-theme="ocean" style="background:#3b82f6;" onclick="setColorTheme('ocean')" title="Ocean Blue"></div>
+    <div class="theme-dot" data-theme="cyber" style="background:#22c55e;" onclick="setColorTheme('cyber')" title="Cyber Green"></div>
+  </div>
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+  <span id="cryptoStatus" style="font-size:10px;padding:0 4px;"></span>
+</div>
+
+<!-- Main Grid -->
+<div class="main">
+
+  <!-- Sidebar: Kind Browser -->
+  <div class="sidebar" id="sidebarKinds">
+
+    <!-- Search / Filter -->
+    <div class="sidebar-search">
+      <input type="text" id="sidebarFilter" placeholder="Filter kinds...">
+    </div>
+
+    <!-- Add Custom Kind Button (Top) -->
+    <div class="sidebar-top-actions">
+      <button class="sidebar-add-btn" onclick="openAddCustomKind()">➕ Add Custom Kind</button>
+    </div>
+
+    <!-- Standard NIP-01 -->
+    <div class="sidebar-section">
+      <h3>📡 Standard NIP-01</h3>
+      <div class="sidebar-item" onclick="quickQuery(0)"><span class="kind-badge">0</span><span class="kind-name">Profile Metadata</span></div>
+      <div class="sidebar-item" onclick="quickQuery(1)"><span class="kind-badge">1</span><span class="kind-name">Text Note</span></div>
+      <div class="sidebar-item" onclick="quickQuery(3)"><span class="kind-badge">3</span><span class="kind-name">Contact List</span></div>
+      <div class="sidebar-item" onclick="quickQuery(4)"><span class="kind-badge">4</span><span class="kind-name">Encrypted DM</span></div>
+      <div class="sidebar-item" onclick="quickQuery(5)"><span class="kind-badge">5</span><span class="kind-name">Deletion</span></div>
+      <div class="sidebar-item" onclick="quickQuery(7)"><span class="kind-badge">7</span><span class="kind-name">Reaction</span></div>
+    </div>
+
+    <!-- BnOS Store Config -->
+    <div class="sidebar-section">
+      <h3>🏪 BnOS Store Config</h3>
+      <div class="sidebar-item" onclick="quickQuery(30078)"><span class="kind-badge">30078</span><span class="kind-name">Store Settings</span></div>
+      <div class="sidebar-item" onclick="quickQuery(30079)"><span class="kind-badge">30079</span><span class="kind-name">Store Profile</span></div>
+      <div class="sidebar-item" onclick="quickQuery(30080)"><span class="kind-badge">30080</span><span class="kind-name">Table Layout</span></div>
+    </div>
+
+    <!-- BnOS Catalog -->
+    <div class="sidebar-section">
+      <h3>🛍️ BnOS Catalog</h3>
+      <div class="sidebar-item" onclick="quickQuery(30100)"><span class="kind-badge">30100</span><span class="kind-name">Product</span></div>
+      <div class="sidebar-item" onclick="quickQuery(30101)"><span class="kind-badge">30101</span><span class="kind-name">Category</span></div>
+      <div class="sidebar-item" onclick="quickQuery(30102)"><span class="kind-badge">30102</span><span class="kind-name">Unit</span></div>
+      <div class="sidebar-item" onclick="quickQuery(30103)"><span class="kind-badge">30103</span><span class="kind-name">Modifier Group</span></div>
+      <div class="sidebar-item" onclick="quickQuery(30104)"><span class="kind-badge">30104</span><span class="kind-name">Ingredient</span></div>
+      <div class="sidebar-item" onclick="quickQuery(30105)"><span class="kind-badge">30105</span><span class="kind-name">Recipe</span></div>
+    </div>
+
+    <!-- BnOS Transactions -->
+    <div class="sidebar-section">
+      <h3>🧾 BnOS Transactions</h3>
+      <div class="sidebar-item" onclick="quickQuery(30200)"><span class="kind-badge">30200</span><span class="kind-name">Order</span></div>
+      <div class="sidebar-item" onclick="quickQuery(30201)"><span class="kind-badge">30201</span><span class="kind-name">Payment</span></div>
+      <div class="sidebar-item" onclick="quickQuery(30202)"><span class="kind-badge">30202</span><span class="kind-name">Refund</span></div>
+      <div class="sidebar-item" onclick="quickQuery(30203)"><span class="kind-badge">30203</span><span class="kind-name">Invoice</span></div>
+    </div>
+
+    <!-- BnOS CRM & Loyalty -->
+    <div class="sidebar-section">
+      <h3>👥 BnOS CRM &amp; Loyalty</h3>
+      <div class="sidebar-item" onclick="quickQuery(30300)"><span class="kind-badge">30300</span><span class="kind-name">Customer</span></div>
+      <div class="sidebar-item" onclick="quickQuery(30301)"><span class="kind-badge">30301</span><span class="kind-name">Loyalty Points</span></div>
+      <div class="sidebar-item" onclick="quickQuery(30310)"><span class="kind-badge">30310</span><span class="kind-name">Coupon</span></div>
+      <div class="sidebar-item" onclick="quickQuery(30311)"><span class="kind-badge">30311</span><span class="kind-name">Membership</span></div>
+      <div class="sidebar-item" onclick="quickQuery(30313)"><span class="kind-badge">30313</span><span class="kind-name">Promotion</span></div>
+    </div>
+
+    <!-- BnOS Inventory -->
+    <div class="sidebar-section">
+      <h3>📦 BnOS Inventory</h3>
+      <div class="sidebar-item" onclick="quickQuery(30400)"><span class="kind-badge">30400</span><span class="kind-name">Stock Adjustment</span></div>
+      <div class="sidebar-item" onclick="quickQuery(30401)"><span class="kind-badge">30401</span><span class="kind-name">Inventory Count</span></div>
+    </div>
+
+    <!-- BnOS Staff & Access -->
+    <div class="sidebar-section">
+      <h3>👤 BnOS Staff &amp; Access</h3>
+      <div class="sidebar-item" onclick="quickQuery(30500)"><span class="kind-badge">30500</span><span class="kind-name">Staff Member</span></div>
+      <div class="sidebar-item" onclick="quickQuery(30501)"><span class="kind-badge">30501</span><span class="kind-name">POS Session</span></div>
+      <div class="sidebar-item" onclick="quickQuery(30503)"><span class="kind-badge">30503</span><span class="kind-name">Company Index</span></div>
+      <div class="sidebar-item" onclick="quickQuery(30591)"><span class="kind-badge">30591</span><span class="kind-name">User Workspaces</span></div>
+    </div>
+
+    <!-- BnOS Supply Chain -->
+    <div class="sidebar-section">
+      <h3>🚚 BnOS Supply Chain</h3>
+      <div class="sidebar-item" onclick="quickQuery(30700)"><span class="kind-badge">30700</span><span class="kind-name">Supplier</span></div>
+      <div class="sidebar-item" onclick="quickQuery(30701)"><span class="kind-badge">30701</span><span class="kind-name">Branch Stock</span></div>
+      <div class="sidebar-item" onclick="quickQuery(30702)"><span class="kind-badge">30702</span><span class="kind-name">Purchase Order</span></div>
+      <div class="sidebar-item" onclick="quickQuery(30703)"><span class="kind-badge">30703</span><span class="kind-name">Stock Transfer</span></div>
+    </div>
+
+    <!-- BnOS Accounting -->
+    <div class="sidebar-section">
+      <h3>💰 BnOS Accounting</h3>
+      <div class="sidebar-item" onclick="quickQuery(30800)"><span class="kind-badge">30800</span><span class="kind-name">Account</span></div>
+      <div class="sidebar-item" onclick="quickQuery(30801)"><span class="kind-badge">30801</span><span class="kind-name">Journal Entry</span></div>
+      <div class="sidebar-item" onclick="quickQuery(30802)"><span class="kind-badge">30802</span><span class="kind-name">Expense</span></div>
+    </div>
+
+    <!-- BnOS Marketplace -->
+    <div class="sidebar-section">
+      <h3>🏪 BnOS Marketplace</h3>
+      <div class="sidebar-item" onclick="quickQuery(30950)"><span class="kind-badge">30950</span><span class="kind-name">Marketplace Listing</span></div>
+      <div class="sidebar-item" onclick="quickQuery(30951)"><span class="kind-badge">30951</span><span class="kind-name">Marketplace Product</span></div>
+      <div class="sidebar-item" onclick="quickQuery(30952)"><span class="kind-badge">30952</span><span class="kind-name">Marketplace Order</span></div>
+      <div class="sidebar-item" onclick="quickQuery(30955)"><span class="kind-badge">30955</span><span class="kind-name">Review</span></div>
+    </div>
+
+    <!-- BnOS Project Mgr -->
+    <div class="sidebar-section">
+      <h3>📋 BnOS Project Mgr</h3>
+      <div class="sidebar-item" onclick="quickQuery(31100)"><span class="kind-badge">31100</span><span class="kind-name">Project</span></div>
+      <div class="sidebar-item" onclick="quickQuery(31102)"><span class="kind-badge">31102</span><span class="kind-name">Issue</span></div>
+      <div class="sidebar-item" onclick="quickQuery(31109)"><span class="kind-badge">31109</span><span class="kind-name">Wiki Page</span></div>
+    </div>
+
+    <!-- Custom Kinds (injected dynamically) -->
+    <div class="sidebar-section" id="customKindsSection" style="display:none;">
+      <h3>🔧 Custom Kinds</h3>
+      <div id="customKindsList"></div>
+    </div>
+  </div>
+
+  <!-- Top Panel: Tabs -->
+  <div class="top-panel" style="grid-column: 2 / 4;">
+    <div class="tabs">
+      <div class="tab active" data-tab="timeline" onclick="switchTab('timeline')">🕐 Timeline</div>
+      <div class="tab" data-tab="query" onclick="switchTab('query')">🔍 Query</div>
+      <div class="tab" data-tab="raw" onclick="switchTab('raw')">⚡ Raw WebSocket</div>
+      <div class="tab" data-tab="publish" onclick="switchTab('publish')">📝 Publish Event</div>
+      <div class="tab" data-tab="stats" onclick="switchTab('stats')">📊 Relay Info</div>
+      <div class="tab" data-tab="relays" onclick="switchTab('relays')">🔌 Relay Manager</div>
+    </div>
+
+    <!-- Timeline Panel -->
+    <div class="panel active" id="panel-timeline">
+      <div class="timeline-toolbar">
+        <span class="timeline-status" id="timelineStatus">⏸ Paused</span>
+        <button class="green" onclick="startTimeline()">▶ Start Live</button>
+        <button class="danger" onclick="stopTimeline()">⏹ Stop</button>
+        <button onclick="clearTimeline()">🗑 Clear</button>
+        <select id="timelineFilter" onchange="renderTimeline()" style="font-size:11px;padding:4px 8px;background:var(--bg2);border:1px solid var(--border);color:var(--text);border-radius:4px;">
+          <option value="all">All Kinds</option>
+          <option value="orders">🧾 Orders</option>
+          <option value="catalog">🛍 Catalog</option>
+          <option value="crm">👥 CRM</option>
+          <option value="store">🏪 Store</option>
+          <option value="staff">👷 Staff</option>
+          <option value="account">💰 Accounting</option>
+          <option value="notes">📝 Notes</option>
+        </select>
+      </div>
+      <div class="timeline-feed" id="timelineFeed">
+        <div class="timeline-empty">Click "Start Live" to see real-time events from connected relays.</div>
+      </div>
+    </div>
+
+    <!-- Query Panel -->
+    <div class="panel" id="panel-query">
+      <div class="stats-bar">
+        <span>Events: <b id="eventCount">0</b></span>
+        <span>Sub ID: <b id="currentSubId">—</b></span>
+        <span>Query time: <b id="queryTime">—</b></span>
+        <span>Relays: <b id="queryRelayCount">0</b> read</span>
+      </div>
+      <button class="query-toggle" id="queryToggleBtn" onclick="toggleQueryForm()" style="display:none;width:100%;padding:8px 14px;background:var(--bg2);border:none;border-bottom:1px solid var(--border);color:var(--purple);font-size:12px;cursor:pointer;">▼ Show Filters</button>
+      <div class="form-row expanded" id="queryFormRow">
+        <div class="form-group">
+          <label>Kinds (comma sep)</label>
+          <input type="text" id="qKinds" placeholder="0,1,30078..." class="med">
+        </div>
+        <div class="form-group">
+          <label>Authors (pubkey hex)</label>
+          <input type="text" id="qAuthors" placeholder="pubkey hex..." class="med">
+        </div>
+        <div class="form-group">
+          <label>#d tag (identifier)</label>
+          <input type="text" id="qDtag" placeholder="d-tag value..." class="med">
+        </div>
+        <div class="form-group">
+          <label>#e tag</label>
+          <input type="text" id="qEtag" placeholder="event id..." class="med">
+        </div>
+        <div class="form-group">
+          <label>#p tag</label>
+          <input type="text" id="qPtag" placeholder="pubkey..." class="med">
+        </div>
+        <div class="form-group">
+          <label>Since</label>
+          <input type="number" id="qSince" placeholder="unix ts" class="small">
+        </div>
+        <div class="form-group">
+          <label>Until</label>
+          <input type="number" id="qUntil" placeholder="unix ts" class="small">
+        </div>
+        <div class="form-group">
+          <label>Limit</label>
+          <input type="number" id="qLimit" value="100" class="small">
+        </div>
+        <div class="form-group">
+          <label>Search</label>
+          <input type="text" id="qSearch" placeholder="full-text search..." class="med">
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="primary" onclick="runQuery()">▶ Run Query</button>
+        <button id="liveModeBtn" onclick="toggleLiveMode()">📡 Live Mode</button>
+        <button onclick="runQueryAllKinds()">📋 All BnOS Kinds</button>
+        <button class="green" onclick="saveCurrentQuery()">💾 Save Query</button>
+        <button class="danger" onclick="clearEvents()">🗑 Clear</button>
+        <button onclick="exportEvents()">📦 Export</button>
+        <button onclick="stopSubscription()">⏹ Stop Sub</button>
+      </div>
+      <div style="padding:4px 14px;">
+        <div style="font-size:10px;color:var(--text2);margin-bottom:4px;">SAVED QUERIES:</div>
+        <div id="savedQueriesList"></div>
+      </div>
+      <div class="filter-chips" id="filterChips"></div>
+      <div class="event-count" id="eventsInfo"></div>
+    </div>
+
+    <!-- Raw WS Panel -->
+    <div class="panel" id="panel-raw">
+      <div class="ws-console">
+        <div class="ws-log" id="wsLog"></div>
+        <div class="ws-input-row">
+          <textarea id="wsInput" placeholder='["REQ", "sub1", {"kinds": [0], "limit": 10}]' rows="3"></textarea>
+          <div style="display:flex;flex-direction:column;gap:4px;">
+            <button class="primary" onclick="sendRawWs()">Send</button>
+            <button onclick="clearWsLog()">Clear</button>
+          </div>
+        </div>
+        <div style="margin-top:6px;">
+          <div style="font-size:10px;color:var(--text2);margin-bottom:4px;">QUICK TEMPLATES:</div>
+          <div style="display:flex;flex-wrap:wrap;gap:4px;">
+            <button onclick="wsTemplate('req-all')">REQ all k=0</button>
+            <button onclick="wsTemplate('req-notes')">REQ notes</button>
+            <button onclick="wsTemplate('req-bnos')">REQ BnOS products</button>
+            <button onclick="wsTemplate('req-orders')">REQ BnOS orders</button>
+            <button onclick="wsTemplate('count')">COUNT events</button>
+            <button onclick="wsTemplate('close')">CLOSE sub</button>
+            <button onclick="wsTemplate('event')">EVENT publish</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Publish Panel -->
+    <div class="panel" id="panel-publish">
+      <div style="padding:14px;">
+        <div id="nip07Status" style="margin-bottom:8px;font-size:12px;"></div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Kind</label>
+            <input type="number" id="pubKind" value="1" class="small">
+          </div>
+          <div class="form-group">
+            <label>Created At (leave empty = now)</label>
+            <input type="number" id="pubCreated" placeholder="auto" class="small">
+          </div>
+        </div>
+        <div class="form-group" style="padding:0 14px;margin-bottom:8px;">
+          <label>Content</label>
+          <textarea id="pubContent" class="wide" rows="4" placeholder="Event content..."></textarea>
+        </div>
+        <div class="form-group" style="padding:0 14px;margin-bottom:8px;">
+          <label>Tags (JSON array of arrays)</label>
+          <textarea id="pubTags" class="wide" rows="3" placeholder='[["p","pubkey..."],["e","eventid..."]]'></textarea>
+        </div>
+        <div style="padding:0 14px;margin-bottom:8px;">
+          <details>
+            <summary style="cursor:pointer;color:var(--text2);font-size:11px;margin-bottom:6px;">🔑 Signing Key (nsec or hex)</summary>
+            <div class="form-group">
+              <input type="password" id="pubPrivkey" placeholder="nsec1... or hex private key" class="wide">
+              <div style="font-size:10px;color:var(--text2);margin-top:2px;">Leave empty to generate a random key for testing</div>
+            </div>
+          </details>
+        </div>
+        <div class="btn-row">
+          <button class="primary" onclick="publishEvent()">🚀 Publish Event</button>
+          <button onclick="genRandomKey()">🎲 Generate Random Key</button>
+          <button onclick="genTestNote()">📝 Test Note (kind 1)</button>
+        </div>
+        <div style="margin-top:12px;padding:0 14px;">
+          <div style="font-size:10px;color:var(--text2);margin-bottom:4px;">GENERATED KEY INFO:</div>
+          <div id="keyInfo" style="font-size:12px;color:var(--text2);"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats Panel -->
+    <div class="panel" id="panel-stats">
+      <div style="padding:14px;" id="statsContent">
+        <p style="color:var(--text2);">Connect to a relay to see info.</p>
+      </div>
+    </div>
+
+    <!-- Relay Manager Panel -->
+    <div class="panel" id="panel-relays">
+      <div style="padding:14px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+          <h3 style="color:var(--purple);font-size:14px;">🔌 Relay Manager</h3>
+          <div style="display:flex;gap:6px;">
+            <button class="green" onclick="connectAllRelays()">▶ Connect All</button>
+            <button class="danger" onclick="disconnectAllRelays()">⏹ Disconnect All</button>
+            <button onclick="addNewRelayRow()">➕ Add Relay</button>
+            <button onclick="importExportKinds()">📦 Import/Export</button>
+            <button class="danger" onclick="resetToDefaults()">🔄 Reset to Defaults</button>
+          </div>
+        </div>
+        <div class="relay-list" id="relayManagerList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Left: Events List -->
+  <div class="events-panel" id="eventsList" style="overflow-y:auto;background:var(--bg2);">
+    <div class="detail-empty">Connect to relays and run a query to see events</div>
+  </div>
+
+  <!-- Bottom Right: Event Detail -->
+  <div class="detail-panel" id="eventDetail">
+    <div class="detail-close-bar" style="display:none;position:sticky;top:0;background:var(--bg2);padding:8px 14px;border-bottom:1px solid var(--border);z-index:5;">
+      <button onclick="closeMobileDetail()" style="border:none;background:none;color:var(--text);font-size:14px;cursor:pointer;">← Back to events</button>
+    </div>
+    <div class="detail-empty">Click an event to view details</div>
+  </div>
+
+</div>
+
+<!-- Mobile Bottom Nav -->
+<div class="mobile-panel-tabs" id="mobileNav">
+  <button onclick="mobileTab('timeline')" data-mtab="timeline" class="active"><span>🕐</span>Feed</button>
+  <button onclick="mobileTab('query')" data-mtab="query"><span>🔍</span>Query</button>
+  <button onclick="mobileTab('events')" data-mtab="events"><span>📋</span>Events</button>
+  <button onclick="mobileTab('publish')" data-mtab="publish"><span>📝</span>Publish</button>
+  <button onclick="mobileTab('relays')" data-mtab="relays"><span>🔌</span>Relays</button>
+</div>
+
+<!-- Modal: Add Custom Kind -->
+<div class="modal-overlay" id="customKindModal">
+  <div class="modal" style="min-width:400px;">
+    <h2>🔧 Add Custom Kind</h2>
+    <div class="form-group">
+      <label>Kind Number</label>
+      <input type="number" id="ckKind" placeholder="e.g. 9999" style="width:100%;">
+    </div>
+    <div class="form-group">
+      <label>Name</label>
+      <input type="text" id="ckName" placeholder="e.g. My Custom Event" style="width:100%;">
+    </div>
+    <div class="form-group">
+      <label>Category Emoji</label>
+      <input type="text" id="ckEmoji" placeholder="e.g. 🔧" style="width:100px;" maxlength="4">
+    </div>
+    <div class="form-group">
+      <label>Category Label (optional)</label>
+      <input type="text" id="ckCategory" placeholder="e.g. Custom" style="width:100%;">
+    </div>
+    <input type="hidden" id="ckEditIndex" value="-1">
+    <div class="btn-row">
+      <button onclick="closeCustomKindModal()">Cancel</button>
+      <button class="primary" onclick="saveCustomKind()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Import/Export Kinds -->
+<div class="modal-overlay" id="importExportModal">
+  <div class="modal" style="min-width:500px;">
+    <h2>📦 Import/Export Custom Kinds</h2>
+    <div class="form-group">
+      <label>Export — copy this JSON</label>
+      <textarea id="ieExport" class="wide" rows="6" readonly></textarea>
+    </div>
+    <div class="btn-row" style="padding:0;margin-bottom:12px;">
+      <button onclick="clipboardWrite(document.getElementById('ieExport').value)">📋 Copy</button>
+    </div>
+    <div class="form-group">
+      <label>Import — paste JSON below</label>
+      <textarea id="ieImport" class="wide" rows="6" placeholder='[{"kind":9999,"name":"My Kind","emoji":"🔧","category":"Custom"}]'></textarea>
+    </div>
+    <div class="btn-row">
+      <button onclick="closeImportExportModal()">Cancel</button>
+      <button class="primary" onclick="importKinds()">Import Kinds</button>
+    </div>
+  </div>
+</div>
+
+<!-- Sidebar overlay (mobile) -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<!-- Modal: Keychain -->
+<div class="modal-overlay" id="keychainModal">
+  <div class="modal" style="min-width:460px;max-width:540px;">
+    <h2 style="margin-bottom:16px;">🔑 Keychain — Identity Manager</h2>
+    <div id="keychainList" style="margin-bottom:16px;"></div>
+    <div style="border-top:1px solid var(--border);padding-top:12px;display:flex;flex-direction:column;gap:8px;">
+      <div style="font-size:11px;color:var(--text2);margin-bottom:4px;">ADD KEY:</div>
+      <div style="display:flex;gap:8px;">
+        <button class="green" onclick="keychainImportKey()" style="flex:1;">📥 Import nsec / hex</button>
+        <button onclick="keychainGenerate()" style="flex:1;">🎲 Generate New</button>
+      </div>
+      <div style="font-size:10px;color:var(--text2);margin-top:8px;">
+        Keys are encrypted with AES-256-GCM using your password.<br>
+        Private keys never leave your browser unencrypted.
+      </div>
+      <div id="nip07KeychainStatus" style="font-size:11px;margin-top:4px;"></div>
+    </div>
+    <div class="btn-row" style="margin-top:12px;">
+      <button onclick="closeKeychainModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/core.js"></script>
+<script src="js/relay.js"></script>
+<script src="js/events.js"></script>
+<script src="js/console.js"></script>
+<script>
+  // Service Worker Registration
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js').catch(e => console.warn('SW registration failed:', e));
+  }
+</script>
+<script>
+// Toggle mobile nav dropdown along with sidebar
+const origToggle = toggleSidebar;
+toggleSidebar = function() {
+  origToggle();
+  const dd = document.getElementById('mobileNavDropdown');
+  if (dd && window.innerWidth <= 768) dd.classList.toggle('open');
+};
+// Close dropdown when clicking outside
+document.addEventListener('click', function(e) {
+  const dd = document.getElementById('mobileNavDropdown');
+  const ham = document.getElementById('hamburgerBtn');
+  if (dd && dd.classList.contains('open') && !dd.contains(e.target) && !ham.contains(e.target)) {
+    dd.classList.remove('open');
+  }
+});
+// Load saved color theme
+(function() {
+  const saved = localStorage.getItem('bnos_console_color') || 'nostr';
+  setColorTheme(saved);
+})();
+</script>
+</body>
+</html>
