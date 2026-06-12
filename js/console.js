@@ -16,7 +16,7 @@ async function publishEvent() {
   const created_at=parseInt(document.getElementById('pubCreated').value)||Math.floor(Date.now()/1000);
 
   // NIP-07 path
-  if(hasNip07()){
+  if(isNip07Enabled()){
     try{const unsigned={kind,content,tags,created_at};const signed=await nip07SignEvent(unsigned);if(signed){const count=pool.broadcast(JSON.stringify(['EVENT',signed]),'write');switchTab('raw');alert(`Published via NIP-07 to ${count} relay(s)! ID: ${signed.id}`);return;}}catch(e){console.warn('NIP-07 failed, falling back',e);}
   }
 
@@ -28,7 +28,7 @@ async function publishEvent() {
     if(privkey.startsWith('nsec1')){privkey=decodeNsec(privkey);if(!privkey)return alert('Invalid nsec');}
   }
 
-  const pubkey=bytesToHex(schnorr.getPublicKey(privkey));
+  const pubkey=schnorrGetPublicKeyHex(privkey);
   const signedEvt=await signEvent({kind,content,tags,pubkey,created_at},privkey);
   const count=pool.broadcast(JSON.stringify(['EVENT',signedEvt]),'write');
   switchTab('raw');
@@ -39,7 +39,7 @@ function genRandomKey() {
   loadCrypto().then(ok=>{
     if(!ok) return alert('Crypto not loaded — check internet & refresh');
     const hex=bytesToHex(crypto.getRandomValues(new Uint8Array(32)));
-    const pubkey=bytesToHex(schnorr.getPublicKey(hex));
+    const pubkey=schnorrGetPublicKeyHex(hex);
     window._randomPrivkey=hex;
     document.getElementById('pubPrivkey').value=nsecEncode(hex);
     document.getElementById('keyInfo').innerHTML=`🔑 <b>nsec:</b> ${nsecEncode(hex)}<br>📬 <b>npub:</b> ${npubEncode(pubkey)}<br><span style="color:var(--text2);font-size:10px;">Hex: ${pubkey}</span>`;
@@ -50,7 +50,7 @@ function genTestNote() {
   document.getElementById('pubKind').value='1';
   document.getElementById('pubContent').value=`Hello from BnOS Console! ${new Date().toISOString()} ⚡`;
   document.getElementById('pubTags').value='[]';
-  if(!document.getElementById('pubPrivkey').value&&!hasNip07()) genRandomKey();
+  if(!document.getElementById('pubPrivkey').value&&!isNip07Enabled()) genRandomKey();
 }
 
 // ── Raw WS ──
@@ -137,8 +137,9 @@ window.addEventListener('resize',handleResize);
 // ── NIP-07 Status ──
 function updateNip07Status() {
   const el=document.getElementById('nip07Status'); if(!el)return;
-  if(hasNip07()){el.innerHTML='<span style="color:var(--green);">✅ NIP-07 detected</span>';nip07GetPubkey().then(pk=>{if(pk)el.innerHTML+=` <span style="color:var(--text2);font-size:10px;">${npubEncode(pk).slice(0,20)}...</span>`;});}
-  else{el.innerHTML='<span style="color:var(--text2);">No NIP-07 extension</span>';}
+  if(!isNip07Enabled()){el.innerHTML='';return;}
+  el.innerHTML='<span style="color:var(--green);">✅ NIP-07 enabled</span>';
+  nip07GetPubkey().then(pk=>{if(pk)el.innerHTML+=` <span style="color:var(--text2);font-size:10px;">${npubEncode(pk).slice(0,20)}...</span>`;});
 }
 
 // ── Keyboard Shortcuts ──
@@ -168,6 +169,7 @@ restoreTheme();
 pool = new RelayPool();
 customKinds.forEach(ck=>{KIND_NAMES[ck.kind]=ck.name;});
 loadKeychain();
+loadNip07Preference();
 updateIdentityBar();
 renderCustomKinds();
 updateRelayStatusBar();

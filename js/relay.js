@@ -91,7 +91,7 @@ class RelayPool {
     this._log(relayUrl,'in',`AUTH challenge received`);
     let privkey = getActivePrivkey();
     // NIP-07 extension path
-    if(!privkey && hasNip07()) {
+    if(!privkey && isNip07Enabled()) {
       try {
         const pubkey=await nip07GetPubkey(); if(!pubkey)return;
         const event={kind:22242,content:'',tags:[['relay',relayUrl],['challenge',challenge]],created_at:Math.floor(Date.now()/1000),pubkey};
@@ -102,7 +102,7 @@ class RelayPool {
     }
     if(!privkey){this._log(relayUrl,'info','NIP-42 skipped — no active key. Login to authenticate.');return;}
     await loadCrypto(); if(!schnorr)return;
-    const pubkey=bytesToHex(schnorr.getPublicKey(privkey));
+    const pubkey=schnorrGetPublicKeyHex(privkey);
     const event={kind:22242,content:'',tags:[['relay',relayUrl],['challenge',challenge]],pubkey,created_at:Math.floor(Date.now()/1000)};
     const signed=await signEvent(event,privkey);
     const c=this.connections.get(relayUrl);

@@ -538,9 +538,12 @@
         <button class="green" onclick="keychainImportKey()" style="flex:1;">📥 Import nsec / hex</button>
         <button onclick="keychainGenerate()" style="flex:1;">🎲 Generate New</button>
       </div>
+      <div style="font-size:11px;color:var(--text2);margin-top:4px;">
+        Or sign in with a browser extension when available.
+      </div>
       <div style="font-size:10px;color:var(--text2);margin-top:8px;">
         Keys are encrypted with AES-256-GCM using your password.<br>
-        Private keys never leave your browser unencrypted.
+        Use Backup to export an nsec when you need an offline copy.
       </div>
       <div id="nip07KeychainStatus" style="font-size:11px;margin-top:4px;"></div>
     </div>
@@ -550,14 +553,14 @@
   </div>
 </div>
 
-<script src="js/core.js"></script>
-<script src="js/relay.js"></script>
-<script src="js/events.js"></script>
-<script src="js/console.js"></script>
+<script src="js/core.js?v=20260612b"></script>
+<script src="js/relay.js?v=20260612b"></script>
+<script src="js/events.js?v=20260612b"></script>
+<script src="js/console.js?v=20260612b"></script>
 <script>
   // Service Worker Registration
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js').catch(e => console.warn('SW registration failed:', e));
+    navigator.serviceWorker.register('./sw.js?v=20260612b').catch(e => console.warn('SW registration failed:', e));
   }
 </script>
 <script>

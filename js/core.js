@@ -5,6 +5,7 @@
 // ── Constants ──
 const STORAGE_KEY = '***';
 const KEYCHAIN_KEY = '***';
+const NIP07_PREF_KEY = 'bnos-console-nip07-enabled';
 const KEYCHAIN_SALT = new TextEncoder().encode('bnos-keychain-salt-v1');
 const RELAY_COLORS = ['#a855f7','#3b82f6','#22c55e','#f97316','#ef4444','#ec4899','#06b6d4','#eab308'];
 const BECH32_CHARSET = 'qpzry9x8gf2tvdw0s3jn54khce6mua7l';
@@ -32,6 +33,7 @@ let schnorr   = null;
 let keychain = { keys: [], activeIndex: -1, unlocked: false, _rawKey: null };
 let timelineEvents = [];
 let timelineLiveSub = null;
+let nip07Enabled = false;
 
 const QUERY_FIELDS = {
   kinds: 'qKinds', authors: 'qAuthors', dtag: 'qDtag',
@@ -121,6 +123,7 @@ function decodeNsec(nsec) { return nsec?.startsWith('nsec1') ? bech32Decode(nsec
 
 // ── Crypto (with retry + multi-CDN) ──
 const CRYPTO_CDNS = [
+  './vendor/noble-secp256k1.js',
   'https://esm.sh/@noble/secp256k1@2.1.0',
   'https://cdn.jsdelivr.net/npm/@noble/secp256k1@2.1.0/+esm',
 ];
@@ -136,20 +139,28 @@ async function loadCrypto() {
     try {
       const mod = await import(cdn);
       if (mod.schnorr) { secp256k1 = mod; schnorr = mod.schnorr; console.log(`✅ Crypto loaded from ${cdn}`); return true; }
-    } catch (e) { console.warn(`CDN failed: ${cdn}`, e.message); }
+    } catch (e) { console.warn(`Crypto source failed: ${cdn}`, e.message); }
   }
-  console.error('❌ All crypto CDNs failed');
+  console.error('❌ All crypto sources failed');
   return false;
 }
 
 function serializeEvent(evt) { return JSON.stringify([0,evt.pubkey,evt.created_at,evt.kind,evt.tags,evt.content]); }
+
+function schnorrGetPublicKeyHex(privHex) {
+  return bytesToHex(schnorr.getPublicKey(hexToBytes(privHex)));
+}
+
+function schnorrSignHex(messageHex, privHex) {
+  return bytesToHex(schnorr.sign(hexToBytes(messageHex), hexToBytes(privHex)));
+}
 
 async function signEvent(evt, privHex) {
   if (!schnorr) await loadCrypto();
   if (!schnorr) throw new Error('Crypto not available');
   const id = await sha256(serializeEvent(evt));
   evt.id = id;
-  evt.sig = bytesToHex(schnorr.sign(id, privHex));
+  evt.sig = schnorrSignHex(id, privHex);
   return evt;
 }
 
@@ -183,8 +194,39 @@ function resetToDefaults() { if(!confirm('Reset all settings to defaults?'))retu
 
 // ── NIP-07 Extension ──
 function hasNip07() { return typeof window!=='undefined' && window.nostr && typeof window.nostr.getPublicKey==='function'; }
+function isNip07Enabled() { return hasNip07() && nip07Enabled; }
+function loadNip07Preference() {
+  try { nip07Enabled = localStorage.getItem(NIP07_PREF_KEY) === '1'; }
+  catch { nip07Enabled = false; }
+}
+function saveNip07Preference() {
+  try { localStorage.setItem(NIP07_PREF_KEY, nip07Enabled ? '1' : '0'); }
+  catch {}
+}
 async function nip07GetPubkey() { if(!hasNip07())return null; try{return await window.nostr.getPublicKey();}catch{return null;} }
 async function nip07SignEvent(event) { if(!hasNip07())return null; try{return await window.nostr.signEvent(event);}catch{return null;} }
+async function enableNip07() {
+  if (!hasNip07()) return alert('No NIP-07 extension detected.');
+  const pubkey = await nip07GetPubkey();
+  if (!pubkey) return alert('NIP-07 access was not granted.');
+  nip07Enabled = true;
+  saveNip07Preference();
+  updateIdentityBar();
+  renderKeychain();
+  if (typeof updateNip07Status === 'function') updateNip07Status();
+  if (pool) pool.nip42Reauth();
+}
+function disableNip07() {
+  nip07Enabled = false;
+  saveNip07Preference();
+  updateIdentityBar();
+  renderKeychain();
+  if (typeof updateNip07Status === 'function') updateNip07Status();
+}
+function toggleNip07() {
+  if (isNip07Enabled()) disableNip07();
+  else enableNip07();
+}
 
 // ── Keychain ──
 function loadKeychain() {
@@ -202,7 +244,7 @@ async function deriveAesKey(password, forEncrypt) {
 async function keychainAddKey(label, privHex, password) {
   const ok = await loadCrypto();
   if (!ok) throw new Error('Crypto library could not load. Check your internet connection and refresh.');
-  const pubkey = bytesToHex(schnorr.getPublicKey(privHex));
+  const pubkey = schnorrGetPublicKeyHex(privHex);
   const npub = npubEncode(pubkey);
   const iv = crypto.getRandomValues(new Uint8Array(12));
   const aesKey = await deriveAesKey(password, true);
@@ -220,14 +262,21 @@ async function keychainUnlock(index, password) {
   const entry = keychain.keys[index];
   if (!entry) throw new Error('Key not found');
   try {
-    const iv = Uint8Array.from(atob(entry.iv),c=>c.charCodeAt(0));
-    const encData = Uint8Array.from(atob(entry.encPrivkey),c=>c.charCodeAt(0));
-    const aesKey = await deriveAesKey(password, false);
-    const decrypted = await crypto.subtle.decrypt({name:'AES-GCM',iv},aesKey,encData);
-    keychain.activeIndex = index; keychain.unlocked = true; keychain._rawKey = bytesToHex(new Uint8Array(decrypted));
+    const privHex = await keychainDecryptKey(index, password);
+    keychain.activeIndex = index; keychain.unlocked = true; keychain._rawKey = privHex;
     saveKeychain(); renderKeychain(); updateIdentityBar();
     return true;
   } catch { throw new Error('Wrong password'); }
+}
+
+async function keychainDecryptKey(index, password) {
+  const entry = keychain.keys[index];
+  if (!entry) throw new Error('Key not found');
+  const iv = Uint8Array.from(atob(entry.iv),c=>c.charCodeAt(0));
+  const encData = Uint8Array.from(atob(entry.encPrivkey),c=>c.charCodeAt(0));
+  const aesKey = await deriveAesKey(password, false);
+  const decrypted = await crypto.subtle.decrypt({name:'AES-GCM',iv},aesKey,encData);
+  return bytesToHex(new Uint8Array(decrypted));
 }
 
 function keychainLock() { keychain.unlocked=false; keychain._rawKey=null; renderKeychain(); updateIdentityBar(); }
@@ -247,9 +296,29 @@ function keychainSelect(index) {
   keychainUnlock(index,pw).then(()=>pool.nip42Reauth()).catch(e=>alert(e.message));
 }
 
+async function keychainBackup(index) {
+  const entry = keychain.keys[index];
+  if (!entry) return;
+  let privHex = null;
+  if (keychain.unlocked && keychain.activeIndex === index && keychain._rawKey) {
+    privHex = keychain._rawKey;
+  } else {
+    const pw = prompt(`Enter password to back up "${entry.label}":`);
+    if (!pw) return;
+    try {
+      privHex = await keychainDecryptKey(index, pw);
+    } catch {
+      return alert('Wrong password');
+    }
+  }
+  const nsec = nsecEncode(privHex);
+  clipboardWrite(nsec);
+  alert(`Backup copied to clipboard.\n\nLabel: ${entry.label}\nnpub: ${entry.npub}\nnsec: ${nsec}\n\n⚠️ Store this nsec somewhere safe. Anyone with it can control this key.`);
+}
+
 function getActivePubkey() {
   if(keychain.unlocked&&keychain.activeIndex>=0){const e=keychain.keys[keychain.activeIndex];return e?.npub?bech32Decode(e.npub):null;}
-  if(hasNip07()) return nip07GetPubkey();
+  if(isNip07Enabled()) return nip07GetPubkey();
   return null;
 }
 function getActivePrivkey() { return keychain.unlocked?keychain._rawKey:null; }
@@ -259,7 +328,7 @@ function updateIdentityBar() {
   if(keychain.unlocked&&keychain.activeIndex>=0){
     const e=keychain.keys[keychain.activeIndex];
     bar.innerHTML=`<div class="identity-pill active" onclick="openKeychainModal()"><span class="identity-dot"></span><span class="identity-label">${escHtml(e.label)}</span><span class="identity-npub">${e.npub.slice(0,16)}...</span></div><button class="identity-lock" onclick="keychainLock()" title="Lock">🔓</button>`;
-  } else if(hasNip07()){
+  } else if(isNip07Enabled()){
     bar.innerHTML=`<div class="identity-pill ext" onclick="openKeychainModal()"><span class="identity-dot ext"></span><span class="identity-label">NIP-07 Extension</span></div>`;
   } else {
     bar.innerHTML=`<button class="identity-login" onclick="openKeychainModal()">🔑 Login</button>`;
@@ -268,11 +337,26 @@ function updateIdentityBar() {
 
 function renderKeychain() {
   const list=document.getElementById('keychainList'); if(!list)return;
-  if(!keychain.keys.length){list.innerHTML='<div style="color:var(--text2);padding:20px;text-align:center;">No keys stored.<br>Import or generate one below.</div>';return;}
-  list.innerHTML=keychain.keys.map((k,i)=>{
+  if(!keychain.keys.length) list.innerHTML='<div style="color:var(--text2);padding:20px;text-align:center;">No keys stored.<br>Import or generate one below.</div>';
+  else list.innerHTML=keychain.keys.map((k,i)=>{
     const active=i===keychain.activeIndex&&keychain.unlocked;
-    return `<div class="key-row ${active?'active':''}" onclick="keychainSelect(${i})"><div class="key-status">${active?'🔓':'🔒'}</div><div class="key-info"><div class="key-label">${escHtml(k.label)}</div><div class="key-npub">${k.npub.slice(0,24)}...</div></div><button class="danger" style="padding:3px 8px;font-size:11px;" onclick="event.stopPropagation();keychainRemove(${i})">✕</button></div>`;
+    return `<div class="key-row ${active?'active':''}" onclick="keychainSelect(${i})"><div class="key-status">${active?'🔓':'🔒'}</div><div class="key-info"><div class="key-label">${escHtml(k.label)}</div><div class="key-npub">${k.npub.slice(0,24)}...</div></div><button style="padding:3px 8px;font-size:11px;" onclick="event.stopPropagation();keychainBackup(${i})">Backup</button><button class="danger" style="padding:3px 8px;font-size:11px;" onclick="event.stopPropagation();keychainRemove(${i})">✕</button></div>`;
   }).join('');
+  renderNip07Controls();
+}
+
+function renderNip07Controls() {
+  const el = document.getElementById('nip07KeychainStatus');
+  if (!el) return;
+  if (!hasNip07()) {
+    el.innerHTML = '';
+    return;
+  }
+  if (isNip07Enabled()) {
+    el.innerHTML = '<span style="color:var(--green);">Connected with NIP-07 extension</span><button onclick="toggleNip07()" style="margin-left:8px;">Disconnect</button>';
+    return;
+  }
+  el.innerHTML = '<button onclick="enableNip07()">Login with Extension</button><span style="color:var(--text2);margin-left:8px;">Alby, nos2x, and other NIP-07 wallets</span>';
 }
 
 async function keychainImportKey() {

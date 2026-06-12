@@ -1,10 +1,14 @@
 // BnOS Relay Console — Service Worker
-const CACHE_NAME = 'bnos-relay-v1';
+const CACHE_NAME = 'bnos-relay-v3';
 const ASSETS = [
   './',
-  './index.html',
-  './style.css',
-  './app.js',
+  './console.html',
+  './css/console.css',
+  './js/core.js',
+  './js/relay.js',
+  './js/events.js',
+  './js/console.js',
+  './js/vendor/noble-secp256k1.js',
   './manifest.json',
   './icon.svg',
 ];
@@ -12,7 +16,17 @@ const ASSETS = [
 // Install — cache core assets
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
+    caches.open(CACHE_NAME).then(async (cache) => {
+      await Promise.all(
+        ASSETS.map(async (asset) => {
+          try {
+            await cache.add(asset);
+          } catch (error) {
+            console.warn('[SW] Failed to precache asset:', asset, error);
+          }
+        })
+      );
+    })
   );
   self.skipWaiting();
 });
@@ -35,8 +49,11 @@ self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
   if (url.protocol === 'ws:' || url.protocol === 'wss:') return;
 
+  const isSameOrigin = url.origin === self.location.origin;
+  const isStaticAsset = isSameOrigin && ASSETS.some((a) => url.pathname.endsWith(a.replace('./', '/')));
+
   // Static assets: cache-first
-  if (ASSETS.some((a) => url.pathname.endsWith(a.replace('./', '/')))) {
+  if (isStaticAsset) {
     event.respondWith(
       caches.match(event.request).then((cached) => cached || fetch(event.request))
     );
@@ -47,7 +64,7 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     fetch(event.request)
       .then((response) => {
-        if (response.ok) {
+        if (response.ok && isSameOrigin) {
           const clone = response.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
         }
