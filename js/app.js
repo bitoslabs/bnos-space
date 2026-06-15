@@ -54,7 +54,7 @@ export function setLanguage(lang) {
   if (lang === 'th') {
     document.body.style.fontFamily = '"Noto Sans Thai", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
   } else if (lang === 'lo') {
-    document.body.style.fontFamily = '"Chanthavong", "Phetsarath OT", "Saysettha OT", "Noto Sans Lao", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+    document.body.style.fontFamily = '"Chanthavong", "Bouasavanh", "Phetsarath OT", "Saysettha OT", "Noto Sans Lao", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
   } else {
     document.body.style.fontFamily = '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
   }
