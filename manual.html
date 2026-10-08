@@ -3,1335 +3,902 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BnOS User Manual | Documentation</title>
+    <script>
+      // Apply saved theme before first paint (no flash).
+      (function () {
+        try {
+          var t = localStorage.getItem("bnos_theme") || "dark";
+          document.documentElement.setAttribute("data-theme", t);
+        } catch (e) {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      })();
+    </script>
+    <title data-i18n="manual.meta.title">BnOS User Manual | Documentation</title>
     <meta
       name="description"
-      content="Complete user manual for BnOS - Business Operating System. Lightning-Powered Point of Sale built on Nostr Protocol."
+      data-i18n="manual.meta.description"
+      content="Complete user manual for BnOS - the Lightning-powered Point of Sale & commerce OS built on Nostr."
     />
+    <link rel="canonical" href="https://bnos.space/manual.html" />
+    <link rel="alternate" hreflang="en" href="https://bnos.space/manual.html?lang=en" />
+    <link rel="alternate" hreflang="lo" href="https://bnos.space/manual.html?lang=lo" />
+    <link rel="alternate" hreflang="th" href="https://bnos.space/manual.html?lang=th" />
+    <link rel="alternate" hreflang="x-default" href="https://bnos.space/manual.html" />
+    <link rel="icon" type="image/svg+xml" href="assets/icons/icon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/icons/icon-512.png" />
+    <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700;800&family=Noto+Sans+Lao:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      html {
-        scroll-behavior: smooth;
-      }
-
-      body {
-        font-family:
-          "Inter",
-          -apple-system,
-          BlinkMacSystemFont,
-          "Segoe UI",
-          Roboto,
-          sans-serif;
-        background: #0a0a12;
-        color: rgba(255, 255, 255, 0.85);
-        line-height: 1.7;
-        font-size: 16px;
-      }
-
-      /* Navigation */
-      .nav {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 1000;
-        padding: 16px 24px;
-        background: rgba(10, 10, 18, 0.95);
-        backdrop-filter: blur(20px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      }
-
-      .nav-content {
-        max-width: 1200px;
-        margin: 0 auto;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-
-      .nav-logo {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        text-decoration: none;
-      }
-
-      .nav-logo-icon {
-        width: 40px;
-        height: 40px;
-        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .nav-logo-icon svg {
-        width: 22px;
-        height: 22px;
-        fill: white;
-      }
-
-      .nav-logo-text {
-        font-size: 20px;
-        font-weight: 700;
-        color: white;
-        letter-spacing: 2px;
-      }
-
-      .nav-links {
-        display: flex;
-        gap: 24px;
-        list-style: none;
-      }
-
-      .nav-links a {
-        color: rgba(255, 255, 255, 0.7);
-        text-decoration: none;
-        font-size: 14px;
-        font-weight: 500;
-        transition: color 0.3s;
-      }
-
-      .nav-links a:hover {
-        color: #f59e0b;
-      }
-
-      /* Layout */
-      .layout {
-        display: flex;
-        max-width: 1400px;
-        margin: 0 auto;
-        padding-top: 80px;
-      }
-
-      /* Sidebar */
-      .sidebar {
-        position: fixed;
-        top: 80px;
-        left: max(0px, calc((100vw - 1400px) / 2));
-        width: 280px;
-        height: calc(100vh - 80px);
-        overflow-y: auto;
-        padding: 32px 24px;
-        border-right: 1px solid rgba(255, 255, 255, 0.06);
-        background: rgba(10, 10, 18, 0.5);
-      }
-
-      .sidebar-title {
-        font-size: 12px;
-        font-weight: 600;
-        color: rgba(255, 255, 255, 0.4);
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        margin-bottom: 16px;
-      }
-
-      .sidebar-nav {
-        list-style: none;
-      }
-
-      .sidebar-nav li {
-        margin-bottom: 4px;
-      }
-
-      .sidebar-nav a {
-        display: block;
-        padding: 10px 16px;
-        color: rgba(255, 255, 255, 0.6);
-        text-decoration: none;
-        font-size: 14px;
-        border-radius: 8px;
-        transition: all 0.2s;
-      }
-
-      .sidebar-nav a:hover {
-        color: white;
-        background: rgba(255, 255, 255, 0.05);
-      }
-
-      .sidebar-nav a.active {
-        color: #f59e0b;
-        background: rgba(245, 158, 11, 0.1);
-      }
-
-      /* Main Content */
-      .main-content {
-        margin-left: 280px;
-        flex: 1;
-        padding: 48px 64px;
-        max-width: calc(100% - 280px);
-      }
-
-      /* Typography */
-      h1 {
-        font-size: 40px;
-        font-weight: 700;
-        color: white;
-        margin-bottom: 16px;
-        line-height: 1.2;
-      }
-
-      h2 {
-        font-size: 28px;
-        font-weight: 700;
-        color: white;
-        margin-top: 56px;
-        margin-bottom: 24px;
-        padding-top: 24px;
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
-      }
-
-      h2:first-of-type {
-        margin-top: 32px;
-        border-top: none;
-        padding-top: 0;
-      }
-
-      h3 {
-        font-size: 20px;
-        font-weight: 600;
-        color: white;
-        margin-top: 36px;
-        margin-bottom: 16px;
-      }
-
-      h4 {
-        font-size: 16px;
-        font-weight: 600;
-        color: rgba(255, 255, 255, 0.9);
-        margin-top: 24px;
-        margin-bottom: 12px;
-      }
-
-      p {
-        margin-bottom: 16px;
-      }
-
-      .lead {
-        font-size: 18px;
-        color: rgba(255, 255, 255, 0.6);
-        margin-bottom: 32px;
-      }
-
-      /* Lists */
-      ul,
-      ol {
-        margin-bottom: 16px;
-        padding-left: 24px;
-      }
-
-      li {
-        margin-bottom: 8px;
-      }
-
-      /* Tables */
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 24px 0;
-        font-size: 14px;
-      }
-
-      th {
-        text-align: left;
-        padding: 12px 16px;
-        background: rgba(255, 255, 255, 0.05);
-        color: rgba(255, 255, 255, 0.8);
-        font-weight: 600;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      td {
-        padding: 12px 16px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        color: rgba(255, 255, 255, 0.7);
-      }
-
-      tr:hover td {
-        background: rgba(255, 255, 255, 0.02);
-      }
-
-      /* Code */
-      code {
-        font-family: "SF Mono", Monaco, Consolas, monospace;
-        font-size: 14px;
-        background: rgba(255, 255, 255, 0.08);
-        padding: 2px 8px;
-        border-radius: 4px;
-        color: #fbbf24;
-      }
-
-      pre {
-        background: rgba(0, 0, 0, 0.4);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        padding: 20px;
-        overflow-x: auto;
-        margin: 16px 0;
-      }
-
-      pre code {
-        background: none;
-        padding: 0;
-        font-size: 13px;
-        color: rgba(255, 255, 255, 0.8);
-      }
-
-      /* Alerts */
-      .alert {
-        padding: 16px 20px;
-        border-radius: 12px;
-        margin: 20px 0;
-        border-left: 4px solid;
-      }
-
-      .alert-warning {
-        background: rgba(234, 179, 8, 0.1);
-        border-color: #eab308;
-        color: #fde047;
-      }
-
-      .alert-info {
-        background: rgba(59, 130, 246, 0.1);
-        border-color: #3b82f6;
-        color: #93c5fd;
-      }
-
-      .alert-success {
-        background: rgba(34, 197, 94, 0.1);
-        border-color: #22c55e;
-        color: #86efac;
-      }
-
-      /* Feature Cards */
-      .feature-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 16px;
-        margin: 24px 0;
-      }
-
-      .feature-card {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 12px;
-        padding: 20px;
-        transition: all 0.3s;
-      }
-
-      .feature-card:hover {
-        border-color: rgba(245, 158, 11, 0.3);
-        background: rgba(255, 255, 255, 0.05);
-      }
-
-      .feature-card-icon {
-        font-size: 24px;
-        margin-bottom: 12px;
-      }
-
-      .feature-card-title {
-        font-weight: 600;
-        color: white;
-        margin-bottom: 8px;
-      }
-
-      .feature-card-desc {
-        font-size: 14px;
-        color: rgba(255, 255, 255, 0.5);
-      }
-
-      /* Steps */
-      .steps {
-        counter-reset: step;
-        margin: 24px 0;
-      }
-
-      .step {
-        position: relative;
-        padding-left: 48px;
-        margin-bottom: 20px;
-      }
-
-      .step::before {
-        counter-increment: step;
-        content: counter(step);
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 32px;
-        height: 32px;
-        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 600;
-        font-size: 14px;
-        color: white;
-      }
-
-      /* Links */
-      a {
-        color: #f59e0b;
-        text-decoration: none;
-        transition: color 0.2s;
-      }
-
-      a:hover {
-        color: #fbbf24;
-        text-decoration: underline;
-      }
-
-      /* Blockquote */
-      blockquote {
-        border-left: 3px solid #f59e0b;
-        padding-left: 20px;
-        margin: 20px 0;
-        color: rgba(255, 255, 255, 0.7);
-        font-style: italic;
-      }
-
-      /* FAQ */
-      .faq-item {
-        margin-bottom: 24px;
-      }
-
-      .faq-question {
-        font-weight: 600;
-        color: white;
-        margin-bottom: 8px;
-      }
-
-      .faq-answer {
-        color: rgba(255, 255, 255, 0.6);
-        padding-left: 16px;
-        border-left: 2px solid rgba(255, 255, 255, 0.1);
-      }
-
-      /* Footer */
-      .footer {
-        margin-top: 80px;
-        padding: 40px 0;
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
-        text-align: center;
-        color: rgba(255, 255, 255, 0.4);
-        font-size: 14px;
-      }
-
-      .footer a {
-        color: rgba(255, 255, 255, 0.6);
-      }
-
-      .footer a:hover {
-        color: #f59e0b;
-      }
-
-      /* Responsive */
-      @media (max-width: 1024px) {
-        .sidebar {
-          display: none;
-        }
-
-        .main-content {
-          margin-left: 0;
-          max-width: 100%;
-          padding: 32px 24px;
-        }
-      }
-
-      @media (max-width: 768px) {
-        .nav-links {
-          display: none;
-        }
-
-        h1 {
-          font-size: 32px;
-        }
-
-        h2 {
-          font-size: 24px;
-        }
-      }
-
-      /* Scrollbar */
-      ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
-      }
-
-      ::-webkit-scrollbar-track {
-        background: rgba(255, 255, 255, 0.02);
-      }
-
-      ::-webkit-scrollbar-thumb {
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 4px;
-      }
-
-      ::-webkit-scrollbar-thumb:hover {
-        background: rgba(255, 255, 255, 0.2);
-      }
-    </style>
+    <link rel="preconnect" href="https://fonts.mts.la" crossorigin />
+    <link rel="stylesheet" href="https://fonts.mts.la/fonts/chanthavong/chanthavong.css" />
+    <link rel="stylesheet" href="css/manual.css" />
+    <!-- Iconify web component: <iconify-icon icon="solar:..."> like Nuxt Icon -->
+    <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+    <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/manual.js"></script>
   </head>
   <body>
-    <!-- Language Switcher -->
-    <div
-      class="lang-switcher"
-      style="
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 1001;
-        display: flex;
-        gap: 8px;
-      "
-    >
-      <a
-        href="manual.html"
-        style="
-          padding: 8px 16px;
-          background: rgba(245, 158, 11, 0.15);
-          border: 1px solid rgba(245, 158, 11, 0.3);
-          border-radius: 8px;
-          color: #f59e0b;
-          text-decoration: none;
-          font-size: 13px;
-          font-weight: 500;
-        "
-        >EN</a
-      >
-      <a
-        href="manual-lo.html"
-        style="
-          padding: 8px 16px;
-          background: rgba(255, 255, 255, 0.05);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          border-radius: 8px;
-          color: rgba(255, 255, 255, 0.6);
-          text-decoration: none;
-          font-size: 13px;
-          font-weight: 500;
-          transition: all 0.3s;
-        "
-        >ລາວ</a
-      >
-      <a
-        href="manual-th.html"
-        style="
-          padding: 8px 16px;
-          background: rgba(245, 158, 11, 0.15);
-          border: 1px solid rgba(245, 158, 11, 0.3);
-          border-radius: 8px;
-          color: #f59e0b;
-          text-decoration: none;
-          font-size: 13px;
-          font-weight: 500;
-        "
-        >ไทย</a
-      >
-    </div>
+    <div class="progress" id="progress"></div>
 
     <!-- Navigation -->
     <nav class="nav">
       <div class="nav-content">
         <a href="index.html" class="nav-logo">
-          <div class="nav-logo-icon">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+          <div class="nav-logo-icon" aria-hidden="true">
+            <svg class="bee-svg" viewBox="0 0 64 64" width="26" height="26" role="img" aria-label="BnOS">
+              <ellipse class="bee-wing" cx="22" cy="28" rx="12" ry="9" fill="rgba(255,255,255,0.45)" stroke="rgba(255,255,255,0.3)" stroke-width="0.5"/>
+              <ellipse class="bee-wing" cx="42" cy="28" rx="12" ry="9" fill="rgba(255,255,255,0.45)" stroke="rgba(255,255,255,0.3)" stroke-width="0.5"/>
+              <ellipse cx="32" cy="38" rx="13" ry="17" fill="#ffb000"/>
+              <path d="M20 33 Q32 29 44 33" stroke="#12101a" stroke-width="3" fill="none"/>
+              <path d="M20 40 Q32 36 44 40" stroke="#12101a" stroke-width="3" fill="none"/>
+              <path d="M20 47 Q32 43 44 47" stroke="#12101a" stroke-width="3" fill="none"/>
+              <circle cx="32" cy="17" r="8" fill="#ffb000" stroke="#12101a" stroke-width="2"/>
+              <circle cx="29" cy="15" r="1.5" fill="#12101a"/>
+              <circle cx="35" cy="15" r="1.5" fill="#12101a"/>
+              <path d="M28 10 Q25 6 23 3" stroke="#ffb000" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <path d="M36 10 Q39 6 41 3" stroke="#ffb000" stroke-width="1.5" fill="none" stroke-linecap="round"/>
             </svg>
           </div>
           <span class="nav-logo-text">BnOS</span>
         </a>
-        <ul class="nav-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="index.html#features">Features</a></li>
-          <li><a href="#">Documentation</a></li>
-          <li>
-            <a href="https://github.com/locobit-space" target="_blank"
-              >GitHub</a
-            >
-          </li>
-        </ul>
+        <div class="nav-right">
+          <ul class="nav-links">
+            <li><a href="index.html" data-i18n="manual.nav.home">Home</a></li>
+            <li><a href="index.html#features" data-i18n="manual.nav.features">Features</a></li>
+            <li><a href="manual.html" data-i18n="manual.nav.docs">Documentation</a></li>
+            <li>
+              <a href="https://github.com/bitoslabs/bnos-svelte" target="_blank" rel="noopener"
+                >GitHub</a
+              >
+            </li>
+          </ul>
+          <div class="lang-switcher">
+            <a href="#" data-lang="en" class="active">EN</a>
+            <a href="#" data-lang="lo">ລາວ</a>
+            <a href="#" data-lang="th">ไทย</a>
+          </div>
+          <button
+            class="theme-toggle"
+            type="button"
+            aria-label="Toggle theme"
+            aria-pressed="false"
+          >
+            <iconify-icon icon="solar:sun-linear"></iconify-icon>
+          </button>
+          <button
+            class="menu-toggle"
+            id="menuToggle"
+            aria-label="Open contents"
+            data-i18n-aria="manual.ui.openContents"
+          >
+            <iconify-icon icon="solar:hamburger-menu-linear"></iconify-icon>
+          </button>
+        </div>
       </div>
     </nav>
 
+    <div class="backdrop" id="backdrop"></div>
+
     <div class="layout">
       <!-- Sidebar -->
-      <aside class="sidebar">
-        <p class="sidebar-title">Documentation</p>
-        <ul class="sidebar-nav">
-          <li><a href="#introduction" class="active">Introduction</a></li>
-          <li><a href="#getting-started">Getting Started</a></li>
-          <li><a href="#account-setup">Account Setup</a></li>
-          <li><a href="#shop-configuration">Shop Configuration</a></li>
-          <li><a href="#product-management">Product Management</a></li>
-          <li><a href="#point-of-sale">Point of Sale</a></li>
-          <li><a href="#payments">Payments</a></li>
-          <li><a href="#inventory-management">Inventory Management</a></li>
-          <li><a href="#reports-analytics">Reports & Analytics</a></li>
-          <li><a href="#settings">Settings</a></li>
-          <li><a href="#faq">FAQ</a></li>
-          <li><a href="#support">Support</a></li>
+      <aside class="sidebar" id="sidebar">
+        <p class="sidebar-title" data-i18n="manual.ui.documentation">Documentation</p>
+        <div class="search">
+          <iconify-icon icon="solar:magnifer-linear"></iconify-icon>
+          <input
+            type="search"
+            id="tocSearch"
+            data-i18n-placeholder="manual.ui.searchPlaceholder"
+            placeholder="Search the manual…"
+          />
+        </div>
+        <ul class="sidebar-nav" id="tocNav">
+          <li>
+            <a href="#introduction" class="active"
+              ><iconify-icon icon="solar:info-circle-linear"></iconify-icon
+              ><span data-i18n="manual.sections.introduction.title">Introduction</span></a
+            >
+          </li>
+          <li>
+            <a href="#getting-started"
+              ><iconify-icon icon="solar:rocket-linear"></iconify-icon
+              ><span data-i18n="manual.sections.gettingStarted.title">Getting Started</span></a
+            >
+          </li>
+          <li>
+            <a href="#account-identity"
+              ><iconify-icon icon="solar:key-linear"></iconify-icon
+              ><span data-i18n="manual.sections.account.title">Account &amp; Identity</span></a
+            >
+          </li>
+          <li>
+            <a href="#setup-wizard"
+              ><iconify-icon icon="solar:widget-5-linear"></iconify-icon
+              ><span data-i18n="manual.sections.setup.title">Setup Wizard</span></a
+            >
+          </li>
+          <li>
+            <a href="#dashboard"
+              ><iconify-icon icon="solar:widget-linear"></iconify-icon
+              ><span data-i18n="manual.sections.dashboard.title">Dashboard &amp; Navigation</span></a
+            >
+          </li>
+          <li>
+            <a href="#point-of-sale"
+              ><iconify-icon icon="solar:cart-3-linear"></iconify-icon
+              ><span data-i18n="manual.sections.pos.title">Point of Sale</span></a
+            >
+          </li>
+          <li>
+            <a href="#catalog"
+              ><iconify-icon icon="solar:box-linear"></iconify-icon
+              ><span data-i18n="manual.sections.catalog.title">Products &amp; Catalog</span></a
+            >
+          </li>
+          <li>
+            <a href="#inventory"
+              ><iconify-icon icon="solar:database-linear"></iconify-icon
+              ><span data-i18n="manual.sections.inventory.title">Inventory</span></a
+            >
+          </li>
+          <li>
+            <a href="#orders-customers"
+              ><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon
+              ><span data-i18n="manual.sections.orders.title">Orders &amp; Customers</span></a
+            >
+          </li>
+          <li>
+            <a href="#reports"
+              ><iconify-icon icon="solar:chart-2-linear"></iconify-icon
+              ><span data-i18n="manual.sections.reports.title">Transactions &amp; Reports</span></a
+            >
+          </li>
+          <li>
+            <a href="#restaurant"
+              ><iconify-icon icon="solar:chef-hat-linear"></iconify-icon
+              ><span data-i18n="manual.sections.restaurant.title">Restaurant Mode</span></a
+            >
+          </li>
+          <li>
+            <a href="#marketplace"
+              ><iconify-icon icon="solar:shop-minimalistic-linear"></iconify-icon
+              ><span data-i18n="manual.sections.marketplace.title">Marketplace</span></a
+            >
+          </li>
+          <li>
+            <a href="#staff"
+              ><iconify-icon icon="solar:user-id-linear"></iconify-icon
+              ><span data-i18n="manual.sections.staff.title">Staff &amp; Permissions</span></a
+            >
+          </li>
+          <li>
+            <a href="#settings"
+              ><iconify-icon icon="solar:settings-linear"></iconify-icon
+              ><span data-i18n="manual.sections.settings.title">Settings</span></a
+            >
+          </li>
+          <li>
+            <a href="#faq"
+              ><iconify-icon icon="solar:question-circle-linear"></iconify-icon
+              ><span data-i18n="manual.sections.faq.title">FAQ</span></a
+            >
+          </li>
+          <li>
+            <a href="#support"
+              ><iconify-icon icon="solar:headphones-round-linear"></iconify-icon
+              ><span data-i18n="manual.sections.support.title">Support</span></a
+            >
+          </li>
         </ul>
+        <p class="sidebar-empty" id="tocEmpty" data-i18n="manual.ui.noResults">
+          No matching sections
+        </p>
       </aside>
 
       <!-- Main Content -->
       <main class="main-content">
-        <h1>BnOS User Manual</h1>
-        <p class="lead">
-          Bitcoin Nostr Operating System - Business Operating System -
-          Lightning-Powered Point of Sale
-        </p>
+        <header class="doc-header">
+          <span class="doc-kicker"
+            ><iconify-icon icon="solar:book-2-linear"></iconify-icon
+            ><span data-i18n="manual.nav.docs">Documentation</span></span
+          >
+          <h1 data-i18n="manual.hero.title">BnOS User Manual</h1>
+          <p class="lead" data-i18n="manual.hero.lead">
+            Everything you need to set up BnOS, sell in person, manage products and stock, and grow
+            your business — all self-custodial and built on Nostr.
+          </p>
+          <div class="doc-meta">
+            <span class="doc-chip">
+              <iconify-icon icon="solar:tag-linear"></iconify-icon>
+              <span data-i18n="manual.ui.version">Version</span>&nbsp;<b>0.1.0</b>
+            </span>
+            <span class="doc-chip">
+              <iconify-icon icon="solar:calendar-linear"></iconify-icon>
+              <span data-i18n="manual.ui.updated">Updated</span>&nbsp;<b>Oct 2026</b>
+            </span>
+            <a class="doc-chip doc-chip-link" href="https://app.bnos.space" target="_blank" rel="noopener">
+              <iconify-icon icon="solar:rocket-linear"></iconify-icon>
+              <span data-i18n="manual.ui.openApp">Open app</span>
+            </a>
+          </div>
+        </header>
 
         <!-- Introduction -->
         <section id="introduction">
-          <h2>Introduction</h2>
-          <p>
-            <strong
-              >BnOS (Bitcoin Nostr Operating System - Business Operating
-              System)</strong
-            >
-            is a next-generation Point of Sale system built on decentralized
-            technologies. Powered by the Lightning Network for instant Bitcoin
-            payments and the Nostr Protocol for secure, censorship-resistant
-            data management.
-          </p>
+          <h2>
+            <iconify-icon icon="solar:info-circle-linear"></iconify-icon
+            ><span data-i18n="manual.sections.introduction.title">Introduction</span>
+          </h2>
+          <p data-i18n="manual.sections.introduction.p1"></p>
+          <p data-i18n="manual.sections.introduction.p2"></p>
 
-          <h3>Key Features</h3>
+          <h3 data-i18n="manual.sections.introduction.featuresTitle">Key capabilities</h3>
           <div class="feature-grid">
             <div class="feature-card">
-              <div class="feature-card-icon">⚡</div>
-              <div class="feature-card-title">Lightning Payments</div>
-              <div class="feature-card-desc">
-                Instant Bitcoin payments with near-zero fees
+              <div class="feature-card-icon">
+                <iconify-icon icon="solar:bolt-circle-linear"></iconify-icon>
               </div>
+              <div class="feature-card-title" data-i18n="manual.sections.introduction.features.0.title"></div>
+              <div class="feature-card-desc" data-i18n="manual.sections.introduction.features.0.desc"></div>
             </div>
             <div class="feature-card">
-              <div class="feature-card-icon">🔐</div>
-              <div class="feature-card-title">Non-Custodial</div>
-              <div class="feature-card-desc">
-                You control your keys and funds
+              <div class="feature-card-icon">
+                <iconify-icon icon="solar:hashtag-linear"></iconify-icon>
               </div>
+              <div class="feature-card-title" data-i18n="manual.sections.introduction.features.1.title"></div>
+              <div class="feature-card-desc" data-i18n="manual.sections.introduction.features.1.desc"></div>
             </div>
             <div class="feature-card">
-              <div class="feature-card-icon">🌐</div>
-              <div class="feature-card-title">Decentralized</div>
-              <div class="feature-card-desc">
-                Built on Nostr Protocol - no central servers
+              <div class="feature-card-icon">
+                <iconify-icon icon="solar:cart-3-linear"></iconify-icon>
               </div>
+              <div class="feature-card-title" data-i18n="manual.sections.introduction.features.2.title"></div>
+              <div class="feature-card-desc" data-i18n="manual.sections.introduction.features.2.desc"></div>
             </div>
             <div class="feature-card">
-              <div class="feature-card-icon">📱</div>
-              <div class="feature-card-title">Offline First</div>
-              <div class="feature-card-desc">
-                Works without internet, syncs when online
+              <div class="feature-card-icon">
+                <iconify-icon icon="solar:cloud-cross-linear"></iconify-icon>
               </div>
+              <div class="feature-card-title" data-i18n="manual.sections.introduction.features.3.title"></div>
+              <div class="feature-card-desc" data-i18n="manual.sections.introduction.features.3.desc"></div>
             </div>
             <div class="feature-card">
-              <div class="feature-card-icon">📊</div>
-              <div class="feature-card-title">Analytics</div>
-              <div class="feature-card-desc">Real-time business insights</div>
+              <div class="feature-card-icon">
+                <iconify-icon icon="solar:chart-2-linear"></iconify-icon>
+              </div>
+              <div class="feature-card-title" data-i18n="manual.sections.introduction.features.4.title"></div>
+              <div class="feature-card-desc" data-i18n="manual.sections.introduction.features.4.desc"></div>
             </div>
             <div class="feature-card">
-              <div class="feature-card-icon">👥</div>
-              <div class="feature-card-title">Team Management</div>
-              <div class="feature-card-desc">
-                Multi-user with role-based access
+              <div class="feature-card-icon">
+                <iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon>
               </div>
+              <div class="feature-card-title" data-i18n="manual.sections.introduction.features.5.title"></div>
+              <div class="feature-card-desc" data-i18n="manual.sections.introduction.features.5.desc"></div>
             </div>
           </div>
         </section>
 
         <!-- Getting Started -->
         <section id="getting-started">
-          <h2>Getting Started</h2>
-
-          <h3>System Requirements</h3>
+          <h2>
+            <iconify-icon icon="solar:rocket-linear"></iconify-icon
+            ><span data-i18n="manual.sections.gettingStarted.title">Getting Started</span>
+          </h2>
+          <h3 data-i18n="manual.sections.gettingStarted.reqTitle">System requirements</h3>
           <ul>
-            <li>
-              <strong>Browser:</strong> Chrome, Firefox, Safari, or Edge (latest
-              version)
-            </li>
-            <li>
-              <strong>Internet:</strong> Required for initial setup and syncing
-            </li>
-            <li>
-              <strong>Device:</strong> Desktop, laptop, tablet, or smartphone
-            </li>
+            <li data-i18n="manual.sections.gettingStarted.req.0"></li>
+            <li data-i18n="manual.sections.gettingStarted.req.1"></li>
+            <li data-i18n="manual.sections.gettingStarted.req.2"></li>
           </ul>
 
-          <h3>Quick Start</h3>
+          <h3 data-i18n="manual.sections.gettingStarted.quickTitle">Quick start</h3>
           <div class="steps">
-            <div class="step">
-              Visit <a href="https://bnos.space">bnos.space</a>
-            </div>
-            <div class="step">Click <strong>"Get Started"</strong></div>
-            <div class="step">Create or import your Nostr keys</div>
-            <div class="step">Configure your shop</div>
-            <div class="step">Start selling!</div>
+            <div class="step" data-i18n="manual.sections.gettingStarted.steps.0"></div>
+            <div class="step" data-i18n="manual.sections.gettingStarted.steps.1"></div>
+            <div class="step" data-i18n="manual.sections.gettingStarted.steps.2"></div>
+            <div class="step" data-i18n="manual.sections.gettingStarted.steps.3"></div>
+            <div class="step" data-i18n="manual.sections.gettingStarted.steps.4"></div>
           </div>
         </section>
 
-        <!-- Account Setup -->
-        <section id="account-setup">
-          <h2>Account Setup</h2>
+        <!-- Account & Identity -->
+        <section id="account-identity">
+          <h2>
+            <iconify-icon icon="solar:key-linear"></iconify-icon
+            ><span data-i18n="manual.sections.account.title">Account &amp; Identity</span>
+          </h2>
+          <p data-i18n="manual.sections.account.p1"></p>
 
-          <h3>Creating a New Account</h3>
+          <h3 data-i18n="manual.sections.account.createTitle">Create a new identity</h3>
           <div class="steps">
-            <div class="step">Click <strong>"Create New Account"</strong></div>
-            <div class="step">
-              Your private key (nsec) will be generated automatically
-            </div>
-            <div class="step">
-              <strong>🔴 IMPORTANT: Save your private key securely!</strong>
-              <ul>
-                <li>Write it down on paper</li>
-                <li>Store it in a password manager</li>
-                <li>Never share it with anyone</li>
-              </ul>
-            </div>
-            <div class="step">Complete your profile (optional)</div>
+            <div class="step" data-i18n="manual.sections.account.createSteps.0"></div>
+            <div class="step" data-i18n="manual.sections.account.createSteps.1"></div>
+            <div class="step" data-i18n="manual.sections.account.createSteps.2"></div>
           </div>
 
-          <h3>Importing Existing Keys</h3>
-          <p>If you already have Nostr keys:</p>
+          <h3 data-i18n="manual.sections.account.importTitle">Sign in with existing keys</h3>
           <div class="steps">
-            <div class="step">Click <strong>"Import Keys"</strong></div>
-            <div class="step">
-              Enter your private key (nsec) or use a browser extension (nos2x,
-              Alby)
-            </div>
-            <div class="step">Your account will be restored</div>
+            <div class="step" data-i18n="manual.sections.account.importSteps.0"></div>
+            <div class="step" data-i18n="manual.sections.account.importSteps.1"></div>
+            <div class="step" data-i18n="manual.sections.account.importSteps.2"></div>
           </div>
 
-          <h3>Security Best Practices</h3>
+          <h3 data-i18n="manual.sections.account.securityTitle">Security best practices</h3>
           <div class="alert alert-warning">
-            <strong>⚠️ Warning:</strong> Your private key is the only way to
-            access your account. If lost, your data cannot be recovered.
+            <iconify-icon icon="solar:danger-triangle-linear"></iconify-icon>
+            <span data-i18n="manual.sections.account.securityAlert"></span>
           </div>
           <ul>
-            <li>✅ Store private key in multiple secure locations</li>
-            <li>✅ Use a hardware security key when possible</li>
-            <li>✅ Enable browser extension for key management</li>
-            <li>❌ Never share your private key</li>
-            <li>❌ Never store keys in plain text files</li>
+            <li data-i18n="manual.sections.account.security.0"></li>
+            <li data-i18n="manual.sections.account.security.1"></li>
+            <li data-i18n="manual.sections.account.security.2"></li>
+            <li data-i18n="manual.sections.account.security.3"></li>
           </ul>
         </section>
 
-        <!-- Shop Configuration -->
-        <section id="shop-configuration">
-          <h2>Shop Configuration</h2>
-
-          <h3>Initial Setup</h3>
-          <p>
-            After creating your account, you'll be guided through shop setup:
-          </p>
-
-          <h4>Step 1: Shop Type</h4>
-          <p>Select your business type:</p>
-          <ul>
-            <li>🛒 <strong>Retail</strong> - Physical goods</li>
-            <li>🍽️ <strong>Restaurant</strong> - Food & beverages</li>
-            <li>💈 <strong>Service</strong> - Service-based business</li>
-            <li>🏪 <strong>General</strong> - Multi-purpose</li>
-          </ul>
-
-          <h4>Step 2: Shop Details</h4>
-          <table>
-            <thead>
-              <tr>
-                <th>Field</th>
-                <th>Description</th>
-                <th>Required</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Shop Name</td>
-                <td>Your business name</td>
-                <td>✅</td>
-              </tr>
-              <tr>
-                <td>Description</td>
-                <td>Brief description of your business</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Logo</td>
-                <td>Upload your logo (recommended: 512x512px)</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Currency</td>
-                <td>Primary display currency</td>
-                <td>✅</td>
-              </tr>
-              <tr>
-                <td>Tax Rate</td>
-                <td>Default tax percentage</td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-
-          <h4>Step 3: Payment Setup</h4>
-          <p>Configure your Lightning wallet:</p>
-          <ol>
-            <li>
-              <strong>Connect Lightning Wallet</strong>
-              <ul>
-                <li>
-                  Enter your Lightning Address (e.g.,
-                  <code>shop@getalby.com</code>)
-                </li>
-                <li>Or connect via LNUrl</li>
-              </ul>
-            </li>
-            <li>
-              <strong>Test Connection</strong>
-              <ul>
-                <li>Click "Test Payment" to verify setup</li>
-                <li>A small test invoice will be generated</li>
-              </ul>
-            </li>
-          </ol>
+        <!-- Setup Wizard -->
+        <section id="setup-wizard">
+          <h2>
+            <iconify-icon icon="solar:widget-5-linear"></iconify-icon
+            ><span data-i18n="manual.sections.setup.title">Setup Wizard</span>
+          </h2>
+          <p data-i18n="manual.sections.setup.p1"></p>
+          <div class="steps">
+            <div class="step" data-i18n="manual.sections.setup.steps.0"></div>
+            <div class="step" data-i18n="manual.sections.setup.steps.1"></div>
+            <div class="step" data-i18n="manual.sections.setup.steps.2"></div>
+            <div class="step" data-i18n="manual.sections.setup.steps.3"></div>
+            <div class="step" data-i18n="manual.sections.setup.steps.4"></div>
+            <div class="step" data-i18n="manual.sections.setup.steps.5"></div>
+          </div>
         </section>
 
-        <!-- Product Management -->
-        <section id="product-management">
-          <h2>Product Management</h2>
+        <!-- Dashboard & Navigation -->
+        <section id="dashboard">
+          <h2>
+            <iconify-icon icon="solar:widget-linear"></iconify-icon
+            ><span data-i18n="manual.sections.dashboard.title">Dashboard &amp; Navigation</span>
+          </h2>
+          <p data-i18n="manual.sections.dashboard.p1"></p>
 
-          <h3>Adding Products</h3>
-          <div class="steps">
-            <div class="step">
-              Navigate to <strong>Products</strong> from the menu
-            </div>
-            <div class="step">Click <strong>"+ Add Product"</strong></div>
-            <div class="step">Fill in product details</div>
-          </div>
+          <h3 data-i18n="manual.sections.dashboard.navTitle">Sidebar sections</h3>
+          <ul>
+            <li data-i18n="manual.sections.dashboard.nav.0"></li>
+            <li data-i18n="manual.sections.dashboard.nav.1"></li>
+            <li data-i18n="manual.sections.dashboard.nav.2"></li>
+            <li data-i18n="manual.sections.dashboard.nav.3"></li>
+            <li data-i18n="manual.sections.dashboard.nav.4"></li>
+            <li data-i18n="manual.sections.dashboard.nav.5"></li>
+          </ul>
 
-          <table>
-            <thead>
-              <tr>
-                <th>Field</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Name</td>
-                <td>Product name</td>
-              </tr>
-              <tr>
-                <td>SKU</td>
-                <td>Stock Keeping Unit (auto-generated if blank)</td>
-              </tr>
-              <tr>
-                <td>Price</td>
-                <td>Selling price</td>
-              </tr>
-              <tr>
-                <td>Cost</td>
-                <td>Purchase cost (for profit calculation)</td>
-              </tr>
-              <tr>
-                <td>Category</td>
-                <td>Product category</td>
-              </tr>
-              <tr>
-                <td>Description</td>
-                <td>Product details</td>
-              </tr>
-              <tr>
-                <td>Image</td>
-                <td>Product photo</td>
-              </tr>
-              <tr>
-                <td>Inventory</td>
-                <td>Enable stock tracking</td>
-              </tr>
-            </tbody>
-          </table>
+          <h3 data-i18n="manual.sections.dashboard.cardsTitle">What the dashboard shows</h3>
+          <ul>
+            <li data-i18n="manual.sections.dashboard.cards.0"></li>
+            <li data-i18n="manual.sections.dashboard.cards.1"></li>
+            <li data-i18n="manual.sections.dashboard.cards.2"></li>
+            <li data-i18n="manual.sections.dashboard.cards.3"></li>
+          </ul>
 
-          <h3>Product Variants</h3>
-          <p>For products with multiple options (size, color):</p>
-          <ol>
-            <li>Enable <strong>"Has Variants"</strong> toggle</li>
-            <li>
-              Add variant options:
-              <pre><code>Size: Small, Medium, Large
-Color: Red, Blue, Green</code></pre>
-            </li>
-            <li>Set individual prices and stock for each variant</li>
-          </ol>
-
-          <h3>Categories</h3>
-          <p>Organize products with categories:</p>
-          <div class="steps">
-            <div class="step">Go to <strong>Products > Categories</strong></div>
-            <div class="step">Click <strong>"+ Add Category"</strong></div>
-            <div class="step">Enter category name and optional icon</div>
-            <div class="step">Drag products to reorder</div>
-          </div>
-
-          <h3>Bulk Import</h3>
-          <p>Import multiple products via CSV:</p>
-          <div class="steps">
-            <div class="step">
-              Download template:
-              <strong>Products > Import > Download Template</strong>
-            </div>
-            <div class="step">Fill in the CSV file</div>
-            <div class="step">
-              Upload: <strong>Products > Import > Upload CSV</strong>
-            </div>
+          <div class="alert alert-info">
+            <iconify-icon icon="solar:smartphone-linear"></iconify-icon>
+            <span data-i18n="manual.sections.dashboard.mobileNote"></span>
           </div>
         </section>
 
         <!-- Point of Sale -->
         <section id="point-of-sale">
-          <h2>Point of Sale</h2>
+          <h2>
+            <iconify-icon icon="solar:cart-3-linear"></iconify-icon
+            ><span data-i18n="manual.sections.pos.title">Point of Sale</span>
+          </h2>
+          <p data-i18n="manual.sections.pos.p1"></p>
 
-          <h3>Making a Sale</h3>
+          <h3 data-i18n="manual.sections.pos.saleTitle">Making a sale</h3>
           <div class="steps">
-            <div class="step">Open <strong>POS</strong> from the main menu</div>
-            <div class="step">
-              Add products to cart:
-              <ul>
-                <li>Search by name or scan barcode</li>
-                <li>Click product tile</li>
-                <li>Adjust quantity with +/- buttons</li>
-              </ul>
-            </div>
-            <div class="step">Review cart</div>
-            <div class="step">
-              Click <strong>"Charge"</strong> or <strong>"Pay"</strong>
-            </div>
+            <div class="step" data-i18n="manual.sections.pos.saleSteps.0"></div>
+            <div class="step" data-i18n="manual.sections.pos.saleSteps.1"></div>
+            <div class="step" data-i18n="manual.sections.pos.saleSteps.2"></div>
+            <div class="step" data-i18n="manual.sections.pos.saleSteps.3"></div>
           </div>
 
-          <h3>Payment Methods</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Method</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>⚡ Lightning</td>
-                <td>Scan QR code for instant payment</td>
-              </tr>
-              <tr>
-                <td>💵 Cash</td>
-                <td>Enter amount received</td>
-              </tr>
-              <tr>
-                <td>💳 Card</td>
-                <td>External terminal integration</td>
-              </tr>
-              <tr>
-                <td>📝 Credit</td>
-                <td>Record payment on account</td>
-              </tr>
-            </tbody>
-          </table>
+          <h3 data-i18n="manual.sections.pos.methodsTitle">Payment methods</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th data-i18n="manual.sections.pos.methodsHeader"></th>
+                  <th data-i18n="manual.sections.pos.methodsDescHeader"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td
+                    ><iconify-icon icon="solar:bolt-circle-linear"></iconify-icon
+                    ><span data-i18n="manual.sections.pos.methods.0.name"></span
+                  ></td>
+                  <td data-i18n="manual.sections.pos.methods.0.desc"></td>
+                </tr>
+                <tr>
+                  <td
+                    ><iconify-icon icon="solar:qr-code-linear"></iconify-icon
+                    ><span data-i18n="manual.sections.pos.methods.1.name"></span
+                  ></td>
+                  <td data-i18n="manual.sections.pos.methods.1.desc"></td>
+                </tr>
+                <tr>
+                  <td
+                    ><iconify-icon icon="solar:wad-of-money-linear"></iconify-icon
+                    ><span data-i18n="manual.sections.pos.methods.2.name"></span
+                  ></td>
+                  <td data-i18n="manual.sections.pos.methods.2.desc"></td>
+                </tr>
+                <tr>
+                  <td
+                    ><iconify-icon icon="solar:card-linear"></iconify-icon
+                    ><span data-i18n="manual.sections.pos.methods.3.name"></span
+                  ></td>
+                  <td data-i18n="manual.sections.pos.methods.3.desc"></td>
+                </tr>
+                <tr>
+                  <td
+                    ><iconify-icon icon="solar:notebook-linear"></iconify-icon
+                    ><span data-i18n="manual.sections.pos.methods.4.name"></span
+                  ></td>
+                  <td data-i18n="manual.sections.pos.methods.4.desc"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-          <h3>Discounts</h3>
-          <p>Apply discounts during checkout:</p>
-          <ol>
-            <li>Click <strong>"Discount"</strong> in cart</li>
-            <li>
-              Choose type:
-              <ul>
-                <li><strong>Percentage:</strong> 10%, 20%, etc.</li>
-                <li><strong>Fixed Amount:</strong> $5, $10, etc.</li>
-              </ul>
-            </li>
-            <li>Apply to entire cart or single item</li>
-          </ol>
-
-          <h3>Receipts</h3>
-          <p>After payment:</p>
+          <h3 data-i18n="manual.sections.pos.discountsTitle">Discounts &amp; promotions</h3>
           <ul>
-            <li><strong>Print</strong> - Send to connected printer</li>
-            <li><strong>Email</strong> - Send to customer email</li>
-            <li><strong>Copy Link</strong> - Share receipt link</li>
-            <li><strong>Download</strong> - Save as PDF</li>
+            <li data-i18n="manual.sections.pos.discounts.0"></li>
+            <li data-i18n="manual.sections.pos.discounts.1"></li>
+            <li data-i18n="manual.sections.pos.discounts.2"></li>
+          </ul>
+
+          <h3 data-i18n="manual.sections.pos.receiptsTitle">Receipts &amp; shifts</h3>
+          <ul>
+            <li data-i18n="manual.sections.pos.receipts.0"></li>
+            <li data-i18n="manual.sections.pos.receipts.1"></li>
+            <li data-i18n="manual.sections.pos.receipts.2"></li>
           </ul>
         </section>
 
-        <!-- Payments -->
-        <section id="payments">
-          <h2>Payments</h2>
+        <!-- Products & Catalog -->
+        <section id="catalog">
+          <h2>
+            <iconify-icon icon="solar:box-linear"></iconify-icon
+            ><span data-i18n="manual.sections.catalog.title">Products &amp; Catalog</span>
+          </h2>
+          <p data-i18n="manual.sections.catalog.p1"></p>
 
-          <h3>Lightning Network</h3>
-          <p>BnOS uses the Lightning Network for instant Bitcoin payments:</p>
+          <h3 data-i18n="manual.sections.catalog.addTitle">Add a product</h3>
+          <div class="steps">
+            <div class="step" data-i18n="manual.sections.catalog.addSteps.0"></div>
+            <div class="step" data-i18n="manual.sections.catalog.addSteps.1"></div>
+            <div class="step" data-i18n="manual.sections.catalog.addSteps.2"></div>
+          </div>
+
+          <h3 data-i18n="manual.sections.catalog.fieldsTitle">Product fields</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th data-i18n="manual.sections.catalog.fieldHeader"></th>
+                  <th data-i18n="manual.sections.catalog.fieldDescHeader"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-i18n="manual.sections.catalog.fields.0.name"></td>
+                  <td data-i18n="manual.sections.catalog.fields.0.desc"></td>
+                </tr>
+                <tr>
+                  <td data-i18n="manual.sections.catalog.fields.1.name"></td>
+                  <td data-i18n="manual.sections.catalog.fields.1.desc"></td>
+                </tr>
+                <tr>
+                  <td data-i18n="manual.sections.catalog.fields.2.name"></td>
+                  <td data-i18n="manual.sections.catalog.fields.2.desc"></td>
+                </tr>
+                <tr>
+                  <td data-i18n="manual.sections.catalog.fields.3.name"></td>
+                  <td data-i18n="manual.sections.catalog.fields.3.desc"></td>
+                </tr>
+                <tr>
+                  <td data-i18n="manual.sections.catalog.fields.4.name"></td>
+                  <td data-i18n="manual.sections.catalog.fields.4.desc"></td>
+                </tr>
+                <tr>
+                  <td data-i18n="manual.sections.catalog.fields.5.name"></td>
+                  <td data-i18n="manual.sections.catalog.fields.5.desc"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="manual.sections.catalog.moreTitle">Variants, categories &amp; media</h3>
+          <ul>
+            <li data-i18n="manual.sections.catalog.more.0"></li>
+            <li data-i18n="manual.sections.catalog.more.1"></li>
+            <li data-i18n="manual.sections.catalog.more.2"></li>
+          </ul>
+        </section>
+
+        <!-- Inventory -->
+        <section id="inventory">
+          <h2>
+            <iconify-icon icon="solar:database-linear"></iconify-icon
+            ><span data-i18n="manual.sections.inventory.title">Inventory</span>
+          </h2>
+          <p data-i18n="manual.sections.inventory.p1"></p>
+
+          <h3 data-i18n="manual.sections.inventory.trackingTitle">Stock tracking</h3>
+          <ul>
+            <li data-i18n="manual.sections.inventory.tracking.0"></li>
+            <li data-i18n="manual.sections.inventory.tracking.1"></li>
+          </ul>
+
+          <h3 data-i18n="manual.sections.inventory.adjustTitle">Stock adjustments</h3>
           <ol>
-            <li>Customer scans QR code</li>
-            <li>Payment confirms in ~1 second</li>
-            <li>Funds arrive in your wallet immediately</li>
+            <li data-i18n="manual.sections.inventory.adjust.0"></li>
+            <li data-i18n="manual.sections.inventory.adjust.1"></li>
+            <li data-i18n="manual.sections.inventory.adjust.2"></li>
           </ol>
 
-          <h3>Wallet Management</h3>
-          <p>View your payment history:</p>
-          <ol>
-            <li>Go to <strong>Payments</strong> from menu</li>
-            <li>
-              See all transactions with:
-              <ul>
-                <li>Amount</li>
-                <li>Time</li>
-                <li>Status</li>
-                <li>Invoice details</li>
-              </ul>
-            </li>
-          </ol>
-
-          <h3>Withdrawals</h3>
           <div class="alert alert-success">
-            Funds are deposited directly to your connected Lightning wallet. No
-            withdrawal action needed - you already control the funds!
+            <iconify-icon icon="solar:box-linear"></iconify-icon>
+            <span data-i18n="manual.sections.inventory.poNote"></span>
           </div>
         </section>
 
-        <!-- Inventory Management -->
-        <section id="inventory-management">
-          <h2>Inventory Management</h2>
+        <!-- Orders & Customers -->
+        <section id="orders-customers">
+          <h2>
+            <iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon
+            ><span data-i18n="manual.sections.orders.title">Orders &amp; Customers</span>
+          </h2>
+          <p data-i18n="manual.sections.orders.p1"></p>
 
-          <h3>Stock Tracking</h3>
-          <p>Enable inventory tracking per product:</p>
-          <ol>
-            <li>Edit product</li>
-            <li>Enable <strong>"Track Inventory"</strong></li>
-            <li>Set <strong>"Stock Quantity"</strong></li>
-          </ol>
-
-          <h3>Low Stock Alerts</h3>
-          <p>Configure alerts for low inventory:</p>
-          <ol>
-            <li>Go to <strong>Settings > Inventory</strong></li>
-            <li>Set <strong>"Low Stock Threshold"</strong> (e.g., 10 units)</li>
-            <li>Enable notifications</li>
-          </ol>
-
-          <h3>Stock Adjustments</h3>
-          <p>Manually adjust stock:</p>
-          <ol>
-            <li>Go to <strong>Inventory</strong></li>
-            <li>Click on product</li>
-            <li>Click <strong>"Adjust Stock"</strong></li>
-            <li>
-              Enter quantity and reason:
-              <ul>
-                <li>Received shipment</li>
-                <li>Damaged goods</li>
-                <li>Stock count correction</li>
-                <li>Other</li>
-              </ul>
-            </li>
-          </ol>
-
-          <h3>Purchase Orders</h3>
-          <p>Create orders for suppliers:</p>
-          <div class="steps">
-            <div class="step">
-              Go to <strong>Inventory > Purchase Orders</strong>
-            </div>
-            <div class="step">Click <strong>"+ New Order"</strong></div>
-            <div class="step">Select supplier</div>
-            <div class="step">Add products and quantities</div>
-            <div class="step">Submit order</div>
+          <h3 data-i18n="manual.sections.orders.statusesTitle">Order statuses</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th data-i18n="manual.sections.orders.statusHeader"></th>
+                  <th data-i18n="manual.sections.orders.statusDescHeader"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-i18n="manual.sections.orders.statuses.0.name"></td>
+                  <td data-i18n="manual.sections.orders.statuses.0.desc"></td>
+                </tr>
+                <tr>
+                  <td data-i18n="manual.sections.orders.statuses.1.name"></td>
+                  <td data-i18n="manual.sections.orders.statuses.1.desc"></td>
+                </tr>
+                <tr>
+                  <td data-i18n="manual.sections.orders.statuses.2.name"></td>
+                  <td data-i18n="manual.sections.orders.statuses.2.desc"></td>
+                </tr>
+                <tr>
+                  <td data-i18n="manual.sections.orders.statuses.3.name"></td>
+                  <td data-i18n="manual.sections.orders.statuses.3.desc"></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-        </section>
 
-        <!-- Reports & Analytics -->
-        <section id="reports-analytics">
-          <h2>Reports & Analytics</h2>
-
-          <h3>Dashboard</h3>
-          <p>The main dashboard shows:</p>
+          <h3 data-i18n="manual.sections.orders.customersTitle">Customers &amp; memberships</h3>
           <ul>
-            <li>📈 Today's sales</li>
-            <li>💰 Revenue trends</li>
-            <li>🛒 Recent transactions</li>
-            <li>📦 Low stock alerts</li>
-            <li>👥 Top customers</li>
+            <li data-i18n="manual.sections.orders.customers.0"></li>
+            <li data-i18n="manual.sections.orders.customers.1"></li>
+            <li data-i18n="manual.sections.orders.customers.2"></li>
+          </ul>
+        </section>
+
+        <!-- Transactions & Reports -->
+        <section id="reports">
+          <h2>
+            <iconify-icon icon="solar:chart-2-linear"></iconify-icon
+            ><span data-i18n="manual.sections.reports.title">Transactions &amp; Reports</span>
+          </h2>
+          <p data-i18n="manual.sections.reports.p1"></p>
+
+          <h3 data-i18n="manual.sections.reports.txTitle">Transactions &amp; shifts</h3>
+          <ul>
+            <li data-i18n="manual.sections.reports.tx.0"></li>
+            <li data-i18n="manual.sections.reports.tx.1"></li>
+            <li data-i18n="manual.sections.reports.tx.2"></li>
           </ul>
 
-          <h3>Available Reports</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Report</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Sales Report</strong></td>
-                <td>Sales by date, product, category</td>
-              </tr>
-              <tr>
-                <td><strong>Product Performance</strong></td>
-                <td>Best/worst sellers</td>
-              </tr>
-              <tr>
-                <td><strong>Inventory Report</strong></td>
-                <td>Stock levels, valuations</td>
-              </tr>
-              <tr>
-                <td><strong>Customer Report</strong></td>
-                <td>Purchase history, loyalty</td>
-              </tr>
-              <tr>
-                <td><strong>Staff Report</strong></td>
-                <td>Sales by employee</td>
-              </tr>
-            </tbody>
-          </table>
+          <h3 data-i18n="manual.sections.reports.reportTitle">Reports &amp; expenses</h3>
+          <ul>
+            <li data-i18n="manual.sections.reports.report.0"></li>
+            <li data-i18n="manual.sections.reports.report.1"></li>
+            <li data-i18n="manual.sections.reports.report.2"></li>
+            <li data-i18n="manual.sections.reports.report.3"></li>
+          </ul>
 
-          <h3>Exporting Data</h3>
-          <p>Export any report:</p>
+          <p data-i18n="manual.sections.reports.export"></p>
+        </section>
+
+        <!-- Restaurant Mode -->
+        <section id="restaurant">
+          <h2>
+            <iconify-icon icon="solar:chef-hat-linear"></iconify-icon
+            ><span data-i18n="manual.sections.restaurant.title">Restaurant Mode</span>
+          </h2>
+          <p data-i18n="manual.sections.restaurant.p1"></p>
+          <div class="alert alert-info">
+            <iconify-icon icon="solar:settings-linear"></iconify-icon>
+            <span data-i18n="manual.sections.restaurant.note"></span>
+          </div>
+          <div class="feature-grid">
+            <div class="feature-card">
+              <div class="feature-card-icon">
+                <iconify-icon icon="solar:armchair-linear"></iconify-icon>
+              </div>
+              <div class="feature-card-title" data-i18n="manual.sections.restaurant.features.0.title"></div>
+              <div class="feature-card-desc" data-i18n="manual.sections.restaurant.features.0.desc"></div>
+            </div>
+            <div class="feature-card">
+              <div class="feature-card-icon">
+                <iconify-icon icon="solar:bell-bing-linear"></iconify-icon>
+              </div>
+              <div class="feature-card-title" data-i18n="manual.sections.restaurant.features.1.title"></div>
+              <div class="feature-card-desc" data-i18n="manual.sections.restaurant.features.1.desc"></div>
+            </div>
+            <div class="feature-card">
+              <div class="feature-card-icon">
+                <iconify-icon icon="solar:chef-hat-linear"></iconify-icon>
+              </div>
+              <div class="feature-card-title" data-i18n="manual.sections.restaurant.features.2.title"></div>
+              <div class="feature-card-desc" data-i18n="manual.sections.restaurant.features.2.desc"></div>
+            </div>
+            <div class="feature-card">
+              <div class="feature-card-icon">
+                <iconify-icon icon="solar:clipboard-list-linear"></iconify-icon>
+              </div>
+              <div class="feature-card-title" data-i18n="manual.sections.restaurant.features.3.title"></div>
+              <div class="feature-card-desc" data-i18n="manual.sections.restaurant.features.3.desc"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Marketplace -->
+        <section id="marketplace">
+          <h2>
+            <iconify-icon icon="solar:shop-minimalistic-linear"></iconify-icon
+            ><span data-i18n="manual.sections.marketplace.title">Marketplace</span>
+          </h2>
+          <p data-i18n="manual.sections.marketplace.p1"></p>
+          <ul>
+            <li data-i18n="manual.sections.marketplace.modules.0"></li>
+            <li data-i18n="manual.sections.marketplace.modules.1"></li>
+            <li data-i18n="manual.sections.marketplace.modules.2"></li>
+            <li data-i18n="manual.sections.marketplace.modules.3"></li>
+            <li data-i18n="manual.sections.marketplace.modules.4"></li>
+            <li data-i18n="manual.sections.marketplace.modules.5"></li>
+            <li data-i18n="manual.sections.marketplace.modules.6"></li>
+          </ul>
+          <p data-i18n="manual.sections.marketplace.settings"></p>
+        </section>
+
+        <!-- Staff & Permissions -->
+        <section id="staff">
+          <h2>
+            <iconify-icon icon="solar:user-id-linear"></iconify-icon
+            ><span data-i18n="manual.sections.staff.title">Staff &amp; Permissions</span>
+          </h2>
+          <p data-i18n="manual.sections.staff.p1"></p>
+          <h3 data-i18n="manual.sections.staff.rolesTitle">Invite your team</h3>
           <ol>
-            <li>Open desired report</li>
-            <li>Click <strong>"Export"</strong></li>
-            <li>
-              Choose format:
-              <ul>
-                <li>📄 PDF</li>
-                <li>📊 Excel (XLSX)</li>
-                <li>📋 CSV</li>
-              </ul>
-            </li>
+            <li data-i18n="manual.sections.staff.roles.0"></li>
+            <li data-i18n="manual.sections.staff.roles.1"></li>
+            <li data-i18n="manual.sections.staff.roles.2"></li>
           </ol>
+          <h3 data-i18n="manual.sections.staff.permTitle">Role-based access</h3>
+          <p data-i18n="manual.sections.staff.perm"></p>
         </section>
 
         <!-- Settings -->
         <section id="settings">
-          <h2>Settings</h2>
+          <h2>
+            <iconify-icon icon="solar:settings-linear"></iconify-icon
+            ><span data-i18n="manual.sections.settings.title">Settings</span>
+          </h2>
+          <p data-i18n="manual.sections.settings.p1"></p>
 
-          <h3>General Settings</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Setting</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Language</td>
-                <td>Interface language</td>
-              </tr>
-              <tr>
-                <td>Currency</td>
-                <td>Display currency</td>
-              </tr>
-              <tr>
-                <td>Timezone</td>
-                <td>Local timezone</td>
-              </tr>
-              <tr>
-                <td>Date Format</td>
-                <td>Date display format</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <h3>Receipt Settings</h3>
-          <p>Customize receipts:</p>
+          <h4 data-i18n="manual.sections.settings.groups.0.title"></h4>
           <ul>
-            <li>Header text</li>
-            <li>Footer text</li>
-            <li>Logo</li>
-            <li>Show/hide tax details</li>
-            <li>QR code for returns</li>
+            <li data-i18n="manual.sections.settings.groups.0.items.0"></li>
+            <li data-i18n="manual.sections.settings.groups.0.items.1"></li>
+            <li data-i18n="manual.sections.settings.groups.0.items.2"></li>
           </ul>
 
-          <h3>Notification Settings</h3>
-          <p>Configure alerts:</p>
+          <h4 data-i18n="manual.sections.settings.groups.1.title"></h4>
           <ul>
-            <li>Low stock notifications</li>
-            <li>Daily sales summary</li>
-            <li>Payment alerts</li>
+            <li data-i18n="manual.sections.settings.groups.1.items.0"></li>
+            <li data-i18n="manual.sections.settings.groups.1.items.1"></li>
+            <li data-i18n="manual.sections.settings.groups.1.items.2"></li>
+            <li data-i18n="manual.sections.settings.groups.1.items.3"></li>
+            <li data-i18n="manual.sections.settings.groups.1.items.4"></li>
+            <li data-i18n="manual.sections.settings.groups.1.items.5"></li>
           </ul>
 
-          <h3>Security Settings</h3>
+          <h4 data-i18n="manual.sections.settings.groups.2.title"></h4>
           <ul>
-            <li>Change password</li>
-            <li>View login history</li>
-            <li>Connected devices</li>
-            <li>API keys</li>
+            <li data-i18n="manual.sections.settings.groups.2.items.0"></li>
+            <li data-i18n="manual.sections.settings.groups.2.items.1"></li>
+          </ul>
+
+          <h4 data-i18n="manual.sections.settings.groups.3.title"></h4>
+          <ul>
+            <li data-i18n="manual.sections.settings.groups.3.items.0"></li>
+            <li data-i18n="manual.sections.settings.groups.3.items.1"></li>
+          </ul>
+
+          <h4 data-i18n="manual.sections.settings.groups.4.title"></h4>
+          <ul>
+            <li data-i18n="manual.sections.settings.groups.4.items.0"></li>
+            <li data-i18n="manual.sections.settings.groups.4.items.1"></li>
+            <li data-i18n="manual.sections.settings.groups.4.items.2"></li>
+            <li data-i18n="manual.sections.settings.groups.4.items.3"></li>
           </ul>
         </section>
 
         <!-- FAQ -->
         <section id="faq">
-          <h2>FAQ</h2>
-
-          <h3>General</h3>
-          <div class="faq-item">
-            <div class="faq-question">Q: Is BnOS free to use?</div>
-            <div class="faq-answer">
-              A: BnOS offers a free tier with basic features. Premium features
-              are available through subscription.
-            </div>
-          </div>
-          <div class="faq-item">
-            <div class="faq-question">Q: Do I need Bitcoin to use BnOS?</div>
-            <div class="faq-answer">
-              A: You can accept Lightning payments without holding Bitcoin
-              yourself. Payments can be converted to your preferred currency.
-            </div>
-          </div>
-
-          <h3>Technical</h3>
-          <div class="faq-item">
-            <div class="faq-question">Q: What happens if I lose internet?</div>
-            <div class="faq-answer">
-              A: BnOS works offline. Transactions are saved locally and synced
-              when you're back online.
-            </div>
-          </div>
-          <div class="faq-item">
-            <div class="faq-question">Q: How secure is my data?</div>
-            <div class="faq-answer">
-              A: Your data is encrypted and stored using the Nostr Protocol.
-              Only you can access it with your private key.
-            </div>
-          </div>
-          <div class="faq-item">
-            <div class="faq-question">
-              Q: Can I use BnOS on multiple devices?
-            </div>
-            <div class="faq-answer">
-              A: Yes! Log in with your Nostr keys on any device to access your
-              shop.
-            </div>
-          </div>
-
-          <h3>Payments</h3>
-          <div class="faq-item">
-            <div class="faq-question">Q: How fast are Lightning payments?</div>
-            <div class="faq-answer">
-              A: Lightning payments confirm in ~1 second.
-            </div>
-          </div>
-          <div class="faq-item">
-            <div class="faq-question">Q: What are the payment fees?</div>
-            <div class="faq-answer">
-              A: Lightning Network fees are typically less than 1% (often just a
-              few sats).
-            </div>
-          </div>
+          <h2>
+            <iconify-icon icon="solar:question-circle-linear"></iconify-icon
+            ><span data-i18n="manual.sections.faq.title">FAQ</span>
+          </h2>
+          <details class="faq-item">
+            <summary data-i18n="manual.sections.faq.items.0.q"></summary>
+            <div class="faq-answer" data-i18n="manual.sections.faq.items.0.a"></div>
+          </details>
+          <details class="faq-item">
+            <summary data-i18n="manual.sections.faq.items.1.q"></summary>
+            <div class="faq-answer" data-i18n="manual.sections.faq.items.1.a"></div>
+          </details>
+          <details class="faq-item">
+            <summary data-i18n="manual.sections.faq.items.2.q"></summary>
+            <div class="faq-answer" data-i18n="manual.sections.faq.items.2.a"></div>
+          </details>
+          <details class="faq-item">
+            <summary data-i18n="manual.sections.faq.items.3.q"></summary>
+            <div class="faq-answer" data-i18n="manual.sections.faq.items.3.a"></div>
+          </details>
+          <details class="faq-item">
+            <summary data-i18n="manual.sections.faq.items.4.q"></summary>
+            <div class="faq-answer" data-i18n="manual.sections.faq.items.4.a"></div>
+          </details>
+          <details class="faq-item">
+            <summary data-i18n="manual.sections.faq.items.5.q"></summary>
+            <div class="faq-answer" data-i18n="manual.sections.faq.items.5.a"></div>
+          </details>
         </section>
 
         <!-- Support -->
         <section id="support">
-          <h2>Support</h2>
-
-          <h3>Getting Help</h3>
-          <ul>
+          <h2>
+            <iconify-icon icon="solar:headphones-round-linear"></iconify-icon
+            ><span data-i18n="manual.sections.support.title">Support</span>
+          </h2>
+          <p data-i18n="manual.sections.support.p1"></p>
+          <ul class="link-list">
             <li>
-              📖 <strong>Documentation:</strong>
-              <a href="https://docs.bnos.space">docs.bnos.space</a>
+              <a href="https://bnos.space" target="_blank" rel="noopener">
+                <iconify-icon icon="solar:global-linear"></iconify-icon>
+                <span
+                  ><span data-i18n="manual.sections.support.links.0.label"></span
+                  ><small data-i18n="manual.sections.support.links.0.desc"></small
+                ></span>
+              </a>
             </li>
-            <li>💬 <strong>Community:</strong> Join our Nostr community</li>
-            <li>📧 <strong>Email:</strong> support@bnos.space</li>
             <li>
-              🐛 <strong>Bug Reports:</strong>
+              <a href="https://github.com/bitoslabs/bnos-svelte" target="_blank" rel="noopener">
+                <iconify-icon icon="solar:code-square-linear"></iconify-icon>
+                <span
+                  ><span data-i18n="manual.sections.support.links.1.label"></span
+                  ><small data-i18n="manual.sections.support.links.1.desc"></small
+                ></span>
+              </a>
+            </li>
+            <li>
               <a
-                href="https://github.com/locobit-space/bitspace-pos/issues"
+                href="https://github.com/bitoslabs/bnos-svelte/issues"
                 target="_blank"
-                >GitHub Issues</a
+                rel="noopener"
               >
+                <iconify-icon icon="solar:bug-linear"></iconify-icon>
+                <span
+                  ><span data-i18n="manual.sections.support.links.2.label"></span
+                  ><small data-i18n="manual.sections.support.links.2.desc"></small
+                ></span>
+              </a>
+            </li>
+            <li>
+              <a href="mailto:support@bnos.space">
+                <iconify-icon icon="solar:letter-linear"></iconify-icon>
+                <span
+                  ><span data-i18n="manual.sections.support.links.3.label"></span
+                  ><small data-i18n="manual.sections.support.links.3.desc"></small
+                ></span>
+              </a>
             </li>
           </ul>
-
-          <h3>Feature Requests</h3>
-          <p>Have an idea? We'd love to hear it!</p>
-          <ol>
-            <li>Go to <strong>Help > Feature Request</strong></li>
-            <li>Describe your idea</li>
-            <li>Submit</li>
-          </ol>
-
-          <h3>Reporting Issues</h3>
-          <p>If you encounter a problem:</p>
-          <ol>
-            <li>Go to <strong>Help > Report a Bug</strong></li>
-            <li>Describe the issue</li>
-            <li>Include screenshots if possible</li>
-            <li>Submit</li>
-          </ol>
-
-          <h3>Version History</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Version</th>
-                <th>Date</th>
-                <th>Notes</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1.0.0</td>
-                <td>Jan 1, 2026</td>
-                <td>Initial release</td>
-              </tr>
-            </tbody>
-          </table>
+          <p data-i18n="manual.sections.support.version"></p>
         </section>
+
+        <!-- Pager -->
+        <nav class="doc-pager" id="docPager" aria-label="Sections">
+          <a class="pager-link is-prev" id="pagerPrev" href="#">
+            <iconify-icon icon="solar:alt-arrow-left-linear"></iconify-icon>
+            <span
+              ><small data-i18n="manual.ui.prev">Previous</small><b></b
+            ></span>
+          </a>
+          <a class="pager-link is-next" id="pagerNext" href="#">
+            <span
+              ><small data-i18n="manual.ui.next">Next</small><b></b
+            ></span>
+            <iconify-icon icon="solar:alt-arrow-right-linear"></iconify-icon>
+          </a>
+        </nav>
 
         <!-- Footer -->
         <footer class="footer">
           <p>
-            ⚡ <strong>BnOS - Business Operating System</strong><br />
-            Built with ❤️ on Nostr & Lightning Network<br />
-            <a href="https://github.com/locobit-space">GitHub</a> •
+            <strong data-i18n="footer.copyright">© 2026 BnOS. All rights reserved.</strong><br />
+            <a href="https://github.com/bitoslabs/bnos-svelte" target="_blank" rel="noopener"
+              >GitHub</a
+            >
+            •
             <a href="https://bnos.space">Website</a>
           </p>
-          <p style="margin-top: 16px">© 2026 BnOS. All rights reserved.</p>
         </footer>
       </main>
     </div>
 
-    <script>
-      // Highlight active sidebar link on scroll
-      const sections = document.querySelectorAll("section[id]");
-      const navLinks = document.querySelectorAll(".sidebar-nav a");
-
-      window.addEventListener("scroll", () => {
-        let current = "";
-        sections.forEach((section) => {
-          const sectionTop = section.offsetTop - 100;
-          if (scrollY >= sectionTop) {
-            current = section.getAttribute("id");
-          }
-        });
-
-        navLinks.forEach((link) => {
-          link.classList.remove("active");
-          if (link.getAttribute("href") === "#" + current) {
-            link.classList.add("active");
-          }
-        });
-      });
-    </script>
+    <button
+      class="to-top"
+      id="toTop"
+      aria-label="Back to top"
+      data-i18n-aria="manual.ui.backToTop"
+    >
+      <iconify-icon icon="solar:arrow-up-linear"></iconify-icon>
+    </button>
   </body>
 </html>

@@ -3,6 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      // Apply saved theme before first paint (no flash).
+      (function () {
+        try {
+          var t = localStorage.getItem("bnos_theme") || "dark";
+          document.documentElement.setAttribute("data-theme", t);
+        } catch (e) {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      })();
+    </script>
     <title data-i18n="meta.title">
       BnOS - Bitcoin Nostr Operating System | Lightning-Powered POS | Open
       Source Business OS
@@ -31,18 +42,11 @@
     <meta property="og:locale" content="en_US" />
     <meta property="og:locale:alternate" content="lo_LA" />
     <meta property="og:locale:alternate" content="th_TH" />
-    <meta
-      property="og:site_name"
-      content="BnOS - Bitcoin Nostr Operating System"
-    />
+    <meta property="og:site_name" content="BnOS - Bitcoin Nostr Operating System" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:title"
-      data-i18n="meta.ogTitle"
-      content="BnOS - Bitcoin Nostr Operating System"
-    />
+    <meta name="twitter:title" data-i18n="meta.ogTitle" content="BnOS - Bitcoin Nostr Operating System" />
     <meta
       name="twitter:description"
       data-i18n="meta.ogDesc"
@@ -61,30 +65,22 @@
     <!-- Additional SEO -->
     <meta name="robots" content="index, follow" />
     <meta name="author" content="BnOS Team" />
-    <meta name="theme-color" content="#f59e0b" />
+    <meta name="theme-color" content="#0a0a12" />
 
+    <link rel="icon" type="image/svg+xml" href="assets/icons/icon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/icons/icon-512.png" />
+    <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Included all fonts -->
     <link
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700;800&family=Noto+Sans+Lao:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/fonts/stylesheet.css" />
+    <link rel="preconnect" href="https://fonts.mts.la" crossorigin />
+    <link rel="stylesheet" href="https://fonts.mts.la/fonts/chanthavong/chanthavong.css" />
     <link rel="stylesheet" href="css/style.css" />
-    <style>
-      /* Dynamic font override handled in app.js */
-      body {
-        font-family:
-          "Inter",
-          -apple-system,
-          BlinkMacSystemFont,
-          "Segoe UI",
-          Roboto,
-          sans-serif;
-      }
-    </style>
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -130,7 +126,7 @@
           "url": "https://bnos.space",
           "logo": "https://bnos.space/icon-192.png",
           "sameAs": [
-            "https://github.com/locobit-space",
+            "https://github.com/bitoslabs/bnos-svelte",
             "https://twitter.com/bnos_space",
             "https://yakihonne.com/profile/bnos@nostrcheck.me"
           ]
@@ -175,372 +171,548 @@
         }
       ]
     </script>
+    <!-- Iconify web component: use <iconify-icon icon="solar:..."> like Nuxt Icon -->
+    <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
     <script type="module" src="js/app.js"></script>
   </head>
   <body>
-    <!-- Language Switcher -->
-    <div class="lang-switcher">
-      <a href="#" data-lang="en" class="active">EN</a>
-      <a href="#" data-lang="lo">ລາວ</a>
-      <a href="#" data-lang="th">ไทย</a>
-    </div>
+    <a class="skip-link" href="#main">Skip to content</a>
 
     <!-- Navigation -->
-    <nav class="nav">
-      <div class="nav-content">
-        <a href="#" class="nav-logo">
-          <div class="nav-logo-icon">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+    <header class="nav" id="nav">
+      <div class="nav-content container">
+        <a href="#" class="brand" aria-label="BnOS home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg class="bee-svg" viewBox="0 0 64 64" width="26" height="26" role="img" aria-label="BnOS">
+              <ellipse class="bee-wing" cx="22" cy="28" rx="12" ry="9" fill="rgba(255,255,255,0.45)" stroke="rgba(255,255,255,0.3)" stroke-width="0.5"/>
+              <ellipse class="bee-wing" cx="42" cy="28" rx="12" ry="9" fill="rgba(255,255,255,0.45)" stroke="rgba(255,255,255,0.3)" stroke-width="0.5"/>
+              <ellipse cx="32" cy="38" rx="13" ry="17" fill="#ffb000"/>
+              <path d="M20 33 Q32 29 44 33" stroke="#12101a" stroke-width="3" fill="none"/>
+              <path d="M20 40 Q32 36 44 40" stroke="#12101a" stroke-width="3" fill="none"/>
+              <path d="M20 47 Q32 43 44 47" stroke="#12101a" stroke-width="3" fill="none"/>
+              <circle cx="32" cy="17" r="8" fill="#ffb000" stroke="#12101a" stroke-width="2"/>
+              <circle cx="29" cy="15" r="1.5" fill="#12101a"/>
+              <circle cx="35" cy="15" r="1.5" fill="#12101a"/>
+              <path d="M28 10 Q25 6 23 3" stroke="#ffb000" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <path d="M36 10 Q39 6 41 3" stroke="#ffb000" stroke-width="1.5" fill="none" stroke-linecap="round"/>
             </svg>
-          </div>
-          <span class="nav-logo-text">BnOS</span>
+          </span>
+          <span class="brand-name">BnOS</span>
         </a>
-        <div class="nav-mobile-toggle" onclick="toggleMobileMenu()">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div class="nav-right">
-          <ul class="nav-links">
-            <li>
-              <a href="#features" onclick="closeMobileMenu()" data-i18n="nav.features">Features</a>
-            </li>
-            <li>
-              <a href="#how-it-works" onclick="closeMobileMenu()" data-i18n="nav.howItWorks"
-                >How It Works</a
-              >
-            </li>
-            <li>
-              <a href="#technology" onclick="closeMobileMenu()" data-i18n="nav.technology">Technology</a>
-            </li>
-            <li><a href="#faq" onclick="closeMobileMenu()" data-i18n="nav.faq">FAQ</a></li>
-            <li>
-              <a href="manual.html" onclick="closeMobileMenu()" data-i18n="nav.docs"
-                >Documentation</a
-              >
-            </li>
-            <li>
-              <a href="console.html" onclick="closeMobileMenu()">Console</a>
-            </li>
-          </ul>
-          <a href="https://app.bnos.space" class="nav-cta post-launch" data-i18n="nav.getStarted"
+
+        <nav class="nav-links" id="navLinks" aria-label="Primary">
+          <a href="#features" data-i18n="nav.features">Features</a>
+          <a href="#platform" data-i18n="landing.nav.platform">Platform</a>
+          <a href="#how-it-works" data-i18n="nav.howItWorks">How It Works</a>
+          <a href="#use-cases" data-i18n="landing.useCases.tag">Use cases</a>
+          <a href="#faq" data-i18n="nav.faq">FAQ</a>
+          <a href="manual.html" data-i18n="nav.docs">Documentation</a>
+        </nav>
+
+        <div class="nav-actions">
+          <div class="lang-switcher">
+            <a href="#" data-lang="en" class="active">EN</a>
+            <a href="#" data-lang="lo">ລາວ</a>
+            <a href="#" data-lang="th">ไทย</a>
+          </div>
+          <button
+            class="theme-toggle"
+            type="button"
+            aria-label="Toggle theme"
+            aria-pressed="false"
+          >
+            <iconify-icon icon="solar:sun-linear"></iconify-icon>
+          </button>
+          <a href="https://app.bnos.space" class="btn btn-primary btn-sm" data-i18n="nav.getStarted"
             >Get Started</a
           >
+          <button
+            class="menu-btn"
+            id="menuBtn"
+            aria-expanded="false"
+            aria-controls="navLinks"
+            aria-label="Menu"
+          >
+            <iconify-icon icon="solar:hamburger-menu-linear"></iconify-icon>
+          </button>
         </div>
       </div>
-    </nav>
+    </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-      <div class="hero-bg"></div>
-      <div class="hero-orb hero-orb-1"></div>
-      <div class="hero-orb hero-orb-2"></div>
-      <div class="hero-content">
-        <!-- Pre-launch: Show countdown -->
-        <div class="pre-launch">
-          <div class="hero-badge">
-            <div class="hero-badge-dot"></div>
-            <span class="hero-badge-text" data-i18n="hero.preLaunchBadge">Coming Soon</span>
+    <main id="main">
+      <!-- Hero -->
+      <section class="hero">
+        <div class="hero-glow" aria-hidden="true"></div>
+        <div class="hero-grid-bg" aria-hidden="true"></div>
+        <div class="container hero-inner">
+          <div class="hero-copy reveal">
+            <span class="badge">
+              <span class="badge-dot"></span>
+              <span data-i18n="landing.badge">Open-source point of sale on Bitcoin Lightning &amp; Nostr</span>
+            </span>
+            <h1 class="hero-title">
+              <span data-i18n="hero.title1">The Future of</span>
+              <span class="grad" data-i18n="hero.title2">Business Operations</span>
+            </h1>
+            <p class="hero-subtitle" data-i18n="hero.subtitle">
+              Lightning-powered Point of Sale built on Nostr Protocol. Decentralized, sovereign, and
+              privacy-first for modern businesses.
+            </p>
+            <div class="hero-actions">
+              <a href="https://app.bnos.space" class="btn btn-primary">
+                <iconify-icon icon="solar:bolt-circle-bold"></iconify-icon>
+                <span data-i18n="hero.btnPrimary">Get Started</span>
+              </a>
+              <a href="manual.html" class="btn btn-ghost">
+                <iconify-icon icon="solar:book-2-linear"></iconify-icon>
+                <span data-i18n="hero.btnSecondary">Read Documentation</span>
+              </a>
+            </div>
+            <ul class="hero-trust">
+              <li>
+                <iconify-icon icon="solar:shield-check-linear"></iconify-icon>
+                <span data-i18n="landing.trust.0">Self-custodial</span>
+              </li>
+              <li>
+                <iconify-icon icon="solar:cloud-cross-linear"></iconify-icon>
+                <span data-i18n="landing.trust.1">Works offline</span>
+              </li>
+              <li>
+                <iconify-icon icon="solar:wallet-money-linear"></iconify-icon>
+                <span data-i18n="landing.trust.2">No monthly fees</span>
+              </li>
+              <li>
+                <iconify-icon icon="solar:code-square-linear"></iconify-icon>
+                <span data-i18n="landing.trust.3">MIT licensed</span>
+              </li>
+            </ul>
           </div>
-          <h1 class="hero-title">
-            <span data-i18n="hero.title1" style="display:inline">The Future of</span><br />
-            <span data-i18n="hero.title2">Business Operations</span>
-          </h1>
-          <p class="hero-subtitle" data-i18n="hero.subtitle">
-            Lightning-powered Point of Sale built on Nostr Protocol.
-            Decentralized, sovereign, and privacy-first for modern businesses.
-          </p>
-          <!-- Countdown -->
-          <div class="countdown-section">
-            <p class="countdown-label" data-i18n="hero.launchLabel">Launching In</p>
-            <div class="countdown" id="countdown">
-              <div class="countdown-item">
-                <span class="countdown-value" id="days">--</span>
-                <span class="countdown-unit" data-i18n="hero.days">Days</span>
+
+          <div class="hero-visual reveal reveal-delay-2" aria-hidden="true">
+            <div class="mock">
+              <div class="mock-bar">
+                <span class="mock-dots"><i></i><i></i><i></i></span>
+                <span class="mock-url">app.bnos.space</span>
+                <span class="mock-chip"><i class="live"></i>Nostr</span>
               </div>
-              <div class="countdown-item">
-                <span class="countdown-value" id="hours">--</span>
-                <span class="countdown-unit" data-i18n="hero.hours">Hours</span>
-              </div>
-              <div class="countdown-item">
-                <span class="countdown-value" id="minutes">--</span>
-                <span class="countdown-unit" data-i18n="hero.mins">Mins</span>
-              </div>
-              <div class="countdown-item">
-                <span class="countdown-value" id="seconds">--</span>
-                <span class="countdown-unit" data-i18n="hero.secs">Secs</span>
+              <div class="mock-body">
+                <div class="mock-rail">
+                  <span class="rail-ico active"><iconify-icon icon="solar:widget-linear"></iconify-icon></span>
+                  <span class="rail-ico"><iconify-icon icon="solar:cart-3-linear"></iconify-icon></span>
+                  <span class="rail-ico"><iconify-icon icon="solar:box-linear"></iconify-icon></span>
+                  <span class="rail-ico"><iconify-icon icon="solar:chart-2-linear"></iconify-icon></span>
+                  <span class="rail-ico"><iconify-icon icon="solar:settings-linear"></iconify-icon></span>
+                </div>
+                <div class="mock-panel">
+                  <div class="mock-head">
+                    <div>
+                      <p class="mock-eyebrow">BnOS POS</p>
+                      <p class="mock-title">Checkout</p>
+                    </div>
+                    <span class="mock-badge"
+                      ><iconify-icon icon="solar:bolt-circle-linear"></iconify-icon>Lightning</span
+                    >
+                  </div>
+                  <div class="mock-tiles">
+                    <div class="tile">
+                      <iconify-icon icon="solar:cup-hot-linear"></iconify-icon>
+                      <span>Coffee</span><b>45.00</b>
+                    </div>
+                    <div class="tile">
+                      <iconify-icon icon="solar:cart-large-minimalistic-linear"></iconify-icon>
+                      <span>Croissant</span><b>85.00</b>
+                    </div>
+                    <div class="tile">
+                      <iconify-icon icon="solar:bottle-linear"></iconify-icon>
+                      <span>Water</span><b>15.00</b>
+                    </div>
+                  </div>
+                  <div class="mock-total">
+                    <div class="mock-row">
+                      <span data-i18n="landing.mock.subtotal">Subtotal</span><b>145.00</b>
+                    </div>
+                    <div class="mock-row">
+                      <span data-i18n="landing.mock.tax">VAT 7%</span><b>10.15</b>
+                    </div>
+                    <div class="mock-row total">
+                      <span data-i18n="landing.mock.total">Total</span><b>155.15</b>
+                    </div>
+                  </div>
+                  <button class="mock-charge" type="button" tabindex="-1">
+                    <iconify-icon icon="solar:bolt-circle-linear"></iconify-icon>
+                    <span data-i18n="landing.mock.charge">Charge with Lightning</span>
+                  </button>
+                  <div class="mock-paid">
+                    <iconify-icon icon="solar:check-circle-linear"></iconify-icon>
+                    <span data-i18n="landing.mock.paid">Payment received</span>
+                    <b>2,650 sats</b>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="launch-date">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"
-                />
-              </svg>
-              <span data-i18n="hero.launchDate">January 1, 2026 • 09:09 AM</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tech strip -->
+      <section class="strip" aria-label="Built on">
+        <div class="container strip-inner">
+          <div class="strip-item">
+            <iconify-icon icon="solar:wallet-money-linear"></iconify-icon><span>Bitcoin</span>
+          </div>
+          <div class="strip-item">
+            <iconify-icon icon="solar:bolt-linear"></iconify-icon><span>Lightning Network</span>
+          </div>
+          <div class="strip-item">
+            <iconify-icon icon="solar:hashtag-linear"></iconify-icon><span>Nostr Protocol</span>
+          </div>
+          <div class="strip-item">
+            <iconify-icon icon="solar:database-linear"></iconify-icon
+            ><span data-i18n="tech.localFirst">Local-First</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features -->
+      <section class="section" id="features">
+        <div class="container">
+          <div class="section-head reveal">
+            <span class="section-tag" data-i18n="features.tag">Features</span>
+            <h2 class="section-title" data-i18n="features.title">Everything You Need</h2>
+            <p class="section-subtitle" data-i18n="features.subtitle">
+              A complete business operating system designed for the future of commerce.
+            </p>
+          </div>
+          <div class="grid features-grid">
+            <article class="card reveal reveal-delay-1">
+              <div class="card-icon"><iconify-icon icon="solar:bolt-circle-linear"></iconify-icon></div>
+              <h3 class="card-title" data-i18n="features.items.0.title">Lightning Payments</h3>
+              <p class="card-desc" data-i18n="features.items.0.desc"></p>
+            </article>
+            <article class="card reveal reveal-delay-2">
+              <div class="card-icon"><iconify-icon icon="solar:key-linear"></iconify-icon></div>
+              <h3 class="card-title" data-i18n="features.items.1.title">Non-Custodial</h3>
+              <p class="card-desc" data-i18n="features.items.1.desc"></p>
+            </article>
+            <article class="card reveal reveal-delay-3">
+              <div class="card-icon"><iconify-icon icon="solar:global-linear"></iconify-icon></div>
+              <h3 class="card-title" data-i18n="features.items.2.title">Fully Decentralized</h3>
+              <p class="card-desc" data-i18n="features.items.2.desc"></p>
+            </article>
+            <article class="card reveal reveal-delay-1">
+              <div class="card-icon"><iconify-icon icon="solar:cloud-cross-linear"></iconify-icon></div>
+              <h3 class="card-title" data-i18n="features.items.3.title">Offline First</h3>
+              <p class="card-desc" data-i18n="features.items.3.desc"></p>
+            </article>
+            <article class="card reveal reveal-delay-2">
+              <div class="card-icon"><iconify-icon icon="solar:chart-2-linear"></iconify-icon></div>
+              <h3 class="card-title" data-i18n="features.items.4.title">Real-time Analytics</h3>
+              <p class="card-desc" data-i18n="features.items.4.desc"></p>
+            </article>
+            <article class="card reveal reveal-delay-3">
+              <div class="card-icon"
+                ><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon
+              ></div>
+              <h3 class="card-title" data-i18n="features.items.5.title">Team Management</h3>
+              <p class="card-desc" data-i18n="features.items.5.desc"></p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Platform -->
+      <section class="section alt" id="platform">
+        <div class="container">
+          <div class="section-head reveal">
+            <span class="section-tag" data-i18n="landing.platform.tag">Platform</span>
+            <h2 class="section-title" data-i18n="landing.platform.title">One system, every counter</h2>
+            <p class="section-subtitle" data-i18n="landing.platform.subtitle"></p>
+          </div>
+          <div class="grid platform-grid">
+            <article class="card platform-card reveal reveal-delay-1">
+              <div class="card-icon"><iconify-icon icon="solar:cart-3-linear"></iconify-icon></div>
+              <h3 class="card-title" data-i18n="landing.platform.items.0.title"></h3>
+              <p class="card-desc" data-i18n="landing.platform.items.0.desc"></p>
+            </article>
+            <article class="card platform-card reveal reveal-delay-2">
+              <div class="card-icon"><iconify-icon icon="solar:box-linear"></iconify-icon></div>
+              <h3 class="card-title" data-i18n="landing.platform.items.1.title"></h3>
+              <p class="card-desc" data-i18n="landing.platform.items.1.desc"></p>
+            </article>
+            <article class="card platform-card reveal reveal-delay-3">
+              <div class="card-icon"><iconify-icon icon="solar:bill-list-linear"></iconify-icon></div>
+              <h3 class="card-title" data-i18n="landing.platform.items.2.title"></h3>
+              <p class="card-desc" data-i18n="landing.platform.items.2.desc"></p>
+            </article>
+            <article class="card platform-card reveal reveal-delay-4">
+              <div class="card-icon"><iconify-icon icon="solar:chart-2-linear"></iconify-icon></div>
+              <h3 class="card-title" data-i18n="landing.platform.items.3.title"></h3>
+              <p class="card-desc" data-i18n="landing.platform.items.3.desc"></p>
+            </article>
+          </div>
+          <p class="section-foot reveal">
+            <a href="#features" class="text-link"
+              ><span data-i18n="landing.platform.more">Explore all features</span>
+              <iconify-icon icon="solar:alt-arrow-right-linear"></iconify-icon
+            ></a>
+          </p>
+        </div>
+      </section>
+
+      <!-- How it works -->
+      <section class="section" id="how-it-works">
+        <div class="container">
+          <div class="section-head reveal">
+            <span class="section-tag" data-i18n="howItWorks.tag">How It Works</span>
+            <h2 class="section-title" data-i18n="howItWorks.title">Get Started in Minutes</h2>
+            <p class="section-subtitle" data-i18n="howItWorks.subtitle"></p>
+          </div>
+          <div class="steps-grid">
+            <div class="step-card reveal reveal-delay-1">
+              <div class="step-num">1</div>
+              <h3 class="card-title" data-i18n="howItWorks.steps.0.title">Create Account</h3>
+              <p class="card-desc" data-i18n="howItWorks.steps.0.desc"></p>
+            </div>
+            <div class="step-card reveal reveal-delay-2">
+              <div class="step-num">2</div>
+              <h3 class="card-title" data-i18n="howItWorks.steps.1.title">Setup Your Shop</h3>
+              <p class="card-desc" data-i18n="howItWorks.steps.1.desc"></p>
+            </div>
+            <div class="step-card reveal reveal-delay-3">
+              <div class="step-num">3</div>
+              <h3 class="card-title" data-i18n="howItWorks.steps.2.title">Start Selling</h3>
+              <p class="card-desc" data-i18n="howItWorks.steps.2.desc"></p>
             </div>
           </div>
         </div>
+      </section>
 
-        <!-- Post-launch: Show landing content -->
-        <div class="post-launch">
-          <div class="hero-badge">
-            <div class="hero-badge-dot"></div>
-            <span class="hero-badge-text" data-i18n="hero.postLaunchBadge">🚀 We Are Live!</span>
+      <!-- Use cases -->
+      <section class="section alt" id="use-cases">
+        <div class="container">
+          <div class="section-head reveal">
+            <span class="section-tag" data-i18n="landing.useCases.tag">Use cases</span>
+            <h2 class="section-title" data-i18n="landing.useCases.title"></h2>
+            <p class="section-subtitle" data-i18n="landing.useCases.subtitle"></p>
           </div>
-          <h1 class="hero-title">
-            <span data-i18n="hero.title1" style="display:inline">The Future of</span><br />
-            <span data-i18n="hero.title2">Business Operations</span>
-          </h1>
-          <p class="hero-subtitle" data-i18n="hero.subtitle">
-            Lightning-powered Point of Sale built on Nostr Protocol.
-            Decentralized, sovereign, and privacy-first for modern businesses.
-          </p>
+          <div class="grid use-grid">
+            <article class="card use-card reveal reveal-delay-1">
+              <iconify-icon class="use-icon" icon="solar:shop-minimalistic-linear"></iconify-icon>
+              <h3 class="card-title" data-i18n="landing.useCases.items.0.title"></h3>
+              <p class="card-desc" data-i18n="landing.useCases.items.0.desc"></p>
+            </article>
+            <article class="card use-card reveal reveal-delay-2">
+              <iconify-icon class="use-icon" icon="solar:chef-hat-linear"></iconify-icon>
+              <h3 class="card-title" data-i18n="landing.useCases.items.1.title"></h3>
+              <p class="card-desc" data-i18n="landing.useCases.items.1.desc"></p>
+            </article>
+            <article class="card use-card reveal reveal-delay-3">
+              <iconify-icon class="use-icon" icon="solar:scissors-linear"></iconify-icon>
+              <h3 class="card-title" data-i18n="landing.useCases.items.2.title"></h3>
+              <p class="card-desc" data-i18n="landing.useCases.items.2.desc"></p>
+            </article>
+            <article class="card use-card reveal reveal-delay-4">
+              <iconify-icon class="use-icon" icon="solar:global-linear"></iconify-icon>
+              <h3 class="card-title" data-i18n="landing.useCases.items.3.title"></h3>
+              <p class="card-desc" data-i18n="landing.useCases.items.3.desc"></p>
+            </article>
+          </div>
         </div>
-        <div class="hero-buttons post-launch">
-          <a href="https://app.bnos.space" class="btn-primary">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-            </svg>
-            <span data-i18n="hero.btnPrimary">Get Started</span>
-          </a>
-          <a href="manual.html" class="btn-secondary" data-i18n="hero.btnSecondary">Read Documentation</a>
-          <a href="console.html" class="btn-secondary">Console</a>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Features Section -->
-    <section class="features" id="features">
-      <div class="container">
-        <div class="section-header reveal">
-          <span class="section-tag" data-i18n="features.tag">Features</span>
-          <h2 class="section-title" data-i18n="features.title">Everything You Need</h2>
-          <p class="section-subtitle" data-i18n="features.subtitle">
-            A complete business operating system designed for the future of
-            commerce.
-          </p>
-        </div>
-        <div class="features-grid">
-          <div class="feature-card reveal reveal-delay-1">
-            <div class="feature-icon">⚡</div>
-            <h3 class="feature-title" data-i18n="features.items.0.title">Lightning Payments</h3>
-            <p class="feature-desc" data-i18n="features.items.0.desc">
-              Accept Bitcoin payments instantly with Lightning Network.
-              Near-zero fees and instant settlement.
-            </p>
+      <!-- Technology -->
+      <section class="section" id="technology">
+        <div class="container">
+          <div class="section-head reveal">
+            <span class="section-tag" data-i18n="tech.tag">Technology</span>
+            <h2 class="section-title" data-i18n="tech.title">Powered By</h2>
+            <p class="section-subtitle" data-i18n="tech.subtitle"></p>
           </div>
-          <div class="feature-card reveal reveal-delay-2">
-            <div class="feature-icon">🔐</div>
-            <h3 class="feature-title" data-i18n="features.items.1.title">Non-Custodial</h3>
-            <p class="feature-desc" data-i18n="features.items.1.desc">
-              Your keys, your coins. We never hold your funds. Complete
-              financial sovereignty.
-            </p>
-          </div>
-          <div class="feature-card reveal reveal-delay-3">
-            <div class="feature-icon">🌐</div>
-            <h3 class="feature-title" data-i18n="features.items.2.title">Fully Decentralized</h3>
-            <p class="feature-desc" data-i18n="features.items.2.desc">
-              Built on Nostr Protocol. No central servers. Your data stays with
-              you.
-            </p>
-          </div>
-          <div class="feature-card reveal reveal-delay-1">
-            <div class="feature-icon">📱</div>
-            <h3 class="feature-title" data-i18n="features.items.3.title">Offline First</h3>
-            <p class="feature-desc" data-i18n="features.items.3.desc">
-              Works without internet connection. Sync when you're back online.
-              Never miss a sale.
-            </p>
-          </div>
-          <div class="feature-card reveal reveal-delay-2">
-            <div class="feature-icon">📊</div>
-            <h3 class="feature-title" data-i18n="features.items.4.title">Real-time Analytics</h3>
-            <p class="feature-desc" data-i18n="features.items.4.desc">
-              Comprehensive business insights. Track sales, inventory, and
-              customer behavior in real-time.
-            </p>
-          </div>
-          <div class="feature-card reveal reveal-delay-3">
-            <div class="feature-icon">👥</div>
-            <h3 class="feature-title" data-i18n="features.items.5.title">Team Management</h3>
-            <p class="feature-desc" data-i18n="features.items.5.desc">
-              Multi-user support with role-based permissions. Manage your team
-              effectively.
-            </p>
+          <div class="tech-grid">
+            <div class="tech-item reveal reveal-delay-1">
+              <div class="tech-icon"><iconify-icon icon="solar:wallet-money-linear"></iconify-icon></div>
+              <span class="tech-name">Bitcoin</span>
+            </div>
+            <div class="tech-item reveal reveal-delay-2">
+              <div class="tech-icon"><iconify-icon icon="solar:bolt-linear"></iconify-icon></div>
+              <span class="tech-name">Lightning Network</span>
+            </div>
+            <div class="tech-item reveal reveal-delay-3">
+              <div class="tech-icon"><iconify-icon icon="solar:hashtag-linear"></iconify-icon></div>
+              <span class="tech-name">Nostr Protocol</span>
+            </div>
+            <div class="tech-item reveal reveal-delay-4">
+              <div class="tech-icon"><iconify-icon icon="solar:database-linear"></iconify-icon></div>
+              <span class="tech-name" data-i18n="tech.localFirst">Local-First</span>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- How It Works -->
-    <section class="how-it-works" id="how-it-works">
-      <div class="container">
-        <div class="section-header reveal">
-          <span class="section-tag" data-i18n="howItWorks.tag">How It Works</span>
-          <h2 class="section-title" data-i18n="howItWorks.title">Get Started in Minutes</h2>
-          <p class="section-subtitle" data-i18n="howItWorks.subtitle">
-            Simple setup process to get your business running on BnOS.
-          </p>
+      <!-- Open source -->
+      <section class="section alt" id="open-source">
+        <div class="container oss-inner">
+          <div class="oss-copy reveal">
+            <span class="section-tag" data-i18n="landing.oss.tag">Open source</span>
+            <h2 class="section-title" data-i18n="landing.oss.title">Yours to run, audit and self-host</h2>
+            <p class="section-subtitle align-left" data-i18n="landing.oss.subtitle"></p>
+            <ul class="oss-points">
+              <li>
+                <span class="oss-ico"><iconify-icon icon="solar:code-square-linear"></iconify-icon></span>
+                <span>
+                  <b data-i18n="landing.oss.points.0.title"></b>
+                  <small data-i18n="landing.oss.points.0.desc"></small>
+                </span>
+              </li>
+              <li>
+                <span class="oss-ico"><iconify-icon icon="solar:database-linear"></iconify-icon></span>
+                <span>
+                  <b data-i18n="landing.oss.points.1.title"></b>
+                  <small data-i18n="landing.oss.points.1.desc"></small>
+                </span>
+              </li>
+              <li>
+                <span class="oss-ico"><iconify-icon icon="solar:wallet-money-linear"></iconify-icon></span>
+                <span>
+                  <b data-i18n="landing.oss.points.2.title"></b>
+                  <small data-i18n="landing.oss.points.2.desc"></small>
+                </span>
+              </li>
+            </ul>
+            <div class="oss-actions">
+              <a href="https://github.com/bitoslabs/bnos-svelte" target="_blank" rel="noopener" class="btn btn-primary">
+                <iconify-icon icon="solar:code-square-linear"></iconify-icon>
+                <span data-i18n="landing.oss.cta">View on GitHub</span>
+              </a>
+            </div>
+          </div>
+          <div class="oss-visual reveal reveal-delay-2" aria-hidden="true">
+            <div class="term">
+              <div class="term-bar"><span></span><span></span><span></span></div>
+              <pre><code><span class="t-mute">$</span> git clone https://github.com/bitoslabs/bnos-svelte
+<span class="t-mute">$</span> pnpm install
+<span class="t-mute">$</span> pnpm dev
+<span class="t-ok">▲ ready</span> — http://localhost:5173</code></pre>
+            </div>
+          </div>
         </div>
-        <div class="steps">
-          <div class="step reveal reveal-delay-1">
-            <div class="step-number">1</div>
-            <h3 class="step-title" data-i18n="howItWorks.steps.0.title">Create Account</h3>
-            <p class="step-desc" data-i18n="howItWorks.steps.0.desc">
-              Sign up with your Nostr keys or create new ones. No email or
-              personal info required.
-            </p>
-          </div>
-          <div class="step reveal reveal-delay-2">
-            <div class="step-number">2</div>
-            <h3 class="step-title" data-i18n="howItWorks.steps.1.title">Setup Your Shop</h3>
-            <p class="step-desc" data-i18n="howItWorks.steps.1.desc">
-              Configure your business profile, add products, and set up your
-              Lightning wallet.
-            </p>
-          </div>
-          <div class="step reveal reveal-delay-3">
-            <div class="step-number">3</div>
-            <h3 class="step-title" data-i18n="howItWorks.steps.2.title">Start Selling</h3>
-            <p class="step-desc" data-i18n="howItWorks.steps.2.desc">
-              Accept payments, manage inventory, and grow your business with
-              complete sovereignty.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Technology Stack -->
-    <section class="tech-stack" id="technology">
-      <div class="container">
-        <div class="section-header reveal">
-          <span class="section-tag" data-i18n="tech.tag">Technology</span>
-          <h2 class="section-title" data-i18n="tech.title">Powered By</h2>
-          <p class="section-subtitle" data-i18n="tech.subtitle">
-            Built on cutting-edge decentralized technologies.
-          </p>
+      <!-- FAQ -->
+      <section class="section" id="faq">
+        <div class="container narrow">
+          <div class="section-head reveal">
+            <span class="section-tag" data-i18n="faq.tag">FAQ</span>
+            <h2 class="section-title" data-i18n="faq.title">Frequently Asked Questions</h2>
+            <p class="section-subtitle" data-i18n="faq.subtitle">Common questions about BnOS.</p>
+          </div>
+          <div class="faq-list reveal">
+            <details class="faq-item">
+              <summary data-i18n="faq.items.0.q">What is BnOS?</summary>
+              <div class="faq-answer" data-i18n="faq.items.0.a"></div>
+            </details>
+            <details class="faq-item">
+              <summary data-i18n="faq.items.1.q">Is BnOS free to use?</summary>
+              <div class="faq-answer" data-i18n="faq.items.1.a"></div>
+            </details>
+            <details class="faq-item">
+              <summary data-i18n="faq.items.2.q">Do I need a bank account?</summary>
+              <div class="faq-answer" data-i18n="faq.items.2.a"></div>
+            </details>
+            <details class="faq-item">
+              <summary data-i18n="faq.items.3.q">How does offline mode work?</summary>
+              <div class="faq-answer" data-i18n="faq.items.3.a"></div>
+            </details>
+          </div>
         </div>
-        <div class="tech-grid">
-          <div class="tech-item reveal reveal-delay-1">
-            <div class="tech-icon">₿</div>
-            <span class="tech-name">Bitcoin</span>
-          </div>
-          <div class="tech-item reveal reveal-delay-2">
-            <div class="tech-icon">⚡</div>
-            <span class="tech-name">Lightning Network</span>
-          </div>
-          <div class="tech-item reveal reveal-delay-3">
-            <div class="tech-icon">🟣</div>
-            <span class="tech-name">Nostr Protocol</span>
-          </div>
-          <div class="tech-item reveal reveal-delay-4">
-            <div class="tech-icon">💾</div>
-            <span class="tech-name" data-i18n="tech.localFirst">Local-First</span>
-          </div>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- FAQ Section -->
-    <section class="faq" id="faq">
-      <div class="container">
-        <div class="section-header reveal">
-          <span class="section-tag" data-i18n="faq.tag">FAQ</span>
-          <h2 class="section-title" data-i18n="faq.title">Frequently Asked Questions</h2>
-          <p class="section-subtitle" data-i18n="faq.subtitle">Common questions about BnOS.</p>
-        </div>
-        <div class="faq-grid">
-          <div class="faq-item reveal reveal-delay-1">
-            <h3 class="faq-question" data-i18n="faq.items.0.q">What is BnOS?</h3>
-            <p class="faq-answer" data-i18n="faq.items.0.a">
-              BnOS (Bitcoin Nostr Operating System) is a decentralized,
-              lightning-powered Point of Sale (POS) and business operating
-              system. It allows businesses to accept Bitcoin payments and manage
-              their operations without intermediaries.
-            </p>
-          </div>
-          <div class="faq-item reveal reveal-delay-2">
-            <h3 class="faq-question" data-i18n="faq.items.1.q">Is BnOS free to use?</h3>
-            <p class="faq-answer" data-i18n="faq.items.1.a">
-              Yes, BnOS is open-source software. You can use the basic features
-              for free. We do not charge transaction fees on your payments.
-            </p>
-          </div>
-          <div class="faq-item reveal reveal-delay-3">
-            <h3 class="faq-question" data-i18n="faq.items.2.q">Do I need a bank account?</h3>
-            <p class="faq-answer" data-i18n="faq.items.2.a">
-              No, you do not need a traditional bank account. BnOS operates on
-              the Bitcoin Lightning Network, allowing you to have full control
-              over your funds.
-            </p>
-          </div>
-          <div class="faq-item reveal reveal-delay-4">
-            <h3 class="faq-question" data-i18n="faq.items.3.q">How does offline mode work?</h3>
-            <p class="faq-answer" data-i18n="faq.items.3.a">
-              BnOS uses a 'Local-First' architecture. Data is stored on your
-              device first. You can process sales offline, and data will sync
-              with Nostr relays when you reconnect.
-            </p>
+      <!-- CTA -->
+      <section class="cta" id="get-started">
+        <div class="container cta-inner reveal">
+          <h2 class="cta-title" data-i18n="cta.title">Ready to Get Started?</h2>
+          <p class="cta-subtitle" data-i18n="cta.subtitle"></p>
+          <div class="cta-actions">
+            <a href="https://app.bnos.space" class="btn btn-primary">
+              <iconify-icon icon="solar:bolt-circle-bold"></iconify-icon>
+              <span data-i18n="cta.btn">Join Waitlist</span>
+            </a>
+            <a href="manual.html" class="btn btn-ghost">
+              <iconify-icon icon="solar:book-2-linear"></iconify-icon>
+              <span data-i18n="hero.btnSecondary">Read Documentation</span>
+            </a>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta" id="cta">
-      <div class="cta-orb"></div>
-      <div class="cta-content reveal">
-        <h2 class="cta-title" data-i18n="cta.title">Ready to Get Started?</h2>
-        <p class="cta-subtitle" data-i18n="cta.subtitle">
-          Join the waitlist and be among the first to experience the future of
-          business operations.
-        </p>
-        <a href="#" class="btn-primary">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-          </svg>
-          <span data-i18n="cta.btn">Join Waitlist</span>
-        </a>
-      </div>
-    </section>
+      </section>
+    </main>
 
     <!-- Footer -->
     <footer class="footer">
-      <div class="footer-content">
+      <div class="container footer-content">
         <div class="footer-brand">
           <div class="footer-logo">
-            <div class="footer-logo-icon">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+            <span class="footer-logo-icon" aria-hidden="true">
+              <svg class="bee-svg" viewBox="0 0 64 64" width="24" height="24" role="img" aria-label="BnOS">
+                <ellipse class="bee-wing" cx="22" cy="28" rx="12" ry="9" fill="rgba(255,255,255,0.45)" stroke="rgba(255,255,255,0.3)" stroke-width="0.5"/>
+                <ellipse class="bee-wing" cx="42" cy="28" rx="12" ry="9" fill="rgba(255,255,255,0.45)" stroke="rgba(255,255,255,0.3)" stroke-width="0.5"/>
+                <ellipse cx="32" cy="38" rx="13" ry="17" fill="#ffb000"/>
+                <path d="M20 33 Q32 29 44 33" stroke="#12101a" stroke-width="3" fill="none"/>
+                <path d="M20 40 Q32 36 44 40" stroke="#12101a" stroke-width="3" fill="none"/>
+                <path d="M20 47 Q32 43 44 47" stroke="#12101a" stroke-width="3" fill="none"/>
+                <circle cx="32" cy="17" r="8" fill="#ffb000" stroke="#12101a" stroke-width="2"/>
+                <circle cx="29" cy="15" r="1.5" fill="#12101a"/>
+                <circle cx="35" cy="15" r="1.5" fill="#12101a"/>
+                <path d="M28 10 Q25 6 23 3" stroke="#ffb000" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                <path d="M36 10 Q39 6 41 3" stroke="#ffb000" stroke-width="1.5" fill="none" stroke-linecap="round"/>
               </svg>
-            </div>
+            </span>
             <span class="footer-logo-text">BnOS</span>
           </div>
-          <p class="footer-desc" data-i18n="footer.desc">
-            Lightning-powered Point of Sale built on Nostr Protocol.
-            Decentralized, sovereign, and privacy-first.
-          </p>
+          <p class="footer-desc" data-i18n="footer.desc"></p>
+          <div class="footer-social">
+            <a href="https://discord.gg/aNwEQQF3w8" target="_blank" rel="noopener" title="Discord" aria-label="Discord">
+              <svg viewBox="0 -28.5 256 256" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path
+                  d="M216.856339,16.5966031 C200.285002,8.84328665 182.566144,3.2084988 164.041564,0 C161.766523,4.11318106 159.108624,9.64549908 157.276099,14.0464379 C137.583995,11.0849896 118.072967,11.0849896 98.7430163,14.0464379 C96.9108417,9.64549908 94.1925838,4.11318106 91.8971895,0 C73.3526068,3.2084988 55.6133949,8.86399117 39.0420583,16.6376612 C5.61752293,67.146514 -3.4433191,116.400813 1.08711069,164.955721 C23.2560196,181.510915 44.7403634,191.567697 65.8621325,198.148576 C71.0772151,190.971126 75.7283628,183.341335 79.7352139,175.300261 C72.104019,172.400575 64.7949724,168.822202 57.8887866,164.667963 C59.7209612,163.310589 61.5131304,161.891452 63.2445898,160.431257 C105.36741,180.133187 151.134928,180.133187 192.754523,160.431257 C194.506336,161.891452 196.298154,163.310589 198.110326,164.667963 C191.183787,168.842556 183.854737,172.420929 176.223542,175.320965 C180.230393,183.341335 184.861538,190.991831 190.096624,198.16893 C211.238746,191.588051 232.743023,181.531619 254.911949,164.955721 C260.227747,108.668201 245.831087,59.8662432 216.856339,16.5966031 Z M85.4738752,135.09489 C72.8290281,135.09489 62.4592217,123.290155 62.4592217,108.914901 C62.4592217,94.5396472 72.607595,82.7145587 85.4738752,82.7145587 C98.3405064,82.7145587 108.709962,94.5189427 108.488529,108.914901 C108.508531,123.290155 98.3405064,135.09489 85.4738752,135.09489 Z M170.525237,135.09489 C157.88039,135.09489 147.510584,123.290155 147.510584,108.914901 C147.510584,94.5396472 157.658606,82.7145587 170.525237,82.7145587 C183.391518,82.7145587 193.761324,94.5189427 193.539891,108.914901 C193.539891,123.290155 183.391518,135.09489 170.525237,135.09489 Z"
+                />
+              </svg>
+            </a>
+            <a href="https://github.com/bitoslabs/bnos-svelte" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path
+                  d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"
+                />
+              </svg>
+            </a>
+            <a
+              href="https://yakihonne.com/profile/bnos@nostrcheck.me"
+              target="_blank"
+              rel="noopener"
+              title="Nostr"
+              aria-label="Nostr"
+            >
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </a>
+          </div>
         </div>
+
         <div class="footer-column">
           <h4 data-i18n="footer.cols.product">Product</h4>
           <ul class="footer-links">
             <li><a href="#features" data-i18n="footer.links.features">Features</a></li>
             <li><a href="#how-it-works" data-i18n="footer.links.howItWorks">How It Works</a></li>
             <li><a href="#technology" data-i18n="footer.links.tech">Technology</a></li>
-            <!-- <li><a href="#">Pricing</a></li> -->
           </ul>
         </div>
         <div class="footer-column">
           <h4 data-i18n="footer.cols.resources">Resources</h4>
           <ul class="footer-links">
-            <li><a href="docs.bnos.space" data-i18n="footer.links.docs">Documentation</a></li>
-            <!-- <li><a href="#">API Reference</a></li> -->
-            <li><a href="#" data-i18n="footer.links.support">Support</a></li>
-            <li><a href="#" data-i18n="footer.links.blog">Blog</a></li>
+            <li><a href="manual.html" data-i18n="footer.links.docs">Documentation</a></li>
+            <li><a href="https://github.com/bitoslabs/bnos-svelte" target="_blank" rel="noopener" data-i18n="landing.oss.cta">View on GitHub</a></li>
+            <li><a href="console.html">Console</a></li>
           </ul>
         </div>
         <div class="footer-column">
@@ -553,200 +725,68 @@
           </ul>
         </div>
       </div>
-      <div class="footer-bottom">
-        <p class="footer-copyright" data-i18n="footer.copyright">
-          © 2026 BnOS. All rights reserved. Powered by Nostr & Bitcoin Lightning
-          Network.
-        </p>
-        <div class="footer-social">
-          <!-- discord -->
-          <a
-            href="https://discord.gg/aNwEQQF3w8"
-            target="_blank"
-            rel="noopener"
-            title="Discord"
-          >
-            <svg
-              viewBox="0 -28.5 256 256"
-              version="1.1"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-              preserveAspectRatio="xMidYMid"
-              fill="#000000"
-            >
-              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-              <g
-                id="SVGRepo_tracerCarrier"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></g>
-              <g id="SVGRepo_iconCarrier">
-                <g>
-                  <path
-                    d="M216.856339,16.5966031 C200.285002,8.84328665 182.566144,3.2084988 164.041564,0 C161.766523,4.11318106 159.108624,9.64549908 157.276099,14.0464379 C137.583995,11.0849896 118.072967,11.0849896 98.7430163,14.0464379 C96.9108417,9.64549908 94.1925838,4.11318106 91.8971895,0 C73.3526068,3.2084988 55.6133949,8.86399117 39.0420583,16.6376612 C5.61752293,67.146514 -3.4433191,116.400813 1.08711069,164.955721 C23.2560196,181.510915 44.7403634,191.567697 65.8621325,198.148576 C71.0772151,190.971126 75.7283628,183.341335 79.7352139,175.300261 C72.104019,172.400575 64.7949724,168.822202 57.8887866,164.667963 C59.7209612,163.310589 61.5131304,161.891452 63.2445898,160.431257 C105.36741,180.133187 151.134928,180.133187 192.754523,160.431257 C194.506336,161.891452 196.298154,163.310589 198.110326,164.667963 C191.183787,168.842556 183.854737,172.420929 176.223542,175.320965 C180.230393,183.341335 184.861538,190.991831 190.096624,198.16893 C211.238746,191.588051 232.743023,181.531619 254.911949,164.955721 C260.227747,108.668201 245.831087,59.8662432 216.856339,16.5966031 Z M85.4738752,135.09489 C72.8290281,135.09489 62.4592217,123.290155 62.4592217,108.914901 C62.4592217,94.5396472 72.607595,82.7145587 85.4738752,82.7145587 C98.3405064,82.7145587 108.709962,94.5189427 108.488529,108.914901 C108.508531,123.290155 98.3405064,135.09489 85.4738752,135.09489 Z M170.525237,135.09489 C157.88039,135.09489 147.510584,123.290155 147.510584,108.914901 C147.510584,94.5396472 157.658606,82.7145587 170.525237,82.7145587 C183.391518,82.7145587 193.761324,94.5189427 193.539891,108.914901 C193.539891,123.290155 183.391518,135.09489 170.525237,135.09489 Z"
-                    fill="#5865F2"
-                    fill-rule="nonzero"
-                  ></path>
-                </g>
-              </g>
-            </svg>
-          </a>
-          <a
-            href="https://github.com/bitoslabs/BnOS"
-            target="_blank"
-            rel="noopener"
-            title="GitHub"
-          >
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"
-              />
-            </svg>
-          </a>
-          <a
-            href="https://yakihonne.com/profile/bnos@nostrcheck.me"
-            target="_blank"
-            rel="noopener"
-            title="Nostr"
-          >
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <circle
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                stroke-width="2"
-                fill="none"
-              />
-              <circle cx="12" cy="12" r="3" />
-            </svg>
-          </a>
-          <a href="#" target="_blank" rel="noopener" title="Bitcoin">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-1h-1v-2h1v-4H9v-2h2V7h2v1h1v2h-1v4h2v2h-2v1z"
-              />
-            </svg>
-          </a>
-        </div>
+      <div class="container footer-bottom">
+        <p class="footer-copyright" data-i18n="footer.copyright"></p>
       </div>
     </footer>
 
     <script>
-      // Mobile Menu Toggle
-      function toggleMobileMenu() {
-        const navRight = document.querySelector(".nav-right");
-        const mobileToggle = document.querySelector(".nav-mobile-toggle");
-        navRight.classList.toggle("active");
-        mobileToggle.classList.toggle("active");
-      }
-
-      function closeMobileMenu() {
-        const navRight = document.querySelector(".nav-right");
-        const mobileToggle = document.querySelector(".nav-mobile-toggle");
-        navRight.classList.remove("active");
-        mobileToggle.classList.remove("active");
-      }
-
-      // Close mobile menu when clicking outside
-      document.addEventListener("click", function (event) {
-        const navRight = document.querySelector(".nav-right");
-        const mobileToggle = document.querySelector(".nav-mobile-toggle");
-        const nav = document.querySelector(".nav");
-
-        if (
-          navRight.classList.contains("active") &&
-          !nav.contains(event.target)
-        ) {
-          closeMobileMenu();
+      // Mobile menu
+      (function () {
+        var btn = document.getElementById("menuBtn");
+        var links = document.getElementById("navLinks");
+        if (!btn || !links) return;
+        function close() {
+          links.classList.remove("open");
+          btn.setAttribute("aria-expanded", "false");
         }
-      });
+        btn.addEventListener("click", function () {
+          var open = links.classList.toggle("open");
+          btn.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+        links.querySelectorAll("a").forEach(function (a) {
+          a.addEventListener("click", close);
+        });
+        window.addEventListener("resize", function () {
+          if (window.innerWidth > 900) close();
+        });
+      })();
 
-      // Launch date: January 1, 2026 09:09:00 AM (local time)
-      const launchDate = new Date("2026-01-01T09:09:00").getTime();
+      // Sticky nav shadow
+      (function () {
+        var nav = document.getElementById("nav");
+        if (!nav) return;
+        var onScroll = function () {
+          nav.classList.toggle("scrolled", window.scrollY > 8);
+        };
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+      })();
 
-      function checkLaunchStatus() {
-        const now = new Date().getTime();
-        const distance = launchDate - now;
-
-        if (distance < 0) {
-          // Post-launch
-          document.body.classList.remove("is-pre-launch");
-          document.body.classList.add("is-post-launch");
-          return true;
-        } else {
-          // Pre-launch
-          document.body.classList.remove("is-post-launch");
-          document.body.classList.add("is-pre-launch");
-          return false;
-        }
-      }
-
-      function updateCountdown() {
-        const now = new Date().getTime();
-        const distance = launchDate - now;
-
-        if (distance < 0) {
-          document.getElementById("days").textContent = "00";
-          document.getElementById("hours").textContent = "00";
-          document.getElementById("minutes").textContent = "00";
-          document.getElementById("seconds").textContent = "00";
+      // Scroll reveal
+      (function () {
+        var els = document.querySelectorAll(".reveal");
+        if (!("IntersectionObserver" in window)) {
+          els.forEach(function (el) {
+            el.classList.add("active");
+          });
           return;
         }
-
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor(
-          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+        var observer = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("active");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
         );
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        document.getElementById("days").textContent = String(days).padStart(
-          2,
-          "0",
-        );
-        document.getElementById("hours").textContent = String(hours).padStart(
-          2,
-          "0",
-        );
-        document.getElementById("minutes").textContent = String(
-          minutes,
-        ).padStart(2, "0");
-        document.getElementById("seconds").textContent = String(
-          seconds,
-        ).padStart(2, "0");
-      }
-
-      // Initial check
-      checkLaunchStatus();
-      updateCountdown();
-
-      // Update every second
-      setInterval(() => {
-        checkLaunchStatus();
-        updateCountdown();
-      }, 1000);
-
-      // Scroll Reveal Animation
-      const observerOptions = {
-        threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px",
-      };
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("active");
-            observer.unobserve(entry.target); // Only animate once
-          }
+        els.forEach(function (el) {
+          observer.observe(el);
         });
-      }, observerOptions);
-
-      document.addEventListener("DOMContentLoaded", () => {
-        document
-          .querySelectorAll(".reveal")
-          .forEach((el) => observer.observe(el));
-      });
+      })();
     </script>
   </body>
 </html>
