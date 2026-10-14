@@ -42,13 +42,13 @@ function genRandomKey() {
     const pubkey=schnorrGetPublicKeyHex(hex);
     window._randomPrivkey=hex;
     document.getElementById('pubPrivkey').value=nsecEncode(hex);
-    document.getElementById('keyInfo').innerHTML=`🔑 <b>nsec:</b> ${nsecEncode(hex)}<br>📬 <b>npub:</b> ${npubEncode(pubkey)}<br><span style="color:var(--text2);font-size:10px;">Hex: ${pubkey}</span>`;
+    document.getElementById('keyInfo').innerHTML=`${icon('key')} <b>nsec:</b> ${nsecEncode(hex)}<br>${icon('mail')} <b>npub:</b> ${npubEncode(pubkey)}<br><span style="color:var(--text2);font-size:10px;">Hex: ${pubkey}</span>`;
   });
 }
 
 function genTestNote() {
   document.getElementById('pubKind').value='1';
-  document.getElementById('pubContent').value=`Hello from BnOS Console! ${new Date().toISOString()} ⚡`;
+  document.getElementById('pubContent').value=`Hello from BnOS Console! ${new Date().toISOString()}`;
   document.getElementById('pubTags').value='[]';
   if(!document.getElementById('pubPrivkey').value&&!isNip07Enabled()) genRandomKey();
 }
@@ -63,7 +63,7 @@ function clearWsLog(){document.getElementById('wsLog').innerHTML='';}
 
 function wsTemplate(type) {
   const input=document.getElementById('wsInput'); subCounter++; const sid='tpl_'+subCounter;
-  const t={reqall:['REQ',sid,{kinds:[0],limit:20}],reqnotes:['REQ',sid,{kinds:[1],limit:50}],reqbnos:['REQ',sid,{kinds:[30100],limit:50}],reqorders:['REQ',sid,{kinds:[30200],limit:50}],count:['COUNT',sid,{kinds:[0,1]}],close:['CLOSE',activeSubId||'sub_1'],event:['EVENT',{kind:1,content:'Test from BnOS ⚡',tags:[],pubkey:'0'.repeat(64),created_at:Math.floor(Date.now()/1000),id:'...',sig:'...'}]};
+  const t={reqall:['REQ',sid,{kinds:[0],limit:20}],reqnotes:['REQ',sid,{kinds:[1],limit:50}],reqbnos:['REQ',sid,{kinds:[30100],limit:50}],reqorders:['REQ',sid,{kinds:[30200],limit:50}],count:['COUNT',sid,{kinds:[0,1]}],close:['CLOSE',activeSubId||'sub_1'],event:['EVENT',{kind:1,content:'Test from BnOS',tags:[],pubkey:'0'.repeat(64),created_at:Math.floor(Date.now()/1000),id:'...',sig:'...'}]};
   if(t[type]) input.value=JSON.stringify(t[type]); switchTab('raw');
 }
 
@@ -73,7 +73,9 @@ function switchTab(tabName) {
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   const tabEl=document.querySelector(`.tab[data-tab="${tabName}"]`); if(tabEl)tabEl.classList.add('active');
   const panel=document.getElementById(`panel-${tabName}`); if(panel)panel.classList.add('active');
+  const main=document.querySelector('.main'); if(main)main.classList.toggle('terminal-mode',tabName==='terminal');
   if(tabName==='relays')updateRelayManagerList();
+  if(tabName==='terminal'&&typeof focusTerminalInput==='function')focusTerminalInput();
   updateMobileNav(tabName);
 }
 
@@ -95,7 +97,7 @@ function setColorTheme(t){document.documentElement.setAttribute('data-theme',t);
 
 // ── Theme (dark/light) ──
 function getTheme(){return document.body.getAttribute('data-theme')||'dark';}
-function setTheme(t){document.body.setAttribute('data-theme',t);const b=document.getElementById('themeToggle');if(b)b.textContent=t==='light'?'☀️':'🌙';try{const r=localStorage.getItem(STORAGE_KEY);const s=r?JSON.parse(r):{};s.theme=t;localStorage.setItem(STORAGE_KEY,JSON.stringify(s));}catch{}}
+function setTheme(t){document.body.setAttribute('data-theme',t);const b=document.getElementById('themeToggle');if(b)b.innerHTML=icon(t==='light'?'sun':'moon');try{const r=localStorage.getItem(STORAGE_KEY);const s=r?JSON.parse(r):{};s.theme=t;localStorage.setItem(STORAGE_KEY,JSON.stringify(s));}catch{}}
 function toggleTheme(){setTheme(getTheme()==='dark'?'light':'dark');}
 function restoreTheme(){try{const r=localStorage.getItem(STORAGE_KEY);if(r){const s=JSON.parse(r);if(s.theme)setTheme(s.theme);}}catch{}}
 
@@ -105,7 +107,7 @@ function closeSidebarOnMobile(){if(window.innerWidth<=768){document.getElementBy
 
 // ── Mobile UX ──
 function mobileTab(tabName) {
-  if(tabName==='events'){closeMobileDetail();document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.getElementById('eventsList').classList.remove('mobile-hide');document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));updateMobileNav('events');return;}
+  if(tabName==='events'){closeMobileDetail();document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.getElementById('eventsList').classList.remove('mobile-hide');document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));const m=document.querySelector('.main');if(m)m.classList.remove('terminal-mode');updateMobileNav('events');return;}
   closeMobileDetail(); switchTab(tabName);
 }
 function updateMobileNav(activeTab){document.querySelectorAll('#mobileNav button').forEach(b=>{b.classList.toggle('active',b.getAttribute('data-mtab')===activeTab);});}
@@ -115,7 +117,7 @@ function toggleQueryForm() {
   row.classList.toggle('expanded');
   const isOpen=row.classList.contains('expanded');
   row.dataset.userExpanded=isOpen?'1':'';
-  btn.textContent=isOpen?'▲ Hide Filters':'▼ Show Filters';
+  btn.innerHTML=`${icon(isOpen?'chevron-up':'chevron-down')} ${isOpen?'Hide Filters':'Show Filters'}`;
 }
 
 function handleResize() {
@@ -123,7 +125,7 @@ function handleResize() {
   const isMobile=window.innerWidth<=768;
   if(isMobile){
     btn.style.display='flex';
-    if(!row.dataset.userExpanded){row.classList.remove('expanded');btn.textContent='▼ Show Filters';}
+    if(!row.dataset.userExpanded){row.classList.remove('expanded');btn.innerHTML=`${icon('chevron-down')} Show Filters`;}
     closeMobileDetail();
   } else {
     btn.style.display='none'; row.classList.add('expanded'); row.dataset.userExpanded='';
@@ -138,7 +140,7 @@ window.addEventListener('resize',handleResize);
 function updateNip07Status() {
   const el=document.getElementById('nip07Status'); if(!el)return;
   if(!isNip07Enabled()){el.innerHTML='';return;}
-  el.innerHTML='<span style="color:var(--green);">✅ NIP-07 enabled</span>';
+  el.innerHTML=`<span style="color:var(--green);">${icon('check')} NIP-07 enabled</span>`;
   nip07GetPubkey().then(pk=>{if(pk)el.innerHTML+=` <span style="color:var(--text2);font-size:10px;">${npubEncode(pk).slice(0,20)}...</span>`;});
 }
 
@@ -153,10 +155,10 @@ document.addEventListener('click',(e)=>{if(e.target.closest('.sidebar-item'))clo
 // ── Crypto Preload Status ──
 function showCryptoStatus() {
   const el=document.getElementById('cryptoStatus'); if(!el)return;
-  el.innerHTML='<span style="color:var(--text2);">⏳ Loading crypto...</span>';
+  el.innerHTML=`<span style="color:var(--text2);">${icon('refresh')} Loading crypto...</span>`;
   loadCrypto().then(ok=>{
-    if(ok) el.innerHTML='<span style="color:var(--green);">✅ Crypto ready</span>';
-    else el.innerHTML='<span style="color:var(--red);">❌ Crypto failed — check internet</span>';
+    if(ok) el.innerHTML=`<span style="color:var(--green);">${icon('check')} Crypto ready</span>`;
+    else el.innerHTML=`<span style="color:var(--red);">${icon('warning')} Crypto failed — check internet</span>`;
     setTimeout(()=>{el.innerHTML='';},4000);
   });
 }

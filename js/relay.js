@@ -19,7 +19,7 @@ class RelayPool {
       const ws = new WebSocket(url);
       conn.ws = ws;
       const t0 = Date.now();
-      ws.onopen = () => { conn.status='connected'; conn.latency=Date.now()-t0; this._log(url,'info',`✅ Connected (${conn.latency}ms)`); this._emitUI(); fetchRelayInfo(url); };
+      ws.onopen = () => { conn.status='connected'; conn.latency=Date.now()-t0; this._log(url,'info',`Connected (${conn.latency}ms)`); this._emitUI(); fetchRelayInfo(url); };
       ws.onclose = () => { conn.status='disconnected'; conn.ws=null; this._log(url,'info','Connection closed'); this._emitUI(); };
       ws.onerror = () => { conn.status='disconnected'; conn.errorCount++; this._log(url,'err','WebSocket error'); this._emitUI(); };
       ws.onmessage = (msg) => { conn.msgCount++; this._handleMessage(msg.data, url); };
@@ -57,6 +57,7 @@ class RelayPool {
   _handleMessage(data, fromUrl) {
     try {
       const p=JSON.parse(data); const type=p[0];
+      if(window.onRelayMessage) window.onRelayMessage(type, p, fromUrl);
       switch(type) {
         case 'EVENT': {
           const evt=p[2];
@@ -126,7 +127,7 @@ function updateRelayStatusBar() {
     const rw=(r.read&&r.write)?'RW':r.read?'R':r.write?'W':'—';
     html+=`<div class="relay-pill" title="${escHtml(r.url)}\n${r.label} | ${rw}${s.latency?' | '+s.latency+'ms':''}" onclick="openRelayManager()"><div class="pill-dot ${dc}" style="${s.status==='connected'?'background:'+r.color:''}"></div><span class="pill-label">${escHtml(r.label||r.url.replace(/^wss?:\/\//,'').slice(0,20))}</span><span class="pill-rw">${rw}</span></div>`;
   });
-  html+=`<button class="relay-manage-btn" onclick="openRelayManager()">⚙</button>`;
+  html+=`<button class="relay-manage-btn" onclick="openRelayManager()" aria-label="Manage relays">${icon('gear')} Manage</button>`;
   bar.innerHTML=html;
   const el=document.getElementById('queryRelayCount'); if(el)el.textContent=pool.getByMode('read').length;
 }
@@ -138,9 +139,9 @@ function updateRelayManagerList() {
   relaySettings.forEach((r,i)=>{
     const s=pool.getStats(r.url)||{};
     const dc=s.status==='connected'?'connected':s.status==='connecting'?'connecting':'';
-    const h=s.errorCount>0?`<span style="color:var(--red);font-size:10px;">⚠${s.errorCount}</span>`:'';
+    const h=s.errorCount>0?`<span style="color:var(--red);font-size:10px;">${icon('warning')} ${s.errorCount}</span>`:'';
     const l=s.latency?`<span style="color:var(--text2);font-size:10px;">${s.latency}ms</span>`:'';
-    html+=`<div class="relay-row" data-index="${i}"><div class="relay-dot ${dc}" style="${s.status==='connected'?'background:'+r.color:''}"></div><input class="relay-label-input" value="${escHtml(r.label)}" onchange="relaySettings[${i}].label=this.value;saveSettings();updateRelayStatusBar();"><span class="relay-url" title="${escHtml(r.url)}">${escHtml(r.url)}</span>${l}${h}<input type="color" value="${r.color}" style="width:24px;height:24px;border:none;background:none;cursor:pointer;padding:0;" onchange="relaySettings[${i}].color=this.value;saveSettings();updateRelayStatusBar();updateRelayManagerList();"><button class="toggle-btn ${r.read?'on':''}" onclick="relaySettings[${i}].read=!relaySettings[${i}].read;saveSettings();updateRelayStatusBar();updateRelayManagerList();">R</button><button class="toggle-btn ${r.write?'on':''}" onclick="relaySettings[${i}].write=!relaySettings[${i}].write;saveSettings();updateRelayStatusBar();updateRelayManagerList();">W</button><button class="toggle-btn ${s.status==='connected'?'on':''}" onclick="connToggle(${i})">${s.status==='connected'?'⏹':'▶'}</button><button class="danger" style="padding:3px 8px;font-size:11px;" onclick="removeRelay(${i})">✕</button></div>`;
+    html+=`<div class="relay-row" data-index="${i}"><div class="relay-dot ${dc}" style="${s.status==='connected'?'background:'+r.color:''}"></div><input class="relay-label-input" value="${escHtml(r.label)}" onchange="relaySettings[${i}].label=this.value;saveSettings();updateRelayStatusBar();" aria-label="Relay label"><span class="relay-url" title="${escHtml(r.url)}">${escHtml(r.url)}</span>${l}${h}<input type="color" value="${r.color}" style="width:24px;height:24px;border:none;background:none;cursor:pointer;padding:0;" onchange="relaySettings[${i}].color=this.value;saveSettings();updateRelayStatusBar();updateRelayManagerList();" aria-label="Relay color"><button class="toggle-btn ${r.read?'on':''}" onclick="relaySettings[${i}].read=!relaySettings[${i}].read;saveSettings();updateRelayStatusBar();updateRelayManagerList();" title="Read" aria-label="Toggle read">R</button><button class="toggle-btn ${r.write?'on':''}" onclick="relaySettings[${i}].write=!relaySettings[${i}].write;saveSettings();updateRelayStatusBar();updateRelayManagerList();" title="Write" aria-label="Toggle write">W</button><button class="toggle-btn ${s.status==='connected'?'on':''}" onclick="connToggle(${i})" aria-label="Toggle connection">${icon(s.status==='connected'?'stop':'play')}</button><button class="danger" style="padding:3px 8px;font-size:11px;" onclick="removeRelay(${i})" aria-label="Remove relay">${icon('x')}</button></div>`;
   });
   if(!html) html='<div style="color:var(--text2);padding:20px;text-align:center;">No relays configured.</div>';
   c.innerHTML=html;
@@ -155,9 +156,9 @@ function wsLogGeneric(label,type,msg) {
   const log=document.getElementById('wsLog'); if(!log)return;
   const ts=new Date().toLocaleTimeString();
   const cls={in:'msg-in',out:'msg-out',err:'msg-err'}[type]||'msg-info';
-  const arrow={in:'◀',out:'▶',err:'✖'}[type]||'ℹ';
+  const tag={in:'in',out:'out',err:'err'}[type]||'info';
   const prefix=label?`[${label}] `:'';
-  log.innerHTML+=`<div class="${cls}"><span class="msg-ts">${ts}</span>${arrow} ${escHtml(prefix+msg)}</div>`;
+  log.innerHTML+=`<div class="${cls}"><span class="msg-ts">${ts}</span><span class="msg-tag">${tag}</span>${escHtml(prefix+msg)}</div>`;
   log.scrollTop=log.scrollHeight;
 }
 
@@ -177,7 +178,7 @@ function renderRelayInfo() {
   if(!entries.length){el.innerHTML='<p style="color:var(--text2);">Connect to relays to see info.</p>';return;}
   let html='';
   entries.forEach(([url,info])=>{
-    html+=`<h3 style="color:var(--purple);margin:16px 0 12px;">📡 ${escHtml(getRelayLabel(url))}</h3><table style="width:100%;border-collapse:collapse;margin-bottom:16px;">`;
+    html+=`<h3 style="color:var(--purple);margin:16px 0 12px;display:flex;align-items:center;gap:7px;">${icon('radio')} ${escHtml(getRelayLabel(url))}</h3><table style="width:100%;border-collapse:collapse;margin-bottom:16px;">`;
     Object.entries(info).forEach(([k,v])=>{
       html+=`<tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 10px;color:var(--text2);font-size:11px;vertical-align:top;width:150px;">${escHtml(k)}</td><td style="padding:6px 10px;font-size:12px;">${typeof v==='object'?`<pre class="raw-json" style="margin:0;max-height:200px;">${escHtml(JSON.stringify(v,null,2))}</pre>`:escHtml(String(v))}</td></tr>`;
     });

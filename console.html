@@ -10,9 +10,10 @@
   <meta name="apple-mobile-web-app-title" content="BnOS Relay">
   <meta name="description" content="Nostr relay debug &amp; test tool for BnOS">
   <link rel="manifest" href="manifest.json">
-  <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="icon.svg">
-  <link rel="stylesheet" href="css/console.css">
+  <link rel="icon" type="image/svg+xml" href="assets/icons/icon.svg">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+  <link rel="stylesheet" href="css/console.css?v=20261014f">
   <style>
     .console-nav {
       display: flex;
@@ -22,6 +23,9 @@
       margin-right: 8px;
     }
     .console-nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       color: var(--accent, #a855f7);
       font-size: 13px;
       text-decoration: none;
@@ -46,6 +50,7 @@
     .theme-dot {
       width: 16px;
       height: 16px;
+      padding: 0;
       border-radius: 50%;
       border: 2px solid transparent;
       cursor: pointer;
@@ -66,9 +71,13 @@
       padding: 8px 16px;
       z-index: 99;
       flex-direction: row;
+      flex-wrap: wrap;
       gap: 8px;
     }
     .mobile-nav-dropdown a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       color: var(--accent, #a855f7);
       font-size: 13px;
       text-decoration: none;
@@ -101,38 +110,99 @@
 </head>
 <body>
 
+<!-- Inline SVG icon sprite (referenced by <svg class="ico"><use href="#i-..."/></svg>) -->
+<svg class="icon-sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></symbol>
+  <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></symbol>
+  <symbol id="i-external" viewBox="0 0 24 24"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><path d="M21 2l-2 2M15.5 7.5l3 3L22 7l-3-3M11.4 11.4a5.5 5.5 0 1 1-7.8 7.8 5.5 5.5 0 0 1 7.8-7.8zm0 0L15.5 7.5"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1.08-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1.08 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-terminal" viewBox="0 0 24 24"><path d="m4 17 6-6-6-6M12 19h8"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="m8 6-6 6 6 6M16 6l6 6-6 6"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18M18 17V9M13 17V5M8 17v-3"/></symbol>
+  <symbol id="i-plug" viewBox="0 0 24 24"><path d="M9 2v6M15 2v6M6 8h12v3a6 6 0 0 1-12 0zM12 17v5"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="m6 4 14 8-14 8z"/></symbol>
+  <symbol id="i-stop" viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-thumb" viewBox="0 0 24 24"><path d="M7 10v12M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88z"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 21a6.5 6.5 0 0 1 13 0M16 3.5a4 4 0 0 1 0 7.5M22 21a5 5 0 0 0-4-4.9"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="i-unlock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.9-.7"/></symbol>
+  <symbol id="i-warning" viewBox="0 0 24 24"><path d="M12 3 2 20h20L12 3zM12 9v5M12 17h.01"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-package" viewBox="0 0 24 24"><path d="M12 3 3 7.5v9L12 21l9-4.5v-9L12 3zM3 7.5 12 12l9-4.5M12 12v9"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 3v5h-5M21 12a9 9 0 0 1-15 6.7L3 16M3 21v-5h5"/></symbol>
+  <symbol id="i-save" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></symbol>
+  <symbol id="i-radio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M7.8 7.8a6 6 0 0 0 0 8.4M16.2 16.2a6 6 0 0 0 0-8.4M4.9 4.9a10 10 0 0 0 0 14.2M19.1 19.1a10 10 0 0 0 0-14.2"/></symbol>
+  <symbol id="i-store" viewBox="0 0 24 24"><path d="M4 7 5 3h14l1 4M4 7v13h16V7M4 7h16M9 12h6"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0"/></symbol>
+  <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1zM8 7h8M8 11h8M8 15h5"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5V8zM3 8l9 5 9-5M12 13v8"/></symbol>
+  <symbol id="i-id" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="10" r="2.5"/><path d="M8 17c0-2 1.8-3 4-3s4 1 4 3"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><path d="M3 6h11v10H3zM14 9h4l3 3v4h-7z"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M3 5v14a2 2 0 0 0 2 2h15V7H5a2 2 0 0 1-2-2z"/><path d="M3 5a2 2 0 0 1 2-2h13v4M16 13h.01"/></symbol>
+  <symbol id="i-clipboard" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></symbol>
+  <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/></symbol>
+  <symbol id="i-note" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M9 13h6M9 17h4"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+  <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-chevron-up" viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></symbol>
+</svg>
+
 <!-- Header -->
 <div class="header">
-  <button class="hamburger" id="hamburgerBtn" onclick="toggleSidebar()">☰</button>
-  <div>
-    <div class="logo"><span>⚡</span> BnOS Relay Console</div>
+  <button class="hamburger" id="hamburgerBtn" onclick="toggleSidebar()" aria-label="Toggle sidebar" aria-expanded="false">
+    <svg class="ico" aria-hidden="true"><use href="#i-menu"/></svg>
+  </button>
+  <div class="header-brand">
+    <div class="logo"><svg class="ico logo-ico" aria-hidden="true"><use href="#i-bolt"/></svg> BnOS Relay Console</div>
     <div class="subtitle">Nostr Debug &amp; Test Tool</div>
   </div>
-  <div class="console-nav">
-    <a href="index.html" class="console-nav-link">← Home</a>
-    <a href="https://app.bnos.space" target="_blank" rel="noopener" class="console-nav-link">Open App ↗</a>
-    <a href="https://github.com/bitoslabs/bnos-space" target="_blank" rel="noopener" class="console-nav-link">GitHub ↗</a>
-  </div>
+  <nav class="console-nav" aria-label="Console sections">
+    <a href="index.html" class="console-nav-link"><svg class="ico" aria-hidden="true"><use href="#i-arrow-left"/></svg> Home</a>
+    <a href="manual.html" class="console-nav-link"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg> Docs</a>
+    <a href="https://app.bnos.space" target="_blank" rel="noopener" class="console-nav-link">Open App <svg class="ico" aria-hidden="true"><use href="#i-external"/></svg></a>
+    <a href="https://github.com/bitoslabs/bnos-space" target="_blank" rel="noopener" class="console-nav-link">GitHub <svg class="ico" aria-hidden="true"><use href="#i-external"/></svg></a>
+  </nav>
   <!-- Mobile nav links (shown in dropdown) -->
   <div class="mobile-nav-dropdown" id="mobileNavDropdown">
-    <a href="index.html">← Home</a>
-    <a href="https://app.bnos.space" target="_blank" rel="noopener">Open App ↗</a>
-    <a href="https://github.com/bitoslabs/bnos-space" target="_blank" rel="noopener">GitHub ↗</a>
+    <a href="index.html"><svg class="ico" aria-hidden="true"><use href="#i-arrow-left"/></svg> Home</a>
+    <a href="manual.html"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg> Docs</a>
+    <a href="https://app.bnos.space" target="_blank" rel="noopener">Open App <svg class="ico" aria-hidden="true"><use href="#i-external"/></svg></a>
+    <a href="https://github.com/bitoslabs/bnos-space" target="_blank" rel="noopener">GitHub <svg class="ico" aria-hidden="true"><use href="#i-external"/></svg></a>
   </div>
   <div class="identity-bar" id="identityBar">
-    <button class="identity-login" onclick="openKeychainModal()">🔑 Login</button>
+    <button class="identity-login" onclick="openKeychainModal()"><svg class="ico" aria-hidden="true"><use href="#i-key"/></svg> Login</button>
   </div>
   <div class="relay-status-bar" id="relayStatusBar">
-    <button class="relay-manage-btn" onclick="openRelayManager()">⚙ Manage</button>
+    <button class="relay-manage-btn" onclick="openRelayManager()"><svg class="ico" aria-hidden="true"><use href="#i-gear"/></svg> Manage</button>
   </div>
-  <div class="theme-picker" title="Pick color theme">
-    <div class="theme-dot active" data-theme="nostr" style="background:#a855f7;" onclick="setColorTheme('nostr')" title="Nostr Purple"></div>
-    <div class="theme-dot" data-theme="bitcoin" style="background:#f7931a;" onclick="setColorTheme('bitcoin')" title="Bitcoin Orange"></div>
-    <div class="theme-dot" data-theme="lightning" style="background:#fbbf24;" onclick="setColorTheme('lightning')" title="Lightning Yellow"></div>
-    <div class="theme-dot" data-theme="ocean" style="background:#3b82f6;" onclick="setColorTheme('ocean')" title="Ocean Blue"></div>
-    <div class="theme-dot" data-theme="cyber" style="background:#22c55e;" onclick="setColorTheme('cyber')" title="Cyber Green"></div>
+  <div class="theme-picker" role="group" aria-label="Color theme">
+    <button type="button" class="theme-dot active" data-theme="nostr" style="background:#a855f7;" onclick="setColorTheme('nostr')" title="Nostr Purple" aria-label="Nostr Purple theme"></button>
+    <button type="button" class="theme-dot" data-theme="bitcoin" style="background:#f7931a;" onclick="setColorTheme('bitcoin')" title="Bitcoin Orange" aria-label="Bitcoin Orange theme"></button>
+    <button type="button" class="theme-dot" data-theme="lightning" style="background:#fbbf24;" onclick="setColorTheme('lightning')" title="Lightning Yellow" aria-label="Lightning Yellow theme"></button>
+    <button type="button" class="theme-dot" data-theme="ocean" style="background:#3b82f6;" onclick="setColorTheme('ocean')" title="Ocean Blue" aria-label="Ocean Blue theme"></button>
+    <button type="button" class="theme-dot" data-theme="cyber" style="background:#22c55e;" onclick="setColorTheme('cyber')" title="Cyber Green" aria-label="Cyber Green theme"></button>
   </div>
-  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle light and dark theme">
+    <svg class="ico" aria-hidden="true"><use href="#i-moon"/></svg>
+  </button>
   <span id="cryptoStatus" style="font-size:10px;padding:0 4px;"></span>
 </div>
 
@@ -149,12 +219,12 @@
 
     <!-- Add Custom Kind Button (Top) -->
     <div class="sidebar-top-actions">
-      <button class="sidebar-add-btn" onclick="openAddCustomKind()">➕ Add Custom Kind</button>
+      <button class="sidebar-add-btn" onclick="openAddCustomKind()"><svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg> Add Custom Kind</button>
     </div>
 
     <!-- Standard NIP-01 -->
     <div class="sidebar-section">
-      <h3>📡 Standard NIP-01</h3>
+      <h3><svg class="ico" aria-hidden="true"><use href="#i-radio"/></svg> Standard NIP-01</h3>
       <div class="sidebar-item" onclick="quickQuery(0)"><span class="kind-badge">0</span><span class="kind-name">Profile Metadata</span></div>
       <div class="sidebar-item" onclick="quickQuery(1)"><span class="kind-badge">1</span><span class="kind-name">Text Note</span></div>
       <div class="sidebar-item" onclick="quickQuery(3)"><span class="kind-badge">3</span><span class="kind-name">Contact List</span></div>
@@ -165,7 +235,7 @@
 
     <!-- BnOS Store Config -->
     <div class="sidebar-section">
-      <h3>🏪 BnOS Store Config</h3>
+      <h3><svg class="ico" aria-hidden="true"><use href="#i-store"/></svg> BnOS Store Config</h3>
       <div class="sidebar-item" onclick="quickQuery(30078)"><span class="kind-badge">30078</span><span class="kind-name">Store Settings</span></div>
       <div class="sidebar-item" onclick="quickQuery(30079)"><span class="kind-badge">30079</span><span class="kind-name">Store Profile</span></div>
       <div class="sidebar-item" onclick="quickQuery(30080)"><span class="kind-badge">30080</span><span class="kind-name">Table Layout</span></div>
@@ -173,7 +243,7 @@
 
     <!-- BnOS Catalog -->
     <div class="sidebar-section">
-      <h3>🛍️ BnOS Catalog</h3>
+      <h3><svg class="ico" aria-hidden="true"><use href="#i-bag"/></svg> BnOS Catalog</h3>
       <div class="sidebar-item" onclick="quickQuery(30100)"><span class="kind-badge">30100</span><span class="kind-name">Product</span></div>
       <div class="sidebar-item" onclick="quickQuery(30101)"><span class="kind-badge">30101</span><span class="kind-name">Category</span></div>
       <div class="sidebar-item" onclick="quickQuery(30102)"><span class="kind-badge">30102</span><span class="kind-name">Unit</span></div>
@@ -184,7 +254,7 @@
 
     <!-- BnOS Transactions -->
     <div class="sidebar-section">
-      <h3>🧾 BnOS Transactions</h3>
+      <h3><svg class="ico" aria-hidden="true"><use href="#i-receipt"/></svg> BnOS Transactions</h3>
       <div class="sidebar-item" onclick="quickQuery(30200)"><span class="kind-badge">30200</span><span class="kind-name">Order</span></div>
       <div class="sidebar-item" onclick="quickQuery(30201)"><span class="kind-badge">30201</span><span class="kind-name">Payment</span></div>
       <div class="sidebar-item" onclick="quickQuery(30202)"><span class="kind-badge">30202</span><span class="kind-name">Refund</span></div>
@@ -193,7 +263,7 @@
 
     <!-- BnOS CRM & Loyalty -->
     <div class="sidebar-section">
-      <h3>👥 BnOS CRM &amp; Loyalty</h3>
+      <h3><svg class="ico" aria-hidden="true"><use href="#i-users"/></svg> BnOS CRM &amp; Loyalty</h3>
       <div class="sidebar-item" onclick="quickQuery(30300)"><span class="kind-badge">30300</span><span class="kind-name">Customer</span></div>
       <div class="sidebar-item" onclick="quickQuery(30301)"><span class="kind-badge">30301</span><span class="kind-name">Loyalty Points</span></div>
       <div class="sidebar-item" onclick="quickQuery(30310)"><span class="kind-badge">30310</span><span class="kind-name">Coupon</span></div>
@@ -203,14 +273,14 @@
 
     <!-- BnOS Inventory -->
     <div class="sidebar-section">
-      <h3>📦 BnOS Inventory</h3>
+      <h3><svg class="ico" aria-hidden="true"><use href="#i-box"/></svg> BnOS Inventory</h3>
       <div class="sidebar-item" onclick="quickQuery(30400)"><span class="kind-badge">30400</span><span class="kind-name">Stock Adjustment</span></div>
       <div class="sidebar-item" onclick="quickQuery(30401)"><span class="kind-badge">30401</span><span class="kind-name">Inventory Count</span></div>
     </div>
 
     <!-- BnOS Staff & Access -->
     <div class="sidebar-section">
-      <h3>👤 BnOS Staff &amp; Access</h3>
+      <h3><svg class="ico" aria-hidden="true"><use href="#i-id"/></svg> BnOS Staff &amp; Access</h3>
       <div class="sidebar-item" onclick="quickQuery(30500)"><span class="kind-badge">30500</span><span class="kind-name">Staff Member</span></div>
       <div class="sidebar-item" onclick="quickQuery(30501)"><span class="kind-badge">30501</span><span class="kind-name">POS Session</span></div>
       <div class="sidebar-item" onclick="quickQuery(30503)"><span class="kind-badge">30503</span><span class="kind-name">Company Index</span></div>
@@ -219,7 +289,7 @@
 
     <!-- BnOS Supply Chain -->
     <div class="sidebar-section">
-      <h3>🚚 BnOS Supply Chain</h3>
+      <h3><svg class="ico" aria-hidden="true"><use href="#i-truck"/></svg> BnOS Supply Chain</h3>
       <div class="sidebar-item" onclick="quickQuery(30700)"><span class="kind-badge">30700</span><span class="kind-name">Supplier</span></div>
       <div class="sidebar-item" onclick="quickQuery(30701)"><span class="kind-badge">30701</span><span class="kind-name">Branch Stock</span></div>
       <div class="sidebar-item" onclick="quickQuery(30702)"><span class="kind-badge">30702</span><span class="kind-name">Purchase Order</span></div>
@@ -228,7 +298,7 @@
 
     <!-- BnOS Accounting -->
     <div class="sidebar-section">
-      <h3>💰 BnOS Accounting</h3>
+      <h3><svg class="ico" aria-hidden="true"><use href="#i-wallet"/></svg> BnOS Accounting</h3>
       <div class="sidebar-item" onclick="quickQuery(30800)"><span class="kind-badge">30800</span><span class="kind-name">Account</span></div>
       <div class="sidebar-item" onclick="quickQuery(30801)"><span class="kind-badge">30801</span><span class="kind-name">Journal Entry</span></div>
       <div class="sidebar-item" onclick="quickQuery(30802)"><span class="kind-badge">30802</span><span class="kind-name">Expense</span></div>
@@ -236,7 +306,7 @@
 
     <!-- BnOS Marketplace -->
     <div class="sidebar-section">
-      <h3>🏪 BnOS Marketplace</h3>
+      <h3><svg class="ico" aria-hidden="true"><use href="#i-store"/></svg> BnOS Marketplace</h3>
       <div class="sidebar-item" onclick="quickQuery(30950)"><span class="kind-badge">30950</span><span class="kind-name">Marketplace Listing</span></div>
       <div class="sidebar-item" onclick="quickQuery(30951)"><span class="kind-badge">30951</span><span class="kind-name">Marketplace Product</span></div>
       <div class="sidebar-item" onclick="quickQuery(30952)"><span class="kind-badge">30952</span><span class="kind-name">Marketplace Order</span></div>
@@ -245,7 +315,7 @@
 
     <!-- BnOS Project Mgr -->
     <div class="sidebar-section">
-      <h3>📋 BnOS Project Mgr</h3>
+      <h3><svg class="ico" aria-hidden="true"><use href="#i-clipboard"/></svg> BnOS Project Mgr</h3>
       <div class="sidebar-item" onclick="quickQuery(31100)"><span class="kind-badge">31100</span><span class="kind-name">Project</span></div>
       <div class="sidebar-item" onclick="quickQuery(31102)"><span class="kind-badge">31102</span><span class="kind-name">Issue</span></div>
       <div class="sidebar-item" onclick="quickQuery(31109)"><span class="kind-badge">31109</span><span class="kind-name">Wiki Page</span></div>
@@ -253,38 +323,39 @@
 
     <!-- Custom Kinds (injected dynamically) -->
     <div class="sidebar-section" id="customKindsSection" style="display:none;">
-      <h3>🔧 Custom Kinds</h3>
+      <h3><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg> Custom Kinds</h3>
       <div id="customKindsList"></div>
     </div>
   </div>
 
   <!-- Top Panel: Tabs -->
   <div class="top-panel" style="grid-column: 2 / 4;">
-    <div class="tabs">
-      <div class="tab active" data-tab="timeline" onclick="switchTab('timeline')">🕐 Timeline</div>
-      <div class="tab" data-tab="query" onclick="switchTab('query')">🔍 Query</div>
-      <div class="tab" data-tab="raw" onclick="switchTab('raw')">⚡ Raw WebSocket</div>
-      <div class="tab" data-tab="publish" onclick="switchTab('publish')">📝 Publish Event</div>
-      <div class="tab" data-tab="stats" onclick="switchTab('stats')">📊 Relay Info</div>
-      <div class="tab" data-tab="relays" onclick="switchTab('relays')">🔌 Relay Manager</div>
+    <div class="tabs" role="tablist">
+      <div class="tab active" data-tab="timeline" onclick="switchTab('timeline')" role="tab"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg> Timeline</div>
+      <div class="tab" data-tab="query" onclick="switchTab('query')" role="tab"><svg class="ico" aria-hidden="true"><use href="#i-search"/></svg> Query</div>
+      <div class="tab" data-tab="terminal" onclick="switchTab('terminal')" role="tab"><svg class="ico" aria-hidden="true"><use href="#i-terminal"/></svg> Terminal</div>
+      <div class="tab" data-tab="raw" onclick="switchTab('raw')" role="tab"><svg class="ico" aria-hidden="true"><use href="#i-code"/></svg> Raw WebSocket</div>
+      <div class="tab" data-tab="publish" onclick="switchTab('publish')" role="tab"><svg class="ico" aria-hidden="true"><use href="#i-pen"/></svg> Publish Event</div>
+      <div class="tab" data-tab="stats" onclick="switchTab('stats')" role="tab"><svg class="ico" aria-hidden="true"><use href="#i-chart"/></svg> Relay Info</div>
+      <div class="tab" data-tab="relays" onclick="switchTab('relays')" role="tab"><svg class="ico" aria-hidden="true"><use href="#i-plug"/></svg> Relay Manager</div>
     </div>
 
     <!-- Timeline Panel -->
     <div class="panel active" id="panel-timeline">
       <div class="timeline-toolbar">
-        <span class="timeline-status" id="timelineStatus">⏸ Paused</span>
-        <button class="green" onclick="startTimeline()">▶ Start Live</button>
-        <button class="danger" onclick="stopTimeline()">⏹ Stop</button>
-        <button onclick="clearTimeline()">🗑 Clear</button>
+        <span class="timeline-status paused" id="timelineStatus">Paused</span>
+        <button class="green" onclick="startTimeline()"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg> Start Live</button>
+        <button class="danger" onclick="stopTimeline()"><svg class="ico" aria-hidden="true"><use href="#i-stop"/></svg> Stop</button>
+        <button onclick="clearTimeline()"><svg class="ico" aria-hidden="true"><use href="#i-trash"/></svg> Clear</button>
         <select id="timelineFilter" onchange="renderTimeline()" style="font-size:11px;padding:4px 8px;background:var(--bg2);border:1px solid var(--border);color:var(--text);border-radius:4px;">
           <option value="all">All Kinds</option>
-          <option value="orders">🧾 Orders</option>
-          <option value="catalog">🛍 Catalog</option>
-          <option value="crm">👥 CRM</option>
-          <option value="store">🏪 Store</option>
-          <option value="staff">👷 Staff</option>
-          <option value="account">💰 Accounting</option>
-          <option value="notes">📝 Notes</option>
+          <option value="orders">Orders</option>
+          <option value="catalog">Catalog</option>
+          <option value="crm">CRM</option>
+          <option value="store">Store</option>
+          <option value="staff">Staff</option>
+          <option value="account">Accounting</option>
+          <option value="notes">Notes</option>
         </select>
       </div>
       <div class="timeline-feed" id="timelineFeed">
@@ -300,7 +371,7 @@
         <span>Query time: <b id="queryTime">—</b></span>
         <span>Relays: <b id="queryRelayCount">0</b> read</span>
       </div>
-      <button class="query-toggle" id="queryToggleBtn" onclick="toggleQueryForm()" style="display:none;width:100%;padding:8px 14px;background:var(--bg2);border:none;border-bottom:1px solid var(--border);color:var(--purple);font-size:12px;cursor:pointer;">▼ Show Filters</button>
+      <button class="query-toggle" id="queryToggleBtn" onclick="toggleQueryForm()" style="display:none;width:100%;padding:8px 14px;background:var(--bg2);border:none;border-bottom:1px solid var(--border);color:var(--purple);font-size:12px;cursor:pointer;"><svg class="ico" aria-hidden="true"><use href="#i-chevron-down"/></svg> Show Filters</button>
       <div class="form-row expanded" id="queryFormRow">
         <div class="form-group">
           <label>Kinds (comma sep)</label>
@@ -340,13 +411,13 @@
         </div>
       </div>
       <div class="btn-row">
-        <button class="primary" onclick="runQuery()">▶ Run Query</button>
-        <button id="liveModeBtn" onclick="toggleLiveMode()">📡 Live Mode</button>
-        <button onclick="runQueryAllKinds()">📋 All BnOS Kinds</button>
-        <button class="green" onclick="saveCurrentQuery()">💾 Save Query</button>
-        <button class="danger" onclick="clearEvents()">🗑 Clear</button>
-        <button onclick="exportEvents()">📦 Export</button>
-        <button onclick="stopSubscription()">⏹ Stop Sub</button>
+        <button class="primary" onclick="runQuery()"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg> Run Query</button>
+        <button id="liveModeBtn" onclick="toggleLiveMode()"><svg class="ico" aria-hidden="true"><use href="#i-radio"/></svg> Live Mode</button>
+        <button onclick="runQueryAllKinds()"><svg class="ico" aria-hidden="true"><use href="#i-clipboard"/></svg> All BnOS Kinds</button>
+        <button class="green" onclick="saveCurrentQuery()"><svg class="ico" aria-hidden="true"><use href="#i-save"/></svg> Save Query</button>
+        <button class="danger" onclick="clearEvents()"><svg class="ico" aria-hidden="true"><use href="#i-trash"/></svg> Clear</button>
+        <button onclick="exportEvents()"><svg class="ico" aria-hidden="true"><use href="#i-download"/></svg> Export</button>
+        <button onclick="stopSubscription()"><svg class="ico" aria-hidden="true"><use href="#i-stop"/></svg> Stop Sub</button>
       </div>
       <div style="padding:4px 14px;">
         <div style="font-size:10px;color:var(--text2);margin-bottom:4px;">SAVED QUERIES:</div>
@@ -356,6 +427,25 @@
       <div class="event-count" id="eventsInfo"></div>
     </div>
 
+    <!-- Terminal Panel -->
+    <div class="panel" id="panel-terminal">
+      <div class="term">
+        <div class="term-toolbar">
+          <span class="term-title"><svg class="ico" aria-hidden="true"><use href="#i-terminal"/></svg> Command Console</span>
+          <div class="term-toolbar-actions">
+            <button type="button" onclick="termCommand('help')"><svg class="ico" aria-hidden="true"><use href="#i-info"/></svg> Help</button>
+            <button type="button" onclick="termClear()"><svg class="ico" aria-hidden="true"><use href="#i-trash"/></svg> Clear</button>
+          </div>
+        </div>
+        <div class="term-log" id="termLog" role="log" aria-live="polite" aria-label="Console output"></div>
+        <form class="term-input-row" id="termForm" autocomplete="off">
+          <span class="term-prompt" aria-hidden="true">&rsaquo;</span>
+          <input type="text" id="termInput" spellcheck="false" autocapitalize="off" autocorrect="off" placeholder='Type a command — try "help"' aria-label="Console command input">
+          <button class="primary" type="submit"><svg class="ico" aria-hidden="true"><use href="#i-send"/></svg> Run</button>
+        </form>
+      </div>
+    </div>
+
     <!-- Raw WS Panel -->
     <div class="panel" id="panel-raw">
       <div class="ws-console">
@@ -363,8 +453,8 @@
         <div class="ws-input-row">
           <textarea id="wsInput" placeholder='["REQ", "sub1", {"kinds": [0], "limit": 10}]' rows="3"></textarea>
           <div style="display:flex;flex-direction:column;gap:4px;">
-            <button class="primary" onclick="sendRawWs()">Send</button>
-            <button onclick="clearWsLog()">Clear</button>
+            <button class="primary" onclick="sendRawWs()"><svg class="ico" aria-hidden="true"><use href="#i-send"/></svg> Send</button>
+            <button onclick="clearWsLog()"><svg class="ico" aria-hidden="true"><use href="#i-trash"/></svg> Clear</button>
           </div>
         </div>
         <div style="margin-top:6px;">
@@ -406,7 +496,7 @@
         </div>
         <div style="padding:0 14px;margin-bottom:8px;">
           <details>
-            <summary style="cursor:pointer;color:var(--text2);font-size:11px;margin-bottom:6px;">🔑 Signing Key (nsec or hex)</summary>
+            <summary style="cursor:pointer;color:var(--text2);font-size:11px;margin-bottom:6px;">Signing Key (nsec or hex)</summary>
             <div class="form-group">
               <input type="password" id="pubPrivkey" placeholder="nsec1... or hex private key" class="wide">
               <div style="font-size:10px;color:var(--text2);margin-top:2px;">Leave empty to generate a random key for testing</div>
@@ -414,9 +504,9 @@
           </details>
         </div>
         <div class="btn-row">
-          <button class="primary" onclick="publishEvent()">🚀 Publish Event</button>
-          <button onclick="genRandomKey()">🎲 Generate Random Key</button>
-          <button onclick="genTestNote()">📝 Test Note (kind 1)</button>
+          <button class="primary" onclick="publishEvent()"><svg class="ico" aria-hidden="true"><use href="#i-send"/></svg> Publish Event</button>
+          <button onclick="genRandomKey()"><svg class="ico" aria-hidden="true"><use href="#i-refresh"/></svg> Generate Random Key</button>
+          <button onclick="genTestNote()"><svg class="ico" aria-hidden="true"><use href="#i-note"/></svg> Test Note (kind 1)</button>
         </div>
         <div style="margin-top:12px;padding:0 14px;">
           <div style="font-size:10px;color:var(--text2);margin-bottom:4px;">GENERATED KEY INFO:</div>
@@ -435,14 +525,14 @@
     <!-- Relay Manager Panel -->
     <div class="panel" id="panel-relays">
       <div style="padding:14px;">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
-          <h3 style="color:var(--purple);font-size:14px;">🔌 Relay Manager</h3>
-          <div style="display:flex;gap:6px;">
-            <button class="green" onclick="connectAllRelays()">▶ Connect All</button>
-            <button class="danger" onclick="disconnectAllRelays()">⏹ Disconnect All</button>
-            <button onclick="addNewRelayRow()">➕ Add Relay</button>
-            <button onclick="importExportKinds()">📦 Import/Export</button>
-            <button class="danger" onclick="resetToDefaults()">🔄 Reset to Defaults</button>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+          <h3 style="color:var(--purple);font-size:14px;display:flex;align-items:center;gap:7px;"><svg class="ico" aria-hidden="true"><use href="#i-plug"/></svg> Relay Manager</h3>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <button class="green" onclick="connectAllRelays()"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg> Connect All</button>
+            <button class="danger" onclick="disconnectAllRelays()"><svg class="ico" aria-hidden="true"><use href="#i-stop"/></svg> Disconnect All</button>
+            <button onclick="addNewRelayRow()"><svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg> Add Relay</button>
+            <button onclick="importExportKinds()"><svg class="ico" aria-hidden="true"><use href="#i-package"/></svg> Import/Export</button>
+            <button class="danger" onclick="resetToDefaults()"><svg class="ico" aria-hidden="true"><use href="#i-refresh"/></svg> Reset to Defaults</button>
           </div>
         </div>
         <div class="relay-list" id="relayManagerList"></div>
@@ -458,7 +548,7 @@
   <!-- Bottom Right: Event Detail -->
   <div class="detail-panel" id="eventDetail">
     <div class="detail-close-bar" style="display:none;position:sticky;top:0;background:var(--bg2);padding:8px 14px;border-bottom:1px solid var(--border);z-index:5;">
-      <button onclick="closeMobileDetail()" style="border:none;background:none;color:var(--text);font-size:14px;cursor:pointer;">← Back to events</button>
+      <button onclick="closeMobileDetail()" style="border:none;background:none;color:var(--text);font-size:14px;cursor:pointer;"><svg class="ico" aria-hidden="true"><use href="#i-arrow-left"/></svg> Back to events</button>
     </div>
     <div class="detail-empty">Click an event to view details</div>
   </div>
@@ -467,17 +557,18 @@
 
 <!-- Mobile Bottom Nav -->
 <div class="mobile-panel-tabs" id="mobileNav">
-  <button onclick="mobileTab('timeline')" data-mtab="timeline" class="active"><span>🕐</span>Feed</button>
-  <button onclick="mobileTab('query')" data-mtab="query"><span>🔍</span>Query</button>
-  <button onclick="mobileTab('events')" data-mtab="events"><span>📋</span>Events</button>
-  <button onclick="mobileTab('publish')" data-mtab="publish"><span>📝</span>Publish</button>
-  <button onclick="mobileTab('relays')" data-mtab="relays"><span>🔌</span>Relays</button>
+  <button onclick="mobileTab('timeline')" data-mtab="timeline" class="active"><span class="mtab-ico"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg></span>Feed</button>
+  <button onclick="mobileTab('query')" data-mtab="query"><span class="mtab-ico"><svg class="ico" aria-hidden="true"><use href="#i-search"/></svg></span>Query</button>
+  <button onclick="mobileTab('terminal')" data-mtab="terminal"><span class="mtab-ico"><svg class="ico" aria-hidden="true"><use href="#i-terminal"/></svg></span>Term</button>
+  <button onclick="mobileTab('events')" data-mtab="events"><span class="mtab-ico"><svg class="ico" aria-hidden="true"><use href="#i-clipboard"/></svg></span>Events</button>
+  <button onclick="mobileTab('publish')" data-mtab="publish"><span class="mtab-ico"><svg class="ico" aria-hidden="true"><use href="#i-pen"/></svg></span>Publish</button>
+  <button onclick="mobileTab('relays')" data-mtab="relays"><span class="mtab-ico"><svg class="ico" aria-hidden="true"><use href="#i-plug"/></svg></span>Relays</button>
 </div>
 
 <!-- Modal: Add Custom Kind -->
 <div class="modal-overlay" id="customKindModal">
   <div class="modal" style="min-width:400px;">
-    <h2>🔧 Add Custom Kind</h2>
+    <h2><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg> Add Custom Kind</h2>
     <div class="form-group">
       <label>Kind Number</label>
       <input type="number" id="ckKind" placeholder="e.g. 9999" style="width:100%;">
@@ -485,10 +576,6 @@
     <div class="form-group">
       <label>Name</label>
       <input type="text" id="ckName" placeholder="e.g. My Custom Event" style="width:100%;">
-    </div>
-    <div class="form-group">
-      <label>Category Emoji</label>
-      <input type="text" id="ckEmoji" placeholder="e.g. 🔧" style="width:100px;" maxlength="4">
     </div>
     <div class="form-group">
       <label>Category Label (optional)</label>
@@ -505,17 +592,17 @@
 <!-- Modal: Import/Export Kinds -->
 <div class="modal-overlay" id="importExportModal">
   <div class="modal" style="min-width:500px;">
-    <h2>📦 Import/Export Custom Kinds</h2>
+    <h2><svg class="ico" aria-hidden="true"><use href="#i-package"/></svg> Import/Export Custom Kinds</h2>
     <div class="form-group">
       <label>Export — copy this JSON</label>
       <textarea id="ieExport" class="wide" rows="6" readonly></textarea>
     </div>
     <div class="btn-row" style="padding:0;margin-bottom:12px;">
-      <button onclick="clipboardWrite(document.getElementById('ieExport').value)">📋 Copy</button>
+      <button onclick="clipboardWrite(document.getElementById('ieExport').value)"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg> Copy</button>
     </div>
     <div class="form-group">
       <label>Import — paste JSON below</label>
-      <textarea id="ieImport" class="wide" rows="6" placeholder='[{"kind":9999,"name":"My Kind","emoji":"🔧","category":"Custom"}]'></textarea>
+      <textarea id="ieImport" class="wide" rows="6" placeholder='[{"kind":9999,"name":"My Kind","category":"Custom"}]'></textarea>
     </div>
     <div class="btn-row">
       <button onclick="closeImportExportModal()">Cancel</button>
@@ -530,13 +617,13 @@
 <!-- Modal: Keychain -->
 <div class="modal-overlay" id="keychainModal">
   <div class="modal" style="min-width:460px;max-width:540px;">
-    <h2 style="margin-bottom:16px;">🔑 Keychain — Identity Manager</h2>
+    <h2 style="margin-bottom:16px;"><svg class="ico" aria-hidden="true"><use href="#i-key"/></svg> Keychain — Identity Manager</h2>
     <div id="keychainList" style="margin-bottom:16px;"></div>
     <div style="border-top:1px solid var(--border);padding-top:12px;display:flex;flex-direction:column;gap:8px;">
       <div style="font-size:11px;color:var(--text2);margin-bottom:4px;">ADD KEY:</div>
       <div style="display:flex;gap:8px;">
-        <button class="green" onclick="keychainImportKey()" style="flex:1;">📥 Import nsec / hex</button>
-        <button onclick="keychainGenerate()" style="flex:1;">🎲 Generate New</button>
+        <button class="green" onclick="keychainImportKey()" style="flex:1;"><svg class="ico" aria-hidden="true"><use href="#i-download"/></svg> Import nsec / hex</button>
+        <button onclick="keychainGenerate()" style="flex:1;"><svg class="ico" aria-hidden="true"><use href="#i-refresh"/></svg> Generate New</button>
       </div>
       <div style="font-size:11px;color:var(--text2);margin-top:4px;">
         Or sign in with a browser extension when available.
@@ -553,14 +640,15 @@
   </div>
 </div>
 
-<script src="js/core.js?v=20260612b"></script>
-<script src="js/relay.js?v=20260612b"></script>
-<script src="js/events.js?v=20260612b"></script>
-<script src="js/console.js?v=20260612b"></script>
+<script src="js/core.js?v=20261014f"></script>
+<script src="js/relay.js?v=20261014f"></script>
+<script src="js/events.js?v=20261014f"></script>
+<script src="js/terminal.js?v=20261014f"></script>
+<script src="js/console.js?v=20261014f"></script>
 <script>
   // Service Worker Registration
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js?v=20260612b').catch(e => console.warn('SW registration failed:', e));
+    navigator.serviceWorker.register('./sw.js?v=20261014f').catch(e => console.warn('SW registration failed:', e));
   }
 </script>
 <script>

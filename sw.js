@@ -1,5 +1,5 @@
 // BnOS Relay Console — Service Worker
-const CACHE_NAME = 'bnos-relay-v3';
+const CACHE_NAME = 'bnos-relay-v10';
 const ASSETS = [
   './',
   './console.html',
@@ -7,6 +7,7 @@ const ASSETS = [
   './js/core.js',
   './js/relay.js',
   './js/events.js',
+  './js/terminal.js',
   './js/console.js',
   './js/vendor/noble-secp256k1.js',
   './manifest.json',

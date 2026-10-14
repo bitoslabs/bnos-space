@@ -15,7 +15,7 @@ function addEventCard(evt) {
 function showEventDetail(evt) {
   const detail=document.getElementById('eventDetail');
   const tagsFmt=(evt.tags||[]).map(t=>`  [${t.map(x=>`"${x}"`).join(', ')}]`).join('\n');
-  detail.innerHTML=`<div class="detail-close-bar" style="display:none;position:sticky;top:0;background:var(--bg2);padding:8px 14px;border-bottom:1px solid var(--border);z-index:5;"><button onclick="closeMobileDetail()" style="border:none;background:none;color:var(--text);font-size:14px;cursor:pointer;">← Back to events</button></div><div class="detail-content"><h3>📋 Kind ${evt.kind} (${escHtml(getKindName(evt.kind))})</h3><div class="detail-field"><div class="df-label">Event ID</div><div class="df-value" onclick="copyText(this,'${escHtml(evt.id)}')">${escHtml(evt.id)}<span style="color:var(--text2);font-size:10px;margin-left:8px;">note: ${escHtml(noteEncode(evt.id))}</span></div></div><div class="detail-field"><div class="df-label">Pubkey (Author)</div><div class="df-value" onclick="copyText(this,'${escHtml(evt.pubkey)}')">${escHtml(evt.pubkey)}<span style="color:var(--text2);font-size:10px;margin-left:8px;">npub: ${escHtml(npubEncode(evt.pubkey))}</span></div></div><div class="detail-field"><div class="df-label">Created At</div><div class="df-value">${evt.created_at} (${formatTime(evt.created_at)})</div></div><div class="detail-field"><div class="df-label">Signature</div><div class="df-value" onclick="copyText(this,'${escHtml(evt.sig)}')" style="font-size:10px;">${escHtml(evt.sig)}</div></div><div class="detail-field"><div class="df-label">Tags (${(evt.tags||[]).length})</div><div class="df-value" style="white-space:pre;font-size:11px;">${escHtml(tagsFmt)}</div></div><div class="detail-field"><div class="df-label">Content</div><div class="df-value" onclick="copyText(this)" style="white-space:pre-wrap;max-height:300px;overflow-y:auto;">${escHtml(evt.content)}</div></div><div class="detail-field" style="margin-top:12px;"><div class="df-label">Raw JSON</div><pre class="raw-json">${escHtml(JSON.stringify(evt,null,2))}</pre></div><div class="btn-row" style="margin-top:8px;"><button onclick="copyJson()">📋 Copy</button><button onclick="queryReplies()">💬 Replies</button><button onclick="queryReactions()">👍 Reactions</button><button onclick="queryAuthorEvents()">👤 Author</button><button class="danger" onclick="deleteEvent()">🗑 Delete</button></div></div>`;
+  detail.innerHTML=`<div class="detail-close-bar" style="display:none;position:sticky;top:0;background:var(--bg2);padding:8px 14px;border-bottom:1px solid var(--border);z-index:5;"><button onclick="closeMobileDetail()" style="border:none;background:none;color:var(--text);font-size:14px;cursor:pointer;">${icon('arrow-left')} Back to events</button></div><div class="detail-content"><h3>${icon('clipboard')} Kind ${evt.kind} (${escHtml(getKindName(evt.kind))})</h3><div class="detail-field"><div class="df-label">Event ID</div><div class="df-value" onclick="copyText(this,'${escHtml(evt.id)}')">${escHtml(evt.id)}<span style="color:var(--text2);font-size:10px;margin-left:8px;">note: ${escHtml(noteEncode(evt.id))}</span></div></div><div class="detail-field"><div class="df-label">Pubkey (Author)</div><div class="df-value" onclick="copyText(this,'${escHtml(evt.pubkey)}')">${escHtml(evt.pubkey)}<span style="color:var(--text2);font-size:10px;margin-left:8px;">npub: ${escHtml(npubEncode(evt.pubkey))}</span></div></div><div class="detail-field"><div class="df-label">Created At</div><div class="df-value">${evt.created_at} (${formatTime(evt.created_at)})</div></div><div class="detail-field"><div class="df-label">Signature</div><div class="df-value" onclick="copyText(this,'${escHtml(evt.sig)}')" style="font-size:10px;">${escHtml(evt.sig)}</div></div><div class="detail-field"><div class="df-label">Tags (${(evt.tags||[]).length})</div><div class="df-value" style="white-space:pre;font-size:11px;">${escHtml(tagsFmt)}</div></div><div class="detail-field"><div class="df-label">Content</div><div class="df-value" onclick="copyText(this)" style="white-space:pre-wrap;max-height:300px;overflow-y:auto;">${escHtml(evt.content)}</div></div><div class="detail-field" style="margin-top:12px;"><div class="df-label">Raw JSON</div><pre class="raw-json">${escHtml(JSON.stringify(evt,null,2))}</pre></div><div class="btn-row" style="margin-top:8px;"><button onclick="copyJson()">${icon('copy')} Copy</button><button onclick="queryReplies()">${icon('chat')} Replies</button><button onclick="queryReactions()">${icon('thumb')} Reactions</button><button onclick="queryAuthorEvents()">${icon('user')} Author</button><button class="danger" onclick="deleteEvent()">${icon('trash')} Delete</button></div></div>`;
   window._currentEvent=evt;
   if(window.innerWidth<=768){
     document.getElementById('eventsList').classList.add('mobile-hide');
@@ -119,7 +119,7 @@ function exportEvents() {
 
 // ── Live Mode ──
 function toggleLiveMode() { liveMode=!liveMode; updateLiveModeUI(); }
-function updateLiveModeUI() { const b=document.getElementById('liveModeBtn'); if(b){b.textContent=liveMode?'🔴 Live ON':'📡 Live Mode';b.classList.toggle('on',liveMode);} }
+function updateLiveModeUI() { const b=document.getElementById('liveModeBtn'); if(b){b.innerHTML=`${icon('radio')} ${liveMode?'Live ON':'Live Mode'}`;b.classList.toggle('on',liveMode);} }
 
 // ── Saved Queries ──
 function getSavedQueries() { try{const r=localStorage.getItem(STORAGE_KEY);return r?(JSON.parse(r).savedQueries||[]):[];}catch{return[];} }
@@ -145,7 +145,7 @@ function renderSavedQueries() {
   const c=document.getElementById('savedQueriesList'); if(!c)return;
   const saved=getSavedQueries();
   if(!saved.length){c.innerHTML='<div style="color:var(--text2);font-size:11px;padding:4px 0;">No saved queries yet</div>';return;}
-  c.innerHTML=saved.map((q,i)=>`<div class="saved-query-row"><span class="sq-name" onclick="loadSavedQuery(${i})">${escHtml(q.name)}</span><span class="sq-preview">${escHtml(JSON.stringify(q.filter).slice(0,80))}</span><button class="kind-action-btn" onclick="event.stopPropagation();deleteSavedQuery(${i})">🗑</button></div>`).join('');
+  c.innerHTML=saved.map((q,i)=>`<div class="saved-query-row"><span class="sq-name" onclick="loadSavedQuery(${i})">${escHtml(q.name)}</span><span class="sq-preview">${escHtml(JSON.stringify(q.filter).slice(0,80))}</span><button class="kind-action-btn" onclick="event.stopPropagation();deleteSavedQuery(${i})" aria-label="Delete saved query">${icon('x')}</button></div>`).join('');
 }
 
 // ── Timeline ──
@@ -156,14 +156,14 @@ function startTimeline() {
   const filter={since:Math.floor(Date.now()/1000)-3600,limit:100};
   pool.broadcast(JSON.stringify(['REQ',timelineLiveSub,filter]),'read');
   pool._onEvent=onTimelineEvent;
-  document.getElementById('timelineStatus').textContent='🔴 Live';
-  document.getElementById('timelineStatus').className='live';
+  document.getElementById('timelineStatus').textContent='Live';
+  document.getElementById('timelineStatus').className='timeline-status live';
   renderTimeline();
 }
 function stopTimeline() {
   if(timelineLiveSub){pool.broadcast(JSON.stringify(['CLOSE',timelineLiveSub]),'read');timelineLiveSub=null;}
   pool._onEvent=null;
-  const el=document.getElementById('timelineStatus'); if(el){el.textContent='⏸ Paused';el.className='paused';}
+  const el=document.getElementById('timelineStatus'); if(el){el.textContent='Paused';el.className='timeline-status paused';}
 }
 function onTimelineEvent(evt,fromUrl) {
   if(timelineEvents.find(e=>e.id===evt.id))return;
@@ -173,7 +173,7 @@ function onTimelineEvent(evt,fromUrl) {
 }
 function updateTimelineBadge() {
   const t=document.querySelector('.tab[data-tab="timeline"]');
-  if(t) t.textContent=`🕐 Timeline${timelineEvents.length>0?' ('+timelineEvents.length+')':''}`;
+  if(t) t.innerHTML=`${icon('clock')} Timeline${timelineEvents.length>0?' ('+timelineEvents.length+')':''}`;
 }
 function renderTimeline() {
   const c=document.getElementById('timelineFeed'); if(!c)return;
@@ -194,13 +194,13 @@ function clearTimeline() { timelineEvents=[]; renderTimeline(); updateTimelineBa
 function renderCustomKinds() {
   const sec=document.getElementById('customKindsSection'); const list=document.getElementById('customKindsList');
   if(!customKinds.length){sec.style.display='none';return;} sec.style.display='';
-  list.innerHTML=customKinds.map((ck,i)=>`<div class="sidebar-item" onclick="quickQuery(${ck.kind})"><span class="kind-badge">${ck.kind}</span><span class="kind-name">${escHtml(ck.name)}</span><span class="kind-actions"><button class="kind-action-btn" onclick="event.stopPropagation();editCustomKind(${i})">✏️</button><button class="kind-action-btn" onclick="event.stopPropagation();deleteCustomKind(${i})">🗑</button></span></div>`).join('');
+  list.innerHTML=customKinds.map((ck,i)=>`<div class="sidebar-item" onclick="quickQuery(${ck.kind})"><span class="kind-badge">${ck.kind}</span><span class="kind-name">${escHtml(ck.name)}</span><span class="kind-actions"><button class="kind-action-btn" onclick="event.stopPropagation();editCustomKind(${i})" aria-label="Edit kind">${icon('pen')}</button><button class="kind-action-btn" onclick="event.stopPropagation();deleteCustomKind(${i})" aria-label="Delete kind">${icon('x')}</button></span></div>`).join('');
 }
-function openAddCustomKind(){document.getElementById('ckKind').value='';document.getElementById('ckName').value='';document.getElementById('ckEmoji').value='🔧';document.getElementById('ckCategory').value='';document.getElementById('ckEditIndex').value='-1';document.getElementById('customKindModal').classList.add('show');}
+function openAddCustomKind(){document.getElementById('ckKind').value='';document.getElementById('ckName').value='';document.getElementById('ckCategory').value='';document.getElementById('ckEditIndex').value='-1';document.getElementById('customKindModal').classList.add('show');}
 function closeCustomKindModal(){document.getElementById('customKindModal').classList.remove('show');}
-function editCustomKind(i){const ck=customKinds[i];if(!ck)return;document.getElementById('ckKind').value=ck.kind;document.getElementById('ckName').value=ck.name;document.getElementById('ckEmoji').value=ck.emoji||'';document.getElementById('ckCategory').value=ck.category||'';document.getElementById('ckEditIndex').value=i;document.getElementById('customKindModal').classList.add('show');}
+function editCustomKind(i){const ck=customKinds[i];if(!ck)return;document.getElementById('ckKind').value=ck.kind;document.getElementById('ckName').value=ck.name;document.getElementById('ckCategory').value=ck.category||'';document.getElementById('ckEditIndex').value=i;document.getElementById('customKindModal').classList.add('show');}
 function deleteCustomKind(i){const ck=customKinds[i];if(!ck||!confirm(`Delete kind ${ck.kind} "${ck.name}"?`))return;customKinds.splice(i,1);saveSettings();renderCustomKinds();}
-function saveCustomKind(){const kind=parseInt(document.getElementById('ckKind').value);const name=document.getElementById('ckName').value.trim();const emoji=document.getElementById('ckEmoji').value.trim()||'🔧';const cat=document.getElementById('ckCategory').value.trim()||'Custom';const ei=parseInt(document.getElementById('ckEditIndex').value);if(isNaN(kind)||kind<0)return alert('Enter a valid kind number');if(!name)return alert('Enter a name');if(ei>=0)customKinds[ei]={kind,name,emoji,category:cat};else{if(customKinds.some(c=>c.kind===kind))return alert(`Kind ${kind} already exists.`);customKinds.push({kind,name,emoji,category:cat});}KIND_NAMES[kind]=name;saveSettings();renderCustomKinds();closeCustomKindModal();}
+function saveCustomKind(){const kind=parseInt(document.getElementById('ckKind').value);const name=document.getElementById('ckName').value.trim();const cat=document.getElementById('ckCategory').value.trim()||'Custom';const ei=parseInt(document.getElementById('ckEditIndex').value);if(isNaN(kind)||kind<0)return alert('Enter a valid kind number');if(!name)return alert('Enter a name');if(ei>=0)customKinds[ei]={kind,name,category:cat};else{if(customKinds.some(c=>c.kind===kind))return alert(`Kind ${kind} already exists.`);customKinds.push({kind,name,category:cat});}KIND_NAMES[kind]=name;saveSettings();renderCustomKinds();closeCustomKindModal();}
 function importExportKinds(){document.getElementById('ieExport').value=JSON.stringify(customKinds,null,2);document.getElementById('ieImport').value='';document.getElementById('importExportModal').classList.add('show');}
 function closeImportExportModal(){document.getElementById('importExportModal').classList.remove('show');}
-function importKinds(){const raw=document.getElementById('ieImport').value.trim();if(!raw)return alert('Paste JSON first');try{const imp=JSON.parse(raw);if(!Array.isArray(imp))throw new Error('Must be array');let added=0;imp.forEach(ck=>{if(typeof ck.kind==='number'&&ck.name&&!customKinds.some(c=>c.kind===ck.kind)){customKinds.push({kind:ck.kind,name:ck.name,emoji:ck.emoji||'🔧',category:ck.category||'Imported'});KIND_NAMES[ck.kind]=ck.name;added++;}});saveSettings();renderCustomKinds();closeImportExportModal();alert(`Imported ${added} kinds`);}catch(e){alert('Invalid JSON: '+e.message);}}
+function importKinds(){const raw=document.getElementById('ieImport').value.trim();if(!raw)return alert('Paste JSON first');try{const imp=JSON.parse(raw);if(!Array.isArray(imp))throw new Error('Must be array');let added=0;imp.forEach(ck=>{if(typeof ck.kind==='number'&&ck.name&&!customKinds.some(c=>c.kind===ck.kind)){customKinds.push({kind:ck.kind,name:ck.name,category:ck.category||'Imported'});KIND_NAMES[ck.kind]=ck.name;added++;}});saveSettings();renderCustomKinds();closeImportExportModal();alert(`Imported ${added} kinds`);}catch(e){alert('Invalid JSON: '+e.message);}}

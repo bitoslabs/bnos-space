@@ -64,23 +64,29 @@ const KIND_NAMES = {
 };
 
 const KIND_GROUPS = {
-  profile:   { kinds:[0], color:'#3b82f6', icon:'👤', label:'Profile' },
-  notes:     { kinds:[1], color:'#22c55e', icon:'📝', label:'Notes' },
-  contacts:  { kinds:[3], color:'#8b5cf6', icon:'👥', label:'Contacts' },
-  dm:        { kinds:[4], color:'#ec4899', icon:'✉️', label:'DMs' },
-  delete:    { kinds:[5], color:'#ef4444', icon:'🗑', label:'Deletions' },
-  reaction:  { kinds:[7], color:'#f59e0b', icon:'👍', label:'Reactions' },
-  store:     { kinds:[30078,30079,30080], color:'#a855f7', icon:'🏪', label:'Store' },
-  catalog:   { kinds:[30100,30101,30102,30103,30104,30105,30106], color:'#06b6d4', icon:'🛍', label:'Catalog' },
-  orders:    { kinds:[30200,30201,30202,30203,30204], color:'#f97316', icon:'🧾', label:'Orders' },
-  crm:       { kinds:[30300,30301,30310,30311,30313], color:'#3b82f6', icon:'👥', label:'CRM' },
-  inventory: { kinds:[30400,30401], color:'#22c55e', icon:'📦', label:'Inventory' },
-  staff:     { kinds:[30500,30501,30503,30591], color:'#8b5cf6', icon:'👷', label:'Staff' },
-  supply:    { kinds:[30700,30701,30702,30703], color:'#f59e0b', icon:'🚚', label:'Supply' },
-  account:   { kinds:[30800,30801,30802,30803], color:'#ef4444', icon:'💰', label:'Accounting' },
-  market:    { kinds:[30950,30951,30952,30955], color:'#ec4899', icon:'🏪', label:'Marketplace' },
-  project:   { kinds:[31100,31102,31109], color:'#06b6d4', icon:'📋', label:'Projects' },
+  profile:   { kinds:[0], color:'#3b82f6', icon:'user', label:'Profile' },
+  notes:     { kinds:[1], color:'#22c55e', icon:'note', label:'Notes' },
+  contacts:  { kinds:[3], color:'#8b5cf6', icon:'users', label:'Contacts' },
+  dm:        { kinds:[4], color:'#ec4899', icon:'mail', label:'DMs' },
+  delete:    { kinds:[5], color:'#ef4444', icon:'trash', label:'Deletions' },
+  reaction:  { kinds:[7], color:'#f59e0b', icon:'thumb', label:'Reactions' },
+  store:     { kinds:[30078,30079,30080], color:'#a855f7', icon:'store', label:'Store' },
+  catalog:   { kinds:[30100,30101,30102,30103,30104,30105,30106], color:'#06b6d4', icon:'bag', label:'Catalog' },
+  orders:    { kinds:[30200,30201,30202,30203,30204], color:'#f97316', icon:'receipt', label:'Orders' },
+  crm:       { kinds:[30300,30301,30310,30311,30313], color:'#3b82f6', icon:'users', label:'CRM' },
+  inventory: { kinds:[30400,30401], color:'#22c55e', icon:'box', label:'Inventory' },
+  staff:     { kinds:[30500,30501,30503,30591], color:'#8b5cf6', icon:'id', label:'Staff' },
+  supply:    { kinds:[30700,30701,30702,30703], color:'#f59e0b', icon:'truck', label:'Supply' },
+  account:   { kinds:[30800,30801,30802,30803], color:'#ef4444', icon:'wallet', label:'Accounting' },
+  market:    { kinds:[30950,30951,30952,30955], color:'#ec4899', icon:'store', label:'Marketplace' },
+  project:   { kinds:[31100,31102,31109], color:'#06b6d4', icon:'clipboard', label:'Projects' },
 };
+
+// ── Icon Helper ──
+// Renders an inline SVG reference to the sprite defined in console.html.
+function icon(name, cls) {
+  return `<svg class="ico${cls ? ' ' + cls : ''}" aria-hidden="true"><use href="#i-${name}"/></svg>`;
+}
 
 // ── Utility Functions ──
 function escHtml(s) {
@@ -96,7 +102,7 @@ function getRelayLabel(url) { const r = relaySettings.find(s => s.url === url); 
 function hexToBytes(hex) { const b = new Uint8Array(hex.length/2); for (let i=0;i<hex.length;i+=2) b[i/2]=parseInt(hex.substr(i,2),16); return b; }
 function bytesToHex(b) { return Array.from(b).map(x => x.toString(16).padStart(2,'0')).join(''); }
 function timeAgo(ts) { const d=Math.floor(Date.now()/1000)-ts; if(d<60)return d+'s ago'; if(d<3600)return Math.floor(d/60)+'m ago'; if(d<86400)return Math.floor(d/3600)+'h ago'; return Math.floor(d/86400)+'d ago'; }
-function getKindGroup(kind) { for (const [k,g] of Object.entries(KIND_GROUPS)) if (g.kinds.includes(kind)) return {key:k,...g}; return {key:'other',color:'#6b7280',icon:'📄',label:'Other'}; }
+function getKindGroup(kind) { for (const [k,g] of Object.entries(KIND_GROUPS)) if (g.kinds.includes(kind)) return {key:k,...g}; return {key:'other',color:'#6b7280',icon:'note',label:'Other'}; }
 
 // ── Clipboard ──
 function clipboardWrite(text) {
@@ -327,11 +333,11 @@ function updateIdentityBar() {
   const bar=document.getElementById('identityBar'); if(!bar)return;
   if(keychain.unlocked&&keychain.activeIndex>=0){
     const e=keychain.keys[keychain.activeIndex];
-    bar.innerHTML=`<div class="identity-pill active" onclick="openKeychainModal()"><span class="identity-dot"></span><span class="identity-label">${escHtml(e.label)}</span><span class="identity-npub">${e.npub.slice(0,16)}...</span></div><button class="identity-lock" onclick="keychainLock()" title="Lock">🔓</button>`;
+    bar.innerHTML=`<div class="identity-pill active" onclick="openKeychainModal()"><span class="identity-dot"></span><span class="identity-label">${escHtml(e.label)}</span><span class="identity-npub">${e.npub.slice(0,16)}...</span></div><button class="identity-lock" onclick="keychainLock()" title="Lock" aria-label="Lock identity">${icon('unlock')}</button>`;
   } else if(isNip07Enabled()){
     bar.innerHTML=`<div class="identity-pill ext" onclick="openKeychainModal()"><span class="identity-dot ext"></span><span class="identity-label">NIP-07 Extension</span></div>`;
   } else {
-    bar.innerHTML=`<button class="identity-login" onclick="openKeychainModal()">🔑 Login</button>`;
+    bar.innerHTML=`<button class="identity-login" onclick="openKeychainModal()">${icon('key')} Login</button>`;
   }
 }
 
@@ -340,7 +346,7 @@ function renderKeychain() {
   if(!keychain.keys.length) list.innerHTML='<div style="color:var(--text2);padding:20px;text-align:center;">No keys stored.<br>Import or generate one below.</div>';
   else list.innerHTML=keychain.keys.map((k,i)=>{
     const active=i===keychain.activeIndex&&keychain.unlocked;
-    return `<div class="key-row ${active?'active':''}" onclick="keychainSelect(${i})"><div class="key-status">${active?'🔓':'🔒'}</div><div class="key-info"><div class="key-label">${escHtml(k.label)}</div><div class="key-npub">${k.npub.slice(0,24)}...</div></div><button style="padding:3px 8px;font-size:11px;" onclick="event.stopPropagation();keychainBackup(${i})">Backup</button><button class="danger" style="padding:3px 8px;font-size:11px;" onclick="event.stopPropagation();keychainRemove(${i})">✕</button></div>`;
+    return `<div class="key-row ${active?'active':''}" onclick="keychainSelect(${i})"><div class="key-status">${icon(active?'unlock':'lock')}</div><div class="key-info"><div class="key-label">${escHtml(k.label)}</div><div class="key-npub">${k.npub.slice(0,24)}...</div></div><button style="padding:3px 8px;font-size:11px;" onclick="event.stopPropagation();keychainBackup(${i})">Backup</button><button class="danger" style="padding:3px 8px;font-size:11px;" onclick="event.stopPropagation();keychainRemove(${i})" aria-label="Remove key">${icon('x')}</button></div>`;
   }).join('');
   renderNip07Controls();
 }
