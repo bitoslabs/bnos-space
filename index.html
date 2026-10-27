@@ -201,19 +201,35 @@
 
         <nav class="nav-links" id="navLinks" aria-label="Primary">
           <a href="#features" data-i18n="nav.features">Features</a>
-          <a href="#platform" data-i18n="landing.nav.platform">Platform</a>
           <a href="#how-it-works" data-i18n="nav.howItWorks">How It Works</a>
           <a href="#use-cases" data-i18n="landing.useCases.tag">Use cases</a>
-          <a href="#faq" data-i18n="nav.faq">FAQ</a>
           <a href="manual.html" data-i18n="nav.docs">Documentation</a>
-          <a href="console.html" title="Nostr relay debug console">Console</a>
+          <a href="b/" data-i18n="nav.businessPages">Business pages</a>
+          <a href="#faq" data-i18n="nav.faq">FAQ</a>
         </nav>
 
         <div class="nav-actions">
-          <div class="lang-switcher">
-            <a href="#" data-lang="en" class="active">EN</a>
-            <a href="#" data-lang="lo">ລາວ</a>
-            <a href="#" data-lang="th">ไทย</a>
+          <div class="lang-switcher" id="langSwitcher">
+            <button
+              class="lang-toggle"
+              id="langToggle"
+              type="button"
+              aria-expanded="false"
+              aria-controls="langMenu"
+              aria-label="Change language"
+            >
+              <span class="lang-current" aria-hidden="true">
+                <span class="lang-label lang-en">EN</span>
+                <span class="lang-label lang-lo">ລາວ</span>
+                <span class="lang-label lang-th">ไทย</span>
+              </span>
+              <iconify-icon icon="solar:alt-arrow-down-linear" aria-hidden="true"></iconify-icon>
+            </button>
+            <div class="lang-menu" id="langMenu" role="group" aria-label="Language">
+              <a href="#" data-lang="en" class="active">EN</a>
+              <a href="#" data-lang="lo">ລາວ</a>
+              <a href="#" data-lang="th">ไทย</a>
+            </div>
           </div>
           <button
             class="theme-toggle"
@@ -703,6 +719,7 @@
           <h4 data-i18n="footer.cols.product">Product</h4>
           <ul class="footer-links">
             <li><a href="#features" data-i18n="footer.links.features">Features</a></li>
+            <li><a href="#platform" data-i18n="landing.nav.platform">Platform</a></li>
             <li><a href="#how-it-works" data-i18n="footer.links.howItWorks">How It Works</a></li>
             <li><a href="#technology" data-i18n="footer.links.tech">Technology</a></li>
           </ul>
@@ -711,6 +728,7 @@
           <h4 data-i18n="footer.cols.resources">Resources</h4>
           <ul class="footer-links">
             <li><a href="manual.html" data-i18n="footer.links.docs">Documentation</a></li>
+            <li><a href="b/" data-i18n="nav.businessPages">Business pages</a></li>
             <li><a href="https://github.com/bitoslabs/bnos-svelte" target="_blank" rel="noopener" data-i18n="landing.oss.cta">View on GitHub</a></li>
             <li><a href="console.html" title="Nostr relay debug console">Console</a></li>
           </ul>
@@ -748,7 +766,33 @@
           a.addEventListener("click", close);
         });
         window.addEventListener("resize", function () {
-          if (window.innerWidth > 900) close();
+          if (window.innerWidth > 1024) close();
+        });
+      })();
+
+      // Language dropdown
+      (function () {
+        var wrap = document.getElementById("langSwitcher");
+        var toggle = document.getElementById("langToggle");
+        if (!wrap || !toggle) return;
+        function setOpen(open) {
+          wrap.classList.toggle("open", open);
+          toggle.setAttribute("aria-expanded", open ? "true" : "false");
+        }
+        toggle.addEventListener("click", function (e) {
+          e.stopPropagation();
+          setOpen(!wrap.classList.contains("open"));
+        });
+        wrap.querySelectorAll(".lang-menu a").forEach(function (a) {
+          a.addEventListener("click", function () {
+            setOpen(false);
+          });
+        });
+        document.addEventListener("click", function (e) {
+          if (!wrap.contains(e.target)) setOpen(false);
+        });
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape") setOpen(false);
         });
       })();
 

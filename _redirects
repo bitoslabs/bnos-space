@@ -1,0 +1,3 @@
+# Pretty business-page URLs. Static assets and /b/verify/ still win because
+# existing files are served before rewrite rules on Netlify/Cloudflare Pages.
+/b/*  /b/index.html  200

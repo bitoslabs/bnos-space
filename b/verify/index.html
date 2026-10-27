@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Credential verification · BNOS</title>
+<link rel="stylesheet" href="./style.css">
+<header><a href="/b/">← Business page</a><label>Language / ພາສາ <select id="language"><option value="en">English</option><option value="lo">ລາວ</option></select></label></header>
+<main>
+<p class="eyebrow">BNOS · BUSINESS PRESENCE</p>
+<h1 id="heading">Understand a credential</h1>
+<p id="intro">Check each dimension. A signature alone does not establish trust.</p>
+<aside id="notice">Synthetic demonstration only. These are fixed test results, not live verification.</aside>
+<label for="scenario" id="scenario-label">Explore a result</label>
+<select id="scenario">
+<option value="valid">Valid</option><option value="revoked">Revoked</option><option value="expired">Expired</option><option value="unknown">Unknown status</option><option value="issuer-untrusted">Issuer not trusted</option><option value="invalid-signature">Invalid signature</option>
+</select>
+<section id="result" aria-live="polite" aria-atomic="true"></section>
+<p id="error" role="alert"></p>
+<button id="live" disabled>Live verification unavailable</button>
+<p id="privacy">No credentials are uploaded. This page stores nothing and contacts no relays.</p>
+</main>
+<script type="module" src="./app.js"></script>
+</html>

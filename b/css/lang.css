@@ -1,0 +1,47 @@
+/* Language-specific type. Lao uses the same Chanthavong face as the landing
+   page; Thai uses Noto Sans Thai. Headings inherit the language face instead
+   of the Latin display/heading stacks. */
+html[lang="lo"] body {
+  font-family:
+    "Chanthavong",
+    "Bouasavanh",
+    "Phetsarath OT",
+    "Saysettha OT",
+    "Noto Sans Lao",
+    "Inter",
+    system-ui,
+    sans-serif;
+  line-height: 1.7;
+}
+
+html[lang="th"] body {
+  font-family:
+    "Noto Sans Thai",
+    "Inter",
+    system-ui,
+    sans-serif;
+  line-height: 1.65;
+}
+
+html[lang="lo"] :is(h1, h2, h3, h4, h5, h6),
+html[lang="lo"] .kicker {
+  font-family:
+    "Chanthavong",
+    "Noto Sans Lao",
+    "Phetsarath OT",
+    "Saysettha OT",
+    sans-serif;
+  line-height: 1.45;
+  letter-spacing: 0;
+}
+
+html[lang="th"] :is(h1, h2, h3, h4, h5, h6),
+html[lang="th"] .kicker {
+  font-family:
+    "Noto Sans Thai",
+    "Inter",
+    system-ui,
+    sans-serif;
+  line-height: 1.4;
+  letter-spacing: 0;
+}

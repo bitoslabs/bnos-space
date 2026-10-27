@@ -1,0 +1,168 @@
+{
+  "pubkey": "4f355bdcb7cc0af728ef3cceb9615d90684bb5b2ca5f859ab0f0b704075871aa",
+  "created_at": 1792886400,
+  "profile": {
+    "version": 1,
+    "type": "organization",
+    "name": "BnOS",
+    "displayName": "BnOS",
+    "nip05": "",
+    "headline": "Open-source, Lightning-powered point of sale and business OS on Nostr.",
+    "bio": "BnOS (Bitcoin Nostr Operating System) is an open-source, Lightning-powered point of sale and business operating system built on the Nostr protocol. It runs in the browser as a PWA, keeps data local-first, and settles payments directly to the merchant's wallet without a custodian.\n\nModules cover point of sale, catalog and inventory, orders and customers, reports, expenses, staff and settings. It works offline, syncs to relays you control, supports English, Lao and Thai, and is MIT licensed.",
+    "location": "Vientiane, Laos",
+    "timezone": "UTC+7",
+    "languages": [
+      "EN",
+      "ລາວ",
+      "TH"
+    ],
+    "theme": "obsidian",
+    "availability": {
+      "status": "available",
+      "note": "Open source · self-host or use the hosted app"
+    },
+    "avatar": "https://bnos.space/assets/icons/icon.svg",
+    "banner": "",
+    "contact": {
+      "label": "Contact support",
+      "url": "mailto:support@bnos.space"
+    },
+    "links": [
+      {
+        "label": "Website",
+        "url": "https://bnos.space"
+      },
+      {
+        "label": "Open the app",
+        "url": "https://app.bnos.space"
+      },
+      {
+        "label": "Documentation",
+        "url": "https://bnos.space/manual.html"
+      },
+      {
+        "label": "GitHub",
+        "url": "https://github.com/bitoslabs/bnos-svelte"
+      },
+      {
+        "label": "Nostr",
+        "url": "https://yakihonne.com/profile/bnos@nostrcheck.me"
+      },
+      {
+        "label": "Discord",
+        "url": "https://discord.gg/aNwEQQF3w8"
+      }
+    ],
+    "skills": [
+      {
+        "name": "Point of sale",
+        "evidence": "self",
+        "issuer": ""
+      },
+      {
+        "name": "Catalog & inventory",
+        "evidence": "self",
+        "issuer": ""
+      },
+      {
+        "name": "Orders & customers",
+        "evidence": "self",
+        "issuer": ""
+      },
+      {
+        "name": "Reports & insights",
+        "evidence": "self",
+        "issuer": ""
+      },
+      {
+        "name": "Lightning payments",
+        "evidence": "self",
+        "issuer": ""
+      },
+      {
+        "name": "Local-first & offline",
+        "evidence": "self",
+        "issuer": ""
+      },
+      {
+        "name": "Team management",
+        "evidence": "self",
+        "issuer": ""
+      }
+    ],
+    "projects": [
+      {
+        "id": "pr_pos",
+        "title": "Point of sale — Lightning checkout",
+        "summary": "Ring up sales in seconds with barcode, cart and instant Lightning checkout.",
+        "description": "The register handles barcode entry, a live cart, VAT and totals, and Lightning payment confirmation. Sales are written locally first, so a dropped connection does not stop the queue, and settle straight to the merchant's wallet without a custodian.",
+        "role": "BnOS core",
+        "contribution": "POS flows, Lightning settlement, offline queue",
+        "year": "2025 — 2026",
+        "tags": [
+          "POS",
+          "Lightning",
+          "Offline"
+        ],
+        "link": "https://app.bnos.space",
+        "media": "",
+        "public": true
+      },
+      {
+        "id": "pr_catalog",
+        "title": "Catalog & inventory",
+        "summary": "Products, variants, images and live stock that update with every sale.",
+        "description": "A shared catalog backs the register and the shop view. Stock counts move with each sale, low-stock alerts surface in the dashboard, and products can be imported and adjusted without a central server.",
+        "role": "BnOS core",
+        "contribution": "Product model, variants, stock updates",
+        "year": "2025 — 2026",
+        "tags": [
+          "Inventory",
+          "Catalog",
+          "Nostr"
+        ],
+        "link": "https://app.bnos.space",
+        "media": "",
+        "public": true
+      },
+      {
+        "id": "pr_orders",
+        "title": "Orders, customers & reports",
+        "summary": "Track orders end to end, keep customer history and read sales, margins and trends in real time.",
+        "description": "Orders move from open to paid with a receipt and customer link. Reports cover sales, margins and trends alongside expense tracking, and the same records sync to relays the merchant controls.",
+        "role": "BnOS core",
+        "contribution": "Order states, customer records, reporting",
+        "year": "2025 — 2026",
+        "tags": [
+          "Orders",
+          "CRM",
+          "Reports"
+        ],
+        "link": "https://app.bnos.space",
+        "media": "",
+        "public": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "md_mark",
+        "type": "image",
+        "url": "https://bnos.space/assets/icons/icon.svg",
+        "poster": "",
+        "caption": "BnOS mark",
+        "alt": "BnOS application icon",
+        "public": true
+      },
+      {
+        "id": "md_og",
+        "type": "image",
+        "url": "https://bnos.space/og-image.png",
+        "poster": "",
+        "caption": "BnOS — Lightning-powered business OS",
+        "alt": "BnOS social preview artwork",
+        "public": true
+      }
+    ],
+    "credentials": []
+  }
+}

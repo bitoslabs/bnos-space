@@ -51,6 +51,31 @@ bnos.space/
 
 - ✅ comming.html - Fully translated with Lao font support
 
+### 4. Business pages (`/b/`)
+
+- **b/index.html** - Business/organization presence app addressed by a Nostr key.
+- Public page at `bnos.space/b/{npub or NIP-05}` with case studies, capabilities,
+  gallery, about, contact and a QR/share link.
+- Owner signs in with NIP-07, NIP-46 or a local nsec; only that key can publish.
+- Content is a NIP-78 replaceable event (kind `30078`, `d` tag
+  `bnos.space:business:v1`), exported and imported as JSON.
+- Demo: `bnos.space/b/?demo=1`.
+- `b/verify/` contains the synthetic credential-verification concept.
+- Uses the landing palette: `#0a0a12` surfaces, gold `#f59e0b` primary,
+  violet secondary, and the shared `bnos_theme` light/dark preference.
+- Local i18n for English, Lao and Thai (`b/js/data/i18n.js`), with a header
+  switcher, `?lang=lo|th` links and the shared `bnos_lang` preference.
+
+Run locally with the included fallback server so `/b/{ref}` resolves:
+
+```sh
+node serve.mjs 8080
+```
+
+Then open <http://localhost:8080/b/>. On static hosts that support `_redirects`,
+the included rule rewrites `/b/*` to `/b/index.html`; on nginx, add an
+equivalent `try_files` fallback for `/b/`.
+
 ## ⏳ Pending Tasks
 
 ### Pages to Complete

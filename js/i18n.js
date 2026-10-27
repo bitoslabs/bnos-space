@@ -17,6 +17,7 @@ const translations = {
       technology: "Technology",
       faq: "FAQ",
       docs: "Documentation",
+      businessPages: "Business pages",
       getStarted: "Get Started"
     },
     hero: {
@@ -541,6 +542,7 @@ const translations = {
       technology: "เทคโนโลยี",
       faq: "ถาม-ตอบ",
       docs: "เอกสาร",
+      businessPages: "หน้าธุรกิจ",
       getStarted: "เริ่มต้นใช้งาน"
     },
     hero: {
@@ -1065,6 +1067,7 @@ const translations = {
       technology: "ເຕັກໂນໂລຊີ",
       faq: "ຄໍາຖາມທີ່ພົບເລື້ອຍ",
       docs: "ເອກະສານ",
+      businessPages: "ໜ້າທຸລະກິດ",
       getStarted: "ເລີ່ມຕົ້ນໃຊ້ງານ"
     },
     hero: {

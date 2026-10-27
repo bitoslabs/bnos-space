@@ -26,4 +26,12 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bnos.space/manual.html" />
   </url>
 
+  <!-- Business presence app -->
+  <url>
+    <loc>https://bnos.space/b/</loc>
+    <lastmod>2026-10-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>

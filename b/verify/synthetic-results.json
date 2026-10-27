@@ -1,0 +1,288 @@
+{
+  "synthetic": true,
+  "cases": [
+    {
+      "mode": "valid",
+      "view": {
+        "visibility": "private",
+        "verified_at": "2026-10-20T08:00:00Z",
+        "status": {
+          "status": "valid",
+          "labels": {
+            "lo": "ຍັງມີຜົນ",
+            "en": "Valid"
+          },
+          "hints": {
+            "lo": "ລາຍເຊັນຖືກຕ້ອງ, ຍັງບໍ່ໝົດອາຍຸ ແລະ ບໍ່ຖືກຍົກເລີກ ນັບຕັ້ງແຕ່ເວລາກວດສອບ.",
+            "en": "Signature valid, not expired and not revoked as of the check time."
+          }
+        },
+        "signature": "valid",
+        "issuer": {
+          "kind": "issuer-key",
+          "org_ref": "org:alpha",
+          "signer_public_key_ref": "e50b21f532cca6736823a3b55ec64f7fa87503d46bd0eec2a35841588494e9a0",
+          "trust": "trusted",
+          "registration": "unknown"
+        },
+        "evidence": [
+          "synthetic-course-record-001",
+          "synthetic-completion-log-001"
+        ],
+        "expiry": {
+          "expires_at": "2026-10-21T08:00:00Z",
+          "state": "valid"
+        },
+        "revocation": {
+          "status": "valid",
+          "checked_at": "2026-10-20T08:00:00Z",
+          "labels": {
+            "lo": "ບໍ່ຖືກຍົກເລີກ (ກວດແລ້ວ)",
+            "en": "Not revoked (checked)"
+          }
+        },
+        "conveys_authority": false,
+        "authority_note": {
+          "lo": "ການຢືນຢັນບົດບາດແມ່ນຄຳຕອບ ບໍ່ແມ່ນສິດ — ສິດໃນທຸກສຳນັກໜ້າໜຶ່ງມາຈາກສະມາຊິກໄດເຣກທໍລີຂອງສຳນັກນັ້ນເທົ່ານັ້ນ.",
+          "en": "Verifying a role is an answer, not a privilege — authority in any tenant comes only from that tenant’s directory membership."
+        }
+      }
+    },
+    {
+      "mode": "revoked",
+      "view": {
+        "visibility": "private",
+        "verified_at": "2026-10-20T08:00:00Z",
+        "status": {
+          "status": "revoked",
+          "labels": {
+            "lo": "ຖືກຍົກເລີກແລ້ວ",
+            "en": "Revoked"
+          },
+          "hints": {
+            "lo": "ຜູ້ອອກໄດ້ຍົກເລີກແລ້ວ — ລາຍເຊັນເດີມຍັງກວດສອບໄດ້ ແຕ່ສະຖານະບໍ່ແມ່ນ \"ຖືກຕ້ອງ\".",
+            "en": "The issuer revoked it — the original signature stays verifiable but the status is not valid."
+          }
+        },
+        "signature": "valid",
+        "issuer": {
+          "kind": "issuer-key",
+          "org_ref": "org:alpha",
+          "signer_public_key_ref": "e50b21f532cca6736823a3b55ec64f7fa87503d46bd0eec2a35841588494e9a0",
+          "trust": "trusted",
+          "registration": "unknown"
+        },
+        "evidence": [
+          "synthetic-course-record-001",
+          "synthetic-completion-log-001"
+        ],
+        "expiry": {
+          "expires_at": "2026-10-21T08:00:00Z",
+          "state": "valid"
+        },
+        "revocation": {
+          "status": "revoked",
+          "checked_at": "2026-10-20T08:00:00Z",
+          "reason_code": "synthetic-error",
+          "labels": {
+            "lo": "ຖືກຍົກເລີກ",
+            "en": "Revoked"
+          }
+        },
+        "conveys_authority": false,
+        "authority_note": {
+          "lo": "ການຢືນຢັນບົດບາດແມ່ນຄຳຕອບ ບໍ່ແມ່ນສິດ — ສິດໃນທຸກສຳນັກໜ້າໜຶ່ງມາຈາກສະມາຊິກໄດເຣກທໍລີຂອງສຳນັກນັ້ນເທົ່ານັ້ນ.",
+          "en": "Verifying a role is an answer, not a privilege — authority in any tenant comes only from that tenant’s directory membership."
+        }
+      }
+    },
+    {
+      "mode": "expired",
+      "view": {
+        "visibility": "private",
+        "verified_at": "2026-10-22T08:00:00Z",
+        "status": {
+          "status": "expired",
+          "labels": {
+            "lo": "ໝົດອາຍຸແລ້ວ",
+            "en": "Expired"
+          },
+          "hints": {
+            "lo": "ໃບຮັບຮອງໝົດອາຍຸແລ້ວ — ສະຖານະການຍົກເລີກບໍ່ສາມາດສະຫຼຸບລວມເປັນ \"ຖືກຕ້ອງ\".",
+            "en": "The credential is past its expiry — never summarized as valid."
+          }
+        },
+        "signature": "valid",
+        "issuer": {
+          "kind": "issuer-key",
+          "org_ref": "org:alpha",
+          "signer_public_key_ref": "e50b21f532cca6736823a3b55ec64f7fa87503d46bd0eec2a35841588494e9a0",
+          "trust": "trusted",
+          "registration": "unknown"
+        },
+        "evidence": [
+          "synthetic-course-record-001",
+          "synthetic-completion-log-001"
+        ],
+        "expiry": {
+          "expires_at": "2026-10-21T08:00:00Z",
+          "state": "expired"
+        },
+        "revocation": {
+          "status": "valid",
+          "checked_at": "2026-10-22T08:00:00Z",
+          "labels": {
+            "lo": "ບໍ່ຖືກຍົກເລີກ (ກວດແລ້ວ)",
+            "en": "Not revoked (checked)"
+          }
+        },
+        "conveys_authority": false,
+        "authority_note": {
+          "lo": "ການຢືນຢັນບົດບາດແມ່ນຄຳຕອບ ບໍ່ແມ່ນສິດ — ສິດໃນທຸກສຳນັກໜ້າໜຶ່ງມາຈາກສະມາຊິກໄດເຣກທໍລີຂອງສຳນັກນັ້ນເທົ່ານັ້ນ.",
+          "en": "Verifying a role is an answer, not a privilege — authority in any tenant comes only from that tenant’s directory membership."
+        }
+      }
+    },
+    {
+      "mode": "unknown",
+      "view": {
+        "visibility": "private",
+        "verified_at": "2026-10-20T08:00:00Z",
+        "status": {
+          "status": "unknown",
+          "labels": {
+            "lo": "ບໍ່ຮູ້ສະຖານະປັດຈຸບັນ",
+            "en": "Unknown status"
+          },
+          "hints": {
+            "lo": "ບໍ່ສາມາດຢືນຢັນສະຖານະການຍົກເລີກໄດ້ — ການປະຕິບັດທີ່ມີສິດພິເສດຈະຖືກຢຸດ (ປິດແບບປອດໄພ).",
+            "en": "Revocation status could not be confirmed — privileged actions stop here (fail closed)."
+          }
+        },
+        "signature": "valid",
+        "issuer": {
+          "kind": "issuer-key",
+          "org_ref": "org:alpha",
+          "signer_public_key_ref": "e50b21f532cca6736823a3b55ec64f7fa87503d46bd0eec2a35841588494e9a0",
+          "trust": "trusted",
+          "registration": "unknown"
+        },
+        "evidence": [
+          "synthetic-course-record-001",
+          "synthetic-completion-log-001"
+        ],
+        "expiry": {
+          "expires_at": "2026-10-21T08:00:00Z",
+          "state": "valid"
+        },
+        "revocation": {
+          "status": "unknown",
+          "checked_at": "2026-10-20T08:00:00Z",
+          "labels": {
+            "lo": "ບໍ່ຮູ້ (ບໍ່ສາມາດກວດໄດ້)",
+            "en": "Unknown (could not check)"
+          }
+        },
+        "conveys_authority": false,
+        "authority_note": {
+          "lo": "ການຢືນຢັນບົດບາດແມ່ນຄຳຕອບ ບໍ່ແມ່ນສິດ — ສິດໃນທຸກສຳນັກໜ້າໜຶ່ງມາຈາກສະມາຊິກໄດເຣກທໍລີຂອງສຳນັກນັ້ນເທົ່ານັ້ນ.",
+          "en": "Verifying a role is an answer, not a privilege — authority in any tenant comes only from that tenant’s directory membership."
+        }
+      }
+    },
+    {
+      "mode": "issuer-untrusted",
+      "view": {
+        "visibility": "private",
+        "verified_at": "2026-10-20T08:00:00Z",
+        "status": {
+          "status": "issuer-untrusted",
+          "labels": {
+            "lo": "ຜູ້ອອກບໍ່ໄດ້ຮັບຄວາມໄວ້ວາງໃຈ",
+            "en": "Issuer not trusted"
+          },
+          "hints": {
+            "lo": "ຜູ້ກວດສອບບໍ່ໄດ້ວາງໃຈອົງກອນຜູ້ອອກໃບຮັບຮອງນີ້.",
+            "en": "This verifier does not trust the organization that issued the credential."
+          }
+        },
+        "signature": "valid",
+        "issuer": {
+          "kind": "issuer-key",
+          "org_ref": "org:alpha",
+          "signer_public_key_ref": "e50b21f532cca6736823a3b55ec64f7fa87503d46bd0eec2a35841588494e9a0",
+          "trust": "untrusted",
+          "registration": "unknown"
+        },
+        "evidence": [
+          "synthetic-course-record-001",
+          "synthetic-completion-log-001"
+        ],
+        "expiry": {
+          "expires_at": "2026-10-21T08:00:00Z",
+          "state": "valid"
+        },
+        "revocation": {
+          "status": "valid",
+          "checked_at": "2026-10-20T08:00:00Z",
+          "labels": {
+            "lo": "ບໍ່ຖືກຍົກເລີກ (ກວດແລ້ວ)",
+            "en": "Not revoked (checked)"
+          }
+        },
+        "conveys_authority": false,
+        "authority_note": {
+          "lo": "ການຢືນຢັນບົດບາດແມ່ນຄຳຕອບ ບໍ່ແມ່ນສິດ — ສິດໃນທຸກສຳນັກໜ້າໜຶ່ງມາຈາກສະມາຊິກໄດເຣກທໍລີຂອງສຳນັກນັ້ນເທົ່ານັ້ນ.",
+          "en": "Verifying a role is an answer, not a privilege — authority in any tenant comes only from that tenant’s directory membership."
+        }
+      }
+    },
+    {
+      "mode": "invalid-signature",
+      "view": {
+        "visibility": "private",
+        "verified_at": "2026-10-20T08:00:00Z",
+        "status": {
+          "status": "invalid-signature",
+          "labels": {
+            "lo": "ລາຍເຊັນບໍ່ຖືກຕ້ອງ",
+            "en": "Invalid signature"
+          },
+          "hints": {
+            "lo": "ເນື້ອໃນຖືກດັດແປງ ຫຼື ລາຍເຊັນບໍ່ຕົງກັບຜູ້ອອກ — ບໍ່ສາມາດຍື່ນຕໍ່ໄດ້.",
+            "en": "Content was altered or the signature does not match the issuer — nothing further is trusted."
+          }
+        },
+        "signature": "invalid",
+        "issuer": {
+          "kind": "issuer-key",
+          "org_ref": "org:alpha",
+          "signer_public_key_ref": "e50b21f532cca6736823a3b55ec64f7fa87503d46bd0eec2a35841588494e9a0",
+          "trust": "trusted",
+          "registration": "unknown"
+        },
+        "evidence": [
+          "synthetic-course-record-001",
+          "synthetic-completion-log-001"
+        ],
+        "expiry": {
+          "expires_at": "2026-10-21T08:00:00Z",
+          "state": "valid"
+        },
+        "revocation": {
+          "status": "valid",
+          "checked_at": "2026-10-20T08:00:00Z",
+          "labels": {
+            "lo": "ບໍ່ຖືກຍົກເລີກ (ກວດແລ້ວ)",
+            "en": "Not revoked (checked)"
+          }
+        },
+        "conveys_authority": false,
+        "authority_note": {
+          "lo": "ການຢືນຢັນບົດບາດແມ່ນຄຳຕອບ ບໍ່ແມ່ນສິດ — ສິດໃນທຸກສຳນັກໜ້າໜຶ່ງມາຈາກສະມາຊິກໄດເຣກທໍລີຂອງສຳນັກນັ້ນເທົ່ານັ້ນ.",
+          "en": "Verifying a role is an answer, not a privilege — authority in any tenant comes only from that tenant’s directory membership."
+        }
+      }
+    }
+  ]
+}

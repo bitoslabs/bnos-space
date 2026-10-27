@@ -1,0 +1,1627 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <base href="/b/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark light" />
+    <meta
+      name="theme-color"
+      content="#0a0a12"
+      id="theme-color"
+    />
+    <title>Business presence — bnos.space</title>
+    <meta
+      name="description"
+      content="A business page addressed by a Nostr key. Open bnos.space/b/{npub or NIP-05} to view services and case studies; the key owner can sign in and edit."
+    />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://bnos.space/b/" id="canonical-link" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="bnos.space" />
+    <meta property="og:title" content="Business presence — bnos.space" id="og-title" />
+    <meta
+      property="og:description"
+      content="A business page addressed by a Nostr key, owned and signed by the key holder."
+      id="og-description"
+    />
+    <meta property="og:image" content="https://bnos.space/og-image.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.mts.la" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+Lao:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.mts.la/fonts/chanthavong/chanthavong.css"
+    />
+    <link rel="stylesheet" href="css/tokens.css?v=6" />
+    <link rel="stylesheet" href="css/header.css?v=7" />
+    <link rel="stylesheet" href="css/landing.css?v=6" />
+    <link rel="stylesheet" href="css/profile.css?v=7" />
+    <link rel="stylesheet" href="css/editor.css?v=7" />
+    <link rel="stylesheet" href="css/responsive.css?v=3" />
+    <link rel="stylesheet" href="css/gallery.css?v=1" />
+    <link rel="stylesheet" href="css/themes.css?v=2" />
+    <link rel="stylesheet" href="css/layouts.css?v=2" />
+    <link rel="stylesheet" href="css/lang.css?v=1" />
+    <link rel="modulepreload" href="vendor/nostr-tools.js" />
+    <link rel="icon" href="../icon.svg" type="image/svg+xml" />
+    <link rel="icon" href="../favicon.ico" sizes="any" />
+    <script>
+      try {
+        const saved = localStorage.getItem("bnos_theme");
+        if (saved === "light") document.documentElement.classList.add("light-mode");
+      } catch {
+        /* storage unavailable */
+      }
+    </script>
+  </head>
+  <body>
+    <div class="brand-honeycomb" aria-hidden="true">
+      <span class="brand-honeycomb__pattern"></span>
+    </div>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <header class="topnav">
+      <div class="topnav-in">
+        <a class="brand" href="../index.html" aria-label="BNOS home">
+          <svg class="mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path
+              d="M16 2.5 27.5 9v14L16 29.5 4.5 23V9L16 2.5Z"
+              stroke="currentColor"
+              stroke-width="2"
+            />
+            <path
+              d="M16 9.5 21.5 12.7v6.6L16 22.5l-5.5-3.2v-6.6L16 9.5Z"
+              fill="rgba(245,158,11,.22)"
+              stroke="currentColor"
+              stroke-width="1.4"
+            />
+            <circle cx="16" cy="16" r="2.1" fill="var(--brand-color)" />
+          </svg>
+          <span class="name">B<b>NOS</b></span>
+        </a>
+
+        <span class="url-chip" id="url-chip" title="Canonical public URL">
+          <svg
+            class="lock"
+            width="11"
+            height="11"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.4"
+            aria-hidden="true"
+          >
+            <rect x="4" y="11" width="16" height="10" rx="2" />
+            <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+          </svg>
+          <span class="url-prefix">bnos.space</span
+          ><span class="path" id="url-chip-path">/b/</span>
+        </span>
+
+        <nav class="navlinks" id="landing-nav" aria-label="Business app sections" hidden>
+          <a href="#how" data-i18n="How it works">How it works</a>
+          <a href="?demo=1" data-i18n="Sample">Sample</a>
+          <a href="../manual.html" data-i18n="Documentation">Documentation</a>
+        </nav>
+
+        <nav class="navlinks" id="profile-nav" aria-label="Business page sections" hidden>
+          <a href="#portfolio" data-i18n="Cases">Cases</a>
+          <a href="#gallery" id="nav-gallery" data-i18n="Gallery" hidden>Gallery</a>
+          <a href="#skills" data-i18n="Capabilities">Capabilities</a>
+          <a href="#about" data-i18n="About">About</a>
+        </nav>
+
+        <div class="nav-cta">
+          <button
+            class="icon-btn nav-toggle"
+            id="nav-toggle"
+            type="button"
+            aria-label="Open business page sections" data-i18n-aria="Open business page sections"
+            aria-expanded="false"
+            aria-controls="profile-nav"
+            hidden
+          >
+            <svg
+              class="nav-toggle__open"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="M4 7h16M4 12h16M4 17h16" />
+            </svg>
+            <svg
+              class="nav-toggle__close"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="M18 6 6 18M6 6l12 12" />
+            </svg>
+          </button>
+          <label class="lang-picker">
+            <span class="sr-only" data-i18n="Language">Language</span>
+            <select id="lang-select" aria-label="Language" data-i18n-aria="Language">
+              <option value="en">EN</option>
+              <option value="lo">ລາວ</option>
+              <option value="th">ไทย</option>
+            </select>
+          </label>
+          <button
+            class="icon-btn"
+            id="theme-btn"
+            type="button"
+            aria-label="Switch to light theme"
+            data-i18n-aria="Switch to light theme"
+            title="Toggle theme"
+          >
+            <svg
+              class="theme-icon theme-icon--moon"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.6 6.6 0 0 0 9.8 9.8Z" />
+            </svg>
+            <svg
+              class="theme-icon theme-icon--sun"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+            </svg>
+          </button>
+          <button
+            class="btn btn-ghost btn-sm"
+            id="share-btn"
+            type="button"
+            hidden
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <circle cx="18" cy="5" r="3" />
+              <circle cx="6" cy="12" r="3" />
+              <circle cx="18" cy="19" r="3" />
+              <path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4" />
+            </svg>
+            <span data-i18n="Share">Share</span>
+          </button>
+          <a
+            class="btn btn-ghost btn-sm nav-my-portfolio"
+            id="my-portfolio-link"
+            href="/b/"
+            aria-label="My business page"
+            data-i18n-aria="My business page"
+            title="My business page"
+            data-i18n-title="My business page"
+            hidden
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <rect x="3" y="7" width="18" height="13" rx="2.5" />
+              <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+              <path d="M3 12h18" />
+            </svg>
+            <span class="my-portfolio-label" data-i18n="My business page">My business page</span>
+          </a>
+          <button class="btn btn-primary btn-sm" id="auth-btn" type="button" data-i18n="Sign in">
+            Sign in
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="demo-banner" id="demo-banner" hidden>
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        aria-hidden="true"
+      >
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 8v5m0 3h.01" />
+      </svg>
+      <span data-i18n="landing.demoBanner"
+        >Preview with sample data — not a published business page. Nothing here is
+        signed or stored on a relay.</span
+      >
+    </div>
+
+    <main id="main" hidden>
+      <!-- ==================== LOOKUP / LANDING ==================== -->
+      <section id="landing-view" class="landing wrap" aria-labelledby="landing-title" hidden>
+        <div class="landing-copy">
+          <div class="kicker" data-i18n="Business presence · Nostr native">Business presence · Nostr native</div>
+          <h1 id="landing-title" data-i18n="Your business, published from the source.">Your business, published from the source.</h1>
+          <p class="landing-lead" data-i18n-html="landing.lead">
+            Publish an organization page at
+            <span class="mono">bnos.space/b/{businessRef}</span> using an
+            <span class="mono">npub</span> or a
+            <span class="mono">NIP-05</span> address. No platform account: the
+            page follows your key, and only that key can edit it.
+          </p>
+
+          <form class="lookup" id="lookup-form" novalidate>
+            <label class="sr-only" for="lookup-input" data-i18n="Business reference">Business reference</label>
+            <input
+              id="lookup-input"
+              type="text"
+              autocomplete="off"
+              spellcheck="false"
+              placeholder="npub1…, NIP-05, or business alias"
+              data-i18n-placeholder="npub1…, NIP-05, or business alias"
+            />
+            <button class="btn btn-primary" type="submit">
+              <span data-i18n="Open business page">Open business page</span>
+              <svg
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.2"
+                aria-hidden="true"
+              >
+                <path d="M5 12h14m-6-6 6 6-6 6" />
+              </svg>
+            </button>
+          </form>
+
+          <div class="landing-actions">
+            <button class="btn btn-ghost" id="landing-signin" type="button">
+              <svg
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <circle cx="8" cy="15" r="4.5" />
+                <path d="m11.2 11.8 8-8M17 4l2.5 2.5M14 7l2 2" />
+              </svg>
+              <span id="landing-signin-label" data-i18n="Sign in to manage">Sign in to manage</span>
+            </button>
+            <a class="head-link" href="?demo=1"
+              ><span data-i18n="View a sample business page">View a sample business page</span>
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <path d="M5 12h14m-6-6 6 6-6 6" />
+              </svg>
+            </a>
+          </div>
+
+          <div class="landing-note" id="landing-session" hidden></div>
+        </div>
+
+        <div class="landing-grid" id="how">
+          <article class="tile landing-card">
+            <div class="tile-title">01 — <span data-i18n="Address">Address</span></div>
+            <h3 data-i18n="npub or NIP-05">npub or NIP-05</h3>
+            <p>
+              <span data-i18n-html="landing.card1">
+              <span class="mono">npub</span> is the portable public key.
+              <span class="mono">NIP-05</span> is a human-readable alias like
+              <span class="mono">you@yourdomain.com</span> that resolves to the
+              same key.</span>
+            </p>
+          </article>
+          <article class="tile landing-card">
+            <div class="tile-title">02 — <span data-i18n="Ownership">Ownership</span></div>
+            <h3 data-i18n="Only the key can publish">Only the key can publish</h3>
+            <p>
+              <span data-i18n="landing.card2">Edits are signed with a Nostr signer (NIP-07 or NIP-46). A visitor can read
+              every field but cannot change one; relays reject a write signed by
+              another key.</span>
+            </p>
+          </article>
+          <article class="tile landing-card">
+            <div class="tile-title">03 — <span data-i18n="Portability">Portability</span></div>
+            <h3 data-i18n="Your business data leaves with you">Your business data leaves with you</h3>
+            <p>
+              <span data-i18n="landing.card3">The business page is a NIP-78 app-data event (kind 30078) on relays you
+              choose. Export the JSON at any time; no private drafts are
+              published.</span>
+            </p>
+          </article>
+        </div>
+
+        <section class="recent-section" id="recent-section" hidden aria-labelledby="recent-title">
+          <div class="recent-head">
+            <div>
+              <div class="kicker" data-i18n="Recently published">Recently published</div>
+              <h2 id="recent-title" data-i18n="Business pages from your relays">Business pages from your relays</h2>
+              <p class="recent-lead" data-i18n="landing.recentLead">
+                Public business-page events from the relays configured in this
+                browser — not a global directory.
+              </p>
+            </div>
+            <button class="btn btn-ghost btn-sm" id="recent-refresh" type="button" data-i18n="Refresh">
+              Refresh
+            </button>
+          </div>
+          <div class="recent-grid" id="recent-grid"></div>
+          <p class="recent-status" id="recent-status" aria-live="polite"></p>
+          <div class="recent-more-wrap">
+            <button class="btn btn-ghost btn-sm" id="recent-more" type="button" data-i18n="Load more" hidden>
+              Load more
+            </button>
+          </div>
+        </section>
+
+        <div class="landing-foot">
+          <span class="mono">NIP-07</span>
+          <span class="mono">NIP-46</span>
+          <span class="mono">NIP-05</span>
+          <span class="mono">NIP-78</span>
+          <span class="mono">kind 30078</span>
+          <span class="landing-foot-note" data-i18n="landing.footNote"
+            >Public pages only. Private drafts stay in this browser.</span
+          >
+        </div>
+      </section>
+
+      <!-- ==================== LOADING / EMPTY / ERROR ==================== -->
+      <section id="state-view" class="state-view wrap" aria-live="polite" hidden>
+        <div class="state-skeleton" id="state-skeleton" hidden>
+          <p class="sr-only" id="state-status" role="status"></p>
+          <div class="sk-hero" aria-hidden="true">
+            <div class="sk-main">
+              <div class="sk-id">
+                <span class="sk-avatar sk-block"></span>
+                <div class="sk-id-copy">
+                  <span class="sk-line sk-line--title sk-block"></span>
+                  <span class="sk-line sk-line--sub sk-block"></span>
+                  <div class="sk-chips">
+                    <span class="sk-chip sk-block"></span>
+                    <span class="sk-chip sk-block"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="sk-trust sk-block"></div>
+              <span class="sk-line sk-line--status sk-block"></span>
+              <div class="sk-actions">
+                <span class="sk-btn sk-block"></span>
+                <span class="sk-btn sk-block"></span>
+                <span class="sk-btn sk-block"></span>
+              </div>
+            </div>
+            <div class="sk-side">
+              <div class="sk-reel sk-block"></div>
+              <div class="sk-card">
+                <span class="sk-line sk-line--card-title sk-block"></span>
+                <div class="sk-row">
+                  <span class="sk-icon sk-block"></span>
+                  <div class="sk-row-copy">
+                    <span class="sk-line sk-line--k sk-block"></span>
+                    <span class="sk-line sk-line--v sk-block"></span>
+                  </div>
+                </div>
+                <div class="sk-row">
+                  <span class="sk-icon sk-block"></span>
+                  <div class="sk-row-copy">
+                    <span class="sk-line sk-line--k sk-block"></span>
+                    <span class="sk-line sk-line--v sk-block"></span>
+                  </div>
+                </div>
+                <div class="sk-row">
+                  <span class="sk-icon sk-block"></span>
+                  <div class="sk-row-copy">
+                    <span class="sk-line sk-line--k sk-block"></span>
+                    <span class="sk-line sk-line--v sk-block"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="sk-section" aria-hidden="true">
+            <div class="sk-section-head">
+              <span class="sk-line sk-line--kicker sk-block"></span>
+              <span class="sk-line sk-line--heading sk-block"></span>
+            </div>
+            <div class="sk-grid">
+              <div class="sk-case">
+                <div class="sk-art sk-block"></div>
+                <div class="sk-case-body">
+                  <span class="sk-line sk-line--case-title sk-block"></span>
+                  <span class="sk-line sk-line--case-line sk-block"></span>
+                  <span class="sk-line sk-line--case-line sk-line--short sk-block"></span>
+                  <span class="sk-line sk-line--case-tags sk-block"></span>
+                </div>
+              </div>
+              <div class="sk-case">
+                <div class="sk-art sk-block"></div>
+                <div class="sk-case-body">
+                  <span class="sk-line sk-line--case-title sk-block"></span>
+                  <span class="sk-line sk-line--case-line sk-block"></span>
+                  <span class="sk-line sk-line--case-line sk-line--short sk-block"></span>
+                  <span class="sk-line sk-line--case-tags sk-block"></span>
+                </div>
+              </div>
+              <div class="sk-case">
+                <div class="sk-art sk-block"></div>
+                <div class="sk-case-body">
+                  <span class="sk-line sk-line--case-title sk-block"></span>
+                  <span class="sk-line sk-line--case-line sk-block"></span>
+                  <span class="sk-line sk-line--case-line sk-line--short sk-block"></span>
+                  <span class="sk-line sk-line--case-tags sk-block"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="state-card">
+          <div class="state-spinner" id="state-spinner" aria-hidden="true"></div>
+          <div class="state-icon" id="state-icon" hidden></div>
+          <h2 id="state-title">Resolving business page…</h2>
+          <div id="state-text" class="state-text"></div>
+          <div class="hero-actions state-actions" id="state-actions"></div>
+        </div>
+      </section>
+
+      <!-- ==================== PROFILE ==================== -->
+      <div id="profile-view" class="profile" hidden></div>
+
+    <!-- ==================== OWNER EDITOR PAGE ==================== -->
+    <section id="editor-view" class="editor-page" hidden aria-labelledby="editor-title">
+      <div class="wrap">
+        <header class="editor-page-head">
+          <div class="editor-page-title">
+            <div class="kicker" data-i18n="Operator mode">Operator mode</div>
+            <h1 id="editor-title" data-i18n="Edit business page">Edit business page</h1>
+            <p class="editor-owner" id="editor-owner"></p>
+            <p class="editor-status" id="editor-status">Not published yet.</p>
+          </div>
+          <div class="editor-page-actions">
+            <button class="btn btn-ghost" type="button" data-editor-close>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M19 12H5m6 6-6-6 6-6" />
+              </svg>
+              <span data-i18n="View public page">View public page</span>
+            </button>
+            <button class="btn btn-primary" type="button" data-editor-publish>
+              <span class="btn-spinner" aria-hidden="true"></span>
+              <svg class="btn-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M12 2 4.5 5v6c0 5 3.2 8.6 7.5 10 4.3-1.4 7.5-5 7.5-10V5L12 2Z" />
+                <path d="m8.8 12 2.2 2.2 4.2-4.4" />
+              </svg>
+              <span data-publish-label>Publish</span>
+            </button>
+          </div>
+        </header>
+
+        <div class="editor-tabs editor-page-tabs" role="tablist" aria-label="Editor sections">
+          <button
+            class="editor-tab is-active"
+            type="button"
+            role="tab"
+            aria-selected="true"
+            data-tab="profile"
+            data-i18n="Profile"
+          >
+            Profile
+          </button>
+          <button
+            class="editor-tab"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            data-tab="projects"
+            data-i18n="Cases"
+          >
+            Cases
+          </button>
+          <button
+            class="editor-tab"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            data-tab="gallery"
+            data-i18n="Gallery"
+          >
+            Gallery
+          </button>
+          <button
+            class="editor-tab"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            data-tab="skills"
+            data-i18n="Capabilities"
+          >
+            Capabilities
+          </button>
+          <button
+            class="editor-tab"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            data-tab="publish"
+            data-i18n="Publish"
+          >
+            Publish
+          </button>
+        </div>
+
+        <div class="editor-body" id="editor-body">
+          <!-- PROFILE TAB -->
+          <section class="editor-panel" data-panel="profile">
+            <div class="editor-section">
+              <div class="editor-section-head">
+                <h3 data-i18n="Identity">Identity</h3>
+                <span class="fine" data-i18n="editor.identityNote">Public fields. No address or phone is required.</span>
+              </div>
+              <div class="field-grid">
+                <label class="field">
+                  <span><span data-i18n="Name">Name</span> <b class="req">*</b></span>
+                  <input id="f-name" type="text" maxlength="80" autocomplete="name" />
+                </label>
+                <label class="field">
+                  <span data-i18n="Short name">Short name</span>
+                  <input id="f-displayName" type="text" maxlength="40" />
+                </label>
+                <div class="field span2">
+                  <span data-i18n="Page type">Page type</span>
+                  <div class="type-picker" role="radiogroup" aria-label="Page type" data-i18n-aria="Page type">
+                    <label class="type-option">
+                      <input type="radio" name="portfolio-type" value="personal" />
+                      <span class="type-icon" aria-hidden="true">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                          <circle cx="12" cy="8" r="3.4" />
+                          <path d="M5 20c.9-3.7 3.7-5.6 7-5.6s6.1 1.9 7 5.6" />
+                        </svg>
+                      </span>
+                      <span class="type-copy">
+                        <span class="type-name" data-i18n="Solo provider">Solo provider</span>
+                        <span class="type-desc" data-i18n="One person offering services and evidence.">One person offering services and evidence.</span>
+                      </span>
+                    </label>
+                    <label class="type-option">
+                      <input type="radio" name="portfolio-type" value="organization" />
+                      <span class="type-icon" aria-hidden="true">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                          <path d="M4 21V5.5A1.5 1.5 0 0 1 5.5 4h7A1.5 1.5 0 0 1 14 5.5V21" />
+                          <path d="M14 9h4.5A1.5 1.5 0 0 1 20 10.5V21M2 21h20M7 8h4M7 12h4M7 16h4M17 13v3" />
+                        </svg>
+                      </span>
+                      <span class="type-copy">
+                        <span class="type-name" data-i18n="Organization / business">Organization / business</span>
+                        <span class="type-desc" data-i18n="A company, shop, school or cooperative page.">A company, shop, school or cooperative page.</span>
+                      </span>
+                    </label>
+                  </div>
+                  <a
+                    class="type-more"
+                    id="type-more"
+                    href="https://app.bnos.space"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    hidden
+                    ><span data-i18n="Open the operator workspace ↗">Open the operator workspace ↗</span></a>
+                </div>
+                <label class="field span2">
+                  <span data-i18n="Headline">Headline</span>
+                  <input id="f-headline" type="text" maxlength="160" />
+                </label>
+                <label class="field span2">
+                  <span data-i18n="Introduction">Introduction</span>
+                  <textarea id="f-bio" rows="5" maxlength="2000"></textarea>
+                </label>
+                <label class="field">
+                  <span data-i18n="Location">Location</span>
+                  <input id="f-location" type="text" maxlength="80" />
+                </label>
+                <label class="field">
+                  <span data-i18n="Time zone">Time zone</span>
+                  <input id="f-timezone" type="text" maxlength="40" placeholder="UTC+7" />
+                </label>
+                <label class="field">
+                  <span data-i18n="Languages">Languages</span>
+                  <input id="f-languages" type="text" maxlength="120" placeholder="EN, ລາວ" />
+                </label>
+                <label class="field">
+                  <span data-i18n="Availability">Availability</span>
+                  <select id="f-availability">
+                    <option value="" data-i18n="Not stated">Not stated</option>
+                    <option value="available" data-i18n="Accepting inquiries">Available</option>
+                    <option value="open" data-i18n="Open for projects">Open to work</option>
+                    <option value="select" data-i18n="Selected clients only">Select projects only</option>
+                    <option value="unavailable" data-i18n="Not accepting work">Unavailable</option>
+                  </select>
+                </label>
+                <label class="field span2">
+                  <span data-i18n="Availability note">Availability note</span>
+                  <input
+                    id="f-availabilityNote"
+                    type="text"
+                    maxlength="120"
+                    placeholder="Available for select projects"
+                  />
+                </label>
+                <label class="field">
+                  <span data-i18n="Avatar URL">Avatar URL</span>
+                  <input id="f-avatar" type="url" placeholder="https://…" />
+                </label>
+                <label class="field">
+                  <span data-i18n="Banner URL">Banner URL</span>
+                  <input id="f-banner" type="url" placeholder="https://…" />
+                </label>
+              </div>
+            </div>
+
+            <div class="editor-section">
+              <div class="editor-section-head">
+                <div>
+                  <h3 data-i18n="Page style">Page style</h3>
+                  <span class="fine"
+                    >Each style changes the layout and palette of your public
+                    page. The choice is published with your business page and also
+                    drives the browser theme-color.</span
+                  >
+                </div>
+              </div>
+              <div class="theme-picker" role="radiogroup" aria-label="Page theme" data-i18n-aria="Page theme">
+                <label class="theme-card">
+                  <input type="radio" name="portfolio-theme" value="obsidian" />
+                  <span class="theme-swatch theme-swatch--obsidian" aria-hidden="true">
+                    <i></i><i></i><i></i><i></i><i></i><i></i>
+                  </span>
+                  <span class="theme-card-text">
+                    <span class="theme-name">Spotlight <b>Obsidian</b></span>
+                    <span class="theme-desc" data-i18n="Featured bento, sticky details, dark gold glass.">Featured bento, sticky details, dark gold glass.</span>
+                  </span>
+                </label>
+                <label class="theme-card">
+                  <input type="radio" name="portfolio-theme" value="parchment" />
+                  <span class="theme-swatch theme-swatch--parchment" aria-hidden="true">
+                    <i></i><i></i><i></i><i></i><i></i><i></i>
+                  </span>
+                  <span class="theme-card-text">
+                    <span class="theme-name">Editorial <b>Parchment</b></span>
+                    <span class="theme-desc" data-i18n="Single-column paper, alternating work rows.">Single-column paper, alternating work rows.</span>
+                  </span>
+                </label>
+                <label class="theme-card">
+                  <input type="radio" name="portfolio-theme" value="signal" />
+                  <span class="theme-swatch theme-swatch--signal" aria-hidden="true">
+                    <i></i><i></i><i></i><i></i><i></i><i></i>
+                  </span>
+                  <span class="theme-card-text">
+                    <span class="theme-name">Dossier <b>Signal</b></span>
+                    <span class="theme-desc" data-i18n="Compact terminal grid, dense media wall.">Compact terminal grid, dense media wall.</span>
+                  </span>
+                </label>
+              </div>
+              <p class="fine" data-i18n="editor.styleNote">
+                The style changes layout and palette only — your content,
+                media and signed data stay the same. It sets the default
+                mode; visitors can switch dark or light on your public page.
+              </p>
+            </div>
+
+            <div class="editor-section">
+              <div class="editor-section-head">
+                <h3 data-i18n="Identity links">Identity links</h3>
+                <span class="fine" data-i18n="editor.nip05Note">Optional. NIP-05 is verified against DNS when present.</span>
+              </div>
+              <div class="field-grid">
+                <label class="field">
+                  <span data-i18n="NIP-05">NIP-05</span>
+                  <input id="f-nip05" type="text" placeholder="you@yourdomain.com" />
+                </label>
+                <label class="field">
+                  <span data-i18n="Contact label">Contact label</span>
+                  <input id="f-contactLabel" type="text" maxlength="60" placeholder="Request contact" />
+                </label>
+                <label class="field span2">
+                  <span data-i18n="Contact link">Contact link</span>
+                  <input
+                    id="f-contactUrl"
+                    type="text"
+                    placeholder="mailto:you@example.com or https://…"
+                  />
+                </label>
+              </div>
+              <p class="fine" data-i18n="editor.contactNote">
+                The contact button opens your chosen link. bnos.space does not
+                store messages or inquiries.
+              </p>
+
+              <div class="nip05-wizard">
+                <button class="btn btn-ghost btn-sm" id="nip05-build" type="button">
+                  Set up NIP-05
+                </button>
+                <p class="fine">
+                  You need a domain you control. The wizard generates the file
+                  that maps your name to your key, then verifies it live.
+                </p>
+                <div class="nip05-panel" id="nip05-panel" hidden>
+                  <p class="fine">
+                    Host this file at
+                    <code id="nip05-file-url" class="mono"></code>
+                    with <code class="mono">Access-Control-Allow-Origin: *</code>
+                    and a JSON content type.
+                  </p>
+                  <pre class="nip05-json"><code id="nip05-json" class="mono"></code></pre>
+                  <div class="hero-actions">
+                    <button class="btn btn-ghost btn-sm" id="nip05-copy" type="button">
+                      Copy JSON
+                    </button>
+                    <button class="btn btn-primary btn-sm" id="nip05-verify" type="button">
+                      Verify now
+                    </button>
+                  </div>
+                  <p class="status-line nip05-status" id="nip05-status" aria-live="polite"></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="editor-section">
+              <div class="editor-section-head">
+                <h3 data-i18n="Links">Links</h3>
+                <button class="btn btn-ghost btn-sm" type="button" data-add="link" data-i18n="Add link">
+                  Add link
+                </button>
+              </div>
+              <div id="links-editor" class="repeat-list"></div>
+            </div>
+          </section>
+
+          <!-- PROJECTS TAB -->
+          <section class="editor-panel" data-panel="projects" hidden>
+            <div class="editor-section">
+              <div class="editor-section-head">
+                <div>
+                  <h3 data-i18n="Case studies">Case studies</h3>
+                  <span class="fine" data-i18n="editor.casesNote"
+                    >Only checked cases are included in the signed public page.
+                    Unchecked cases stay in this browser as drafts.</span
+                  >
+                </div>
+                <button class="btn btn-ghost btn-sm" type="button" data-add="project" data-i18n="Add case study">
+                  Add case study
+                </button>
+              </div>
+              <div id="projects-editor" class="repeat-list"></div>
+            </div>
+          </section>
+
+          <!-- GALLERY TAB -->
+          <section class="editor-panel" data-panel="gallery" hidden>
+            <div class="editor-section">
+              <div class="editor-section-head">
+                <div>
+                  <h3 data-i18n="Gallery">Gallery</h3>
+                  <span class="fine" data-i18n="editor.galleryNote"
+                    >Uploads go to the managed media service first; if that service is
+                    unavailable, the Blossom server below is used as a fallback.
+                    Your event stores only the returned links, so media stays
+                    out of the signed data.</span
+                  >
+                </div>
+              </div>
+
+              <div class="gallery-drop" id="gallery-drop">
+                <div class="gallery-drop-text">
+                  <strong data-i18n="Drop images or video here">Drop images or video here</strong>
+                  <span data-i18n="editor.galleryDropText">Files upload to the managed media service with your Blossom server as
+                  fallback; only the returned links are stored in your event.
+                  Images up to 20 MB, MP4/WebM up to 100 MB.</span>
+                </div>
+                <div class="hero-actions">
+                  <button
+                    class="btn btn-primary btn-sm"
+                    id="gallery-upload-media"
+                    type="button"
+                    title="Upload images or video"
+                    data-i18n-title="Upload images or video"
+                    data-i18n="Upload media"
+                  >
+                    Upload media
+                  </button>
+                  <button class="btn btn-ghost btn-sm" id="gallery-add-image-url" type="button" data-i18n="Add image URL">
+                    Add image URL
+                  </button>
+                  <button class="btn btn-ghost btn-sm" id="gallery-add-video" type="button" data-i18n="Add video link">
+                    Add video link
+                  </button>
+                </div>
+                <input
+                  id="gallery-media-file"
+                  type="file"
+                  accept="image/*,video/mp4,video/webm"
+                  multiple
+                  hidden
+                />
+              </div>
+
+              <p
+                class="upload-status"
+                id="gallery-upload-status"
+                role="status"
+                aria-live="polite"
+              ></p>
+
+              <label class="field blossom-field">
+                <span data-i18n="Blossom fallback server">Blossom fallback server</span>
+                <input
+                  id="f-blossom"
+                  type="url"
+                  spellcheck="false"
+                  placeholder="https://blossom.primal.net"
+                />
+                <span class="tag-hint"
+                  >Used only if the managed media service is unavailable. Files
+                  stay on that server and are linked into your event — the event
+                  never contains the media bytes. Saved in this browser.
+                  <a
+                    href="https://github.com/hzrd149/blossom"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Blossom spec</a
+                  >.</span
+                >
+              </label>
+
+              <div class="media-budget" id="gallery-budget"></div>
+              <div id="gallery-editor" class="repeat-list gallery-editor"></div>
+            </div>
+
+            <div class="editor-section">
+              <div class="editor-section-head">
+                <h3 data-i18n="How media is stored">How media is stored</h3>
+              </div>
+              <ul class="media-notes">
+                <li data-i18n-html="editor.mediaNotes1">
+                  <strong>Upload media</strong> sends images or video to the
+                  managed media service first. If it is unavailable, the Blossom
+                  server above is used with a signed upload request. Only the
+                  returned https:// links are stored in your event, so keep the
+                  files available at those hosts.
+                </li>
+                <li data-i18n-html="editor.mediaNotes2">
+                  <strong>Images and video</strong> can also be added as hosted
+                  URLs. Images are never embedded into the event anymore; older
+                  profiles with embedded images remain readable and are shown
+                  with the legacy budget above.
+                </li>
+                <li data-i18n-html="editor.mediaNotes3">
+                  <strong>Video previews</strong> use a generated poster frame,
+                  uploaded alongside the video and stored as a link.
+                </li>
+                <li data-i18n-html="editor.mediaNotes4">
+                  <strong>Alt text and captions</strong> make the gallery
+                  usable for screen readers and give visitors context before
+                  they open an item.
+                </li>
+                <li data-i18n="editor.mediaNotes5">
+                  Relays enforce different event size limits. Media links keep
+                  the signed event small; publishing only sends the links.
+                </li>
+                <li data-i18n="editor.mediaNotes6">
+                  Unchecked items stay in this browser as drafts and are never
+                  included in the signed public event.
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- SKILLS TAB -->
+          <section class="editor-panel" data-panel="skills" hidden>
+            <div class="editor-section">
+              <div class="editor-section-head">
+                <div>
+                  <h3 data-i18n="Capabilities">Capabilities</h3>
+                  <span class="fine" data-i18n="editor.capabilitiesNote"
+                    >Two grades only: your own claim, or evidence listed by an
+                    issuer. No global rating.</span
+                  >
+                </div>
+                <button class="btn btn-ghost btn-sm" type="button" data-add="skill" data-i18n="Add capability">
+                  Add capability
+                </button>
+              </div>
+              <div id="skills-editor" class="repeat-list"></div>
+            </div>
+
+            <div class="editor-section">
+              <div class="editor-section-head">
+                <div>
+                  <h3 data-i18n="Credentials">Credentials</h3>
+                  <span class="fine" data-i18n="editor.credentialsNote"
+                    >Optional. The issuer is shown with each record; bnos.space
+                    does not independently verify it.</span
+                  >
+                </div>
+                <button class="btn btn-ghost btn-sm" type="button" data-add="credential" data-i18n="Add credential">
+                  Add credential
+                </button>
+              </div>
+              <div id="credentials-editor" class="repeat-list"></div>
+            </div>
+          </section>
+
+          <!-- PUBLISH TAB -->
+          <section class="editor-panel" data-panel="publish" hidden>
+            <div class="editor-section">
+              <div class="editor-section-head">
+                <h3 data-i18n="Publish">Publish</h3>
+              </div>
+              <div class="publish-card">
+                <div class="publish-row">
+                  <span class="publish-k">Event</span>
+                  <span class="mono">kind 30078 · NIP-78 app data</span>
+                </div>
+                <div class="publish-row">
+                  <span class="publish-k">Replaceable key</span>
+                  <span class="mono">d = bnos.space:business:v1</span>
+                </div>
+                <div class="publish-row">
+                  <span class="publish-k">Public URL</span>
+                  <span class="mono" id="editor-url">…</span>
+                </div>
+                <div class="publish-row">
+                  <span class="publish-k">Drafts</span>
+                  <span>Kept in this browser only</span>
+                </div>
+              </div>
+              <p class="fine" data-i18n="editor.publishNote">
+                Publishing replaces the previous business page event for the same
+                key. Readers always see the newest signed version. Your signer
+                will ask for approval before anything is sent.
+              </p>
+              <p class="fine" data-i18n-html="editor.kind0Note">
+                <strong>Kind 0 is separate.</strong> This editor does not
+                overwrite your Nostr profile metadata (name, about, avatar and
+                NIP-05 used by other clients). Those fields are only used as a
+                fallback when the business page leaves them empty.
+              </p>
+            </div>
+
+            <div class="editor-section">
+              <div class="editor-section-head">
+                <h3 data-i18n="Relays">Relays</h3>
+                <button class="btn btn-ghost btn-sm" type="button" id="save-relays" data-i18n="Save relays">
+                  Save relays
+                </button>
+              </div>
+              <textarea id="f-relays" rows="5" spellcheck="false"></textarea>
+              <p class="fine" data-i18n="editor.relaysNote">
+                One WebSocket URL per line. Choose relays you trust to keep your
+                public business page available. Defaults are public relays.
+              </p>
+            </div>
+
+            <div class="editor-section">
+              <div class="editor-section-head">
+                <h3 data-i18n="Portability">Portability</h3>
+              </div>
+              <div class="hero-actions">
+                <button class="btn btn-ghost" type="button" id="export-btn">
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path d="M12 3v12m0 0 4-4m-4 4-4-4" />
+                    <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
+                  </svg>
+                  <span data-i18n="Export JSON">Export JSON</span>
+                </button>
+                <button class="btn btn-ghost" type="button" id="import-btn">
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path d="M12 15V3m0 0 4 4m-4-4L8 7" />
+                    <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
+                  </svg>
+                  <span data-i18n="Import JSON">Import JSON</span>
+                </button>
+                <input id="import-file" type="file" accept="application/json,.json" hidden />
+              </div>
+              <p class="fine" data-i18n="editor.portabilityNote">
+                Export includes local drafts. Import accepts a previously
+                exported file and keeps it as a local draft until you publish.
+              </p>
+            </div>
+
+            <div class="editor-section" id="publish-results-wrap" hidden>
+              <div class="editor-section-head">
+                <h3 data-i18n="Relay results">Relay results</h3>
+              </div>
+              <ul class="relay-results" id="publish-results"></ul>
+            </div>
+          </section>
+        </div>
+
+        <footer class="editor-foot editor-page-foot">
+          <div class="editor-foot-meta">
+            <button class="editor-back-link" type="button" data-editor-close>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M19 12H5m6 6-6-6 6-6" />
+              </svg>
+              <span data-i18n="View public page">View public page</span>
+            </button>
+            <span class="save-state" id="save-state" data-i18n="No changes yet">No changes yet</span>
+          </div>
+          <div class="editor-actions">
+            <button class="btn btn-ghost btn-sm" type="button" id="discard-draft" data-i18n="Discard draft">
+              Discard draft
+            </button>
+            <button class="btn btn-ghost btn-sm" type="button" id="save-draft" data-i18n="Save draft">
+              Save draft
+            </button>
+            <button class="btn btn-primary btn-sm" type="button" id="publish-btn">
+              <span class="btn-spinner" aria-hidden="true"></span>
+              <svg
+                class="btn-icon"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <path d="M12 2 4.5 5v6c0 5 3.2 8.6 7.5 10 4.3-1.4 7.5-5 7.5-10V5L12 2Z" />
+                <path d="m8.8 12 2.2 2.2 4.2-4.4" />
+              </svg>
+              <span data-publish-label data-i18n="Publish to Nostr">Publish to Nostr</span>
+            </button>
+          </div>
+        </footer>
+      </div>
+    </section>
+
+    </main>
+
+    <footer class="footer">
+      <div class="footer-in">
+        <div>
+          <h4 data-i18n="Canonical address">Canonical address</h4>
+          <div class="big-url" id="footer-url">
+            <svg
+              class="lock"
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.4"
+              aria-hidden="true"
+            >
+              <rect x="4" y="11" width="16" height="10" rx="2" />
+              <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+            </svg>
+            <span>bnos.space/b/</span>
+          </div>
+          <p data-i18n="footer.canonicalNote">
+            One key, one canonical business page. The public key is the stable
+            reference; NIP-05 is a human-readable alias that points to it.
+          </p>
+        </div>
+        <div>
+          <h4 data-i18n="Protocol">Protocol</h4>
+          <div class="f-links">
+            <a
+              href="https://github.com/nostr-protocol/nips/blob/master/07.md"
+              target="_blank"
+              rel="noopener"
+              >NIP-07 · browser signer</a
+            >
+            <a
+              href="https://github.com/nostr-protocol/nips/blob/master/46.md"
+              target="_blank"
+              rel="noopener"
+              >NIP-46 · remote signer</a
+            >
+            <a
+              href="https://github.com/nostr-protocol/nips/blob/master/05.md"
+              target="_blank"
+              rel="noopener"
+              >NIP-05 · DNS identity</a
+            >
+            <a
+              href="https://github.com/nostr-protocol/nips/blob/master/78.md"
+              target="_blank"
+              rel="noopener"
+              >NIP-78 · app data</a
+            >
+          </div>
+        </div>
+        <div>
+          <h4>bnos.space</h4>
+          <div class="f-links">
+            <a href="../index.html" data-i18n="Home">Home</a>
+            <a href="https://app.bnos.space" data-i18n="Operator workspace">Operator workspace</a>
+            <a href="?demo=1" data-i18n="Sample business page">Sample business page</a>
+            <a href="/b/verify/" data-i18n="Credential verification · Demo">Credential verification · Demo</a>
+            <a href="../manual.html" data-i18n="Documentation">Documentation</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ==================== CONFIRM DIALOG ==================== -->
+    <dialog
+      class="dialog dialog--confirm"
+      id="confirm-dialog"
+      aria-labelledby="confirm-title"
+      aria-describedby="confirm-message"
+    >
+      <div class="dialog-card">
+        <div class="dialog-head">
+          <div>
+            <div class="kicker" id="confirm-kicker" data-i18n="Confirm">Confirm</div>
+            <h2 id="confirm-title">Are you sure?</h2>
+          </div>
+          <button
+            class="dialog-close"
+            type="button"
+            data-close="confirm-dialog"
+            aria-label="Close" data-i18n-aria="Close"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M18 6 6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="dialog-body">
+          <p class="confirm-message" id="confirm-message"></p>
+          <div class="confirm-actions">
+            <button class="btn btn-ghost" id="confirm-cancel" type="button" data-i18n="Cancel">
+              Cancel
+            </button>
+            <button class="btn btn-danger" id="confirm-accept" type="button" data-i18n="Confirm">
+              Confirm
+            </button>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- ==================== SIGN IN DIALOG ==================== -->
+    <dialog class="dialog dialog--signin" id="signin-dialog" aria-labelledby="signin-title">
+      <div class="dialog-card">
+        <div class="dialog-head">
+          <div>
+            <div class="kicker" data-i18n="Operator mode">Operator mode</div>
+            <h2 id="signin-title" data-i18n="Sign in with a Nostr signer">Sign in with a Nostr signer</h2>
+          </div>
+          <button
+            class="dialog-close"
+            type="button"
+            data-close="signin-dialog"
+            aria-label="Close"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="M18 6 6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="dialog-body">
+          <div class="signer-box" id="signer-box">
+            <div class="signer-box-head">
+              <span class="signer-dot" id="signer-dot" aria-hidden="true"></span>
+              <span id="signer-label" data-i18n="Not signed in">Not signed in</span>
+            </div>
+            <div class="signer-id" id="signer-id" hidden></div>
+          </div>
+
+          <div class="my-portfolio-card" id="my-portfolio-card" hidden>
+            <div class="my-portfolio-head">
+              <div>
+                <div class="my-portfolio-kicker" data-i18n="Your business page">Your business page</div>
+                <div class="my-portfolio-name" id="my-portfolio-name" data-i18n="Your business page">Your business page</div>
+              </div>
+              <span class="my-portfolio-status" id="my-portfolio-status">Checking…</span>
+            </div>
+            <div class="my-portfolio-url mono" id="my-portfolio-url"></div>
+            <div class="hero-actions">
+              <a class="btn btn-ghost btn-sm" id="my-portfolio-view" href="/b/" data-i18n="View public page">View public page</a>
+              <a class="btn btn-primary btn-sm" id="my-portfolio-edit" href="/b/?edit=1" data-i18n="Edit business page">Edit business page</a>
+            </div>
+          </div>
+
+          <div class="auth-tabs" role="tablist" aria-label="Signer type">
+            <button
+              class="auth-tab is-active"
+              type="button"
+              role="tab"
+              aria-selected="true"
+              aria-label="Browser extension" data-i18n-aria="Browser extension"
+              data-auth-tab="nip07"
+              data-i18n="Extension"
+            >
+              Extension
+            </button>
+            <button
+              class="auth-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-label="Remote signer" data-i18n-aria="Remote signer"
+              data-auth-tab="nip46"
+              data-i18n="Remote"
+            >
+              Remote
+            </button>
+            <button
+              class="auth-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              data-auth-tab="nsec"
+              data-i18n="Local key"
+            >
+              Local key
+            </button>
+            <button
+              class="auth-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              data-auth-tab="create"
+              data-i18n="Create account"
+            >
+              Create account
+            </button>
+          </div>
+
+          <section class="auth-panel" data-auth-panel="nip07">
+            <p class="fine" id="nip07-note" data-i18n="auth.nip07Note">
+              A NIP-07 extension keeps your key inside the extension. This page
+              only asks it to sign.
+            </p>
+            <button class="btn btn-primary btn-block" id="connect-signer" type="button">
+              <svg
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <circle cx="8" cy="15" r="4.5" />
+                <path d="m11.2 11.8 8-8M17 4l2.5 2.5M14 7l2 2" />
+              </svg>
+              <span id="connect-signer-label" data-i18n="Connect NIP-07 signer">Connect NIP-07 signer</span>
+            </button>
+          </section>
+
+
+          <section class="auth-panel" data-auth-panel="nsec" hidden>
+            <p class="fine" data-i18n="auth.nsecNote">
+              Sign in with a private key stored in this browser. Prefer a
+              NIP-07 extension or remote signer when you can keep the key out
+              of this page.
+            </p>
+            <div class="field">
+              <label for="nsec-key" data-i18n="Private key">Private key</label>
+              <span class="secret-field">
+                <input
+                  id="nsec-key"
+                  type="password"
+                  autocomplete="off"
+                  spellcheck="false"
+                  placeholder="nsec1… or 64-character secret key"
+                />
+                <button
+                  class="secret-toggle"
+                  id="toggle-nsec"
+                  type="button"
+                  aria-label="Show private key"
+                  data-i18n-aria="Show private key"
+                  title="Show private key"
+                  data-i18n-title="Show private key"
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6S2 12 2 12Z" />
+                    <circle cx="12" cy="12" r="2.6" />
+                  </svg>
+                </button>
+              </span>
+            </div>
+            <label class="check-field">
+              <input id="nsec-remember" type="checkbox" />
+              <span data-i18n="auth.rememberDevice">Remember this device (stores the key in localStorage)</span>
+            </label>
+            <p class="fine" data-i18n="auth.nsecSessionNote">
+              Without this, the key is kept in sessionStorage and is cleared
+              when this tab closes. Only use a local key on a device you trust.
+            </p>
+            <button class="btn btn-primary btn-block" id="connect-nsec" type="button" data-i18n="Sign in with private key">
+              Sign in with private key
+            </button>
+            <p class="status-line" id="nsec-status" aria-live="polite"></p>
+          </section>
+
+          <section class="auth-panel" data-auth-panel="nip46" hidden>
+            <label class="field">
+              <span data-i18n="Bunker URL">Bunker URL</span>
+              <input
+                id="bunker-url"
+                type="text"
+                autocomplete="off"
+                spellcheck="false"
+                placeholder="bunker://<signer-pubkey>?relay=wss://…&secret=…"
+              />
+            </label>
+            <button class="btn btn-primary btn-block" id="connect-bunker" type="button" data-i18n="Connect with bunker URL">
+              Connect with bunker URL
+            </button>
+
+            <div class="auth-or"><span data-i18n="or">or</span></div>
+
+            <button class="btn btn-ghost btn-block" id="start-nostrconnect" type="button" data-i18n="Connect with a signer app">
+              Connect with a signer app
+            </button>
+            <div class="nip46-box" id="nostrconnect-box" hidden>
+              <p class="fine" data-i18n="auth.nip46Note">
+                Open or copy this link in Amber, nsec.app, or another NIP-46
+                signer. Keep this dialog open while you approve.
+              </p>
+              <div class="qr-box" id="nostrconnect-qr" hidden></div>
+              <textarea
+                id="nostrconnect-uri"
+                rows="3"
+                readonly
+                spellcheck="false"
+              ></textarea>
+              <div class="hero-actions">
+                <button class="btn btn-ghost btn-sm" id="copy-nostrconnect" type="button" data-i18n="Copy link">
+                  Copy link
+                </button>
+                <a
+                  class="btn btn-ghost btn-sm"
+                  id="open-nostrconnect"
+                  href="#"
+                  rel="noopener noreferrer"
+                  hidden
+                  ><span data-i18n="Open signer app">Open signer app</span></a
+                >
+                <button class="btn btn-ghost btn-sm" id="cancel-nostrconnect" type="button" data-i18n="Cancel">
+                  Cancel
+                </button>
+              </div>
+            </div>
+            <p class="status-line" id="nip46-status" aria-live="polite"></p>
+          </section>
+
+          <section class="auth-panel" data-auth-panel="create" hidden>
+            <p class="fine" data-i18n="auth.createNote">
+              Create a new Nostr account for this business page. Your nsec is the
+              only way to edit it, so back it up before continuing.
+            </p>
+            <button class="btn btn-primary btn-block" id="create-start" type="button" data-i18n="Create a new account">
+              Create a new account
+            </button>
+            <div class="create-result" id="create-result" hidden>
+              <div class="key-card">
+                <div class="key-card-head">
+                  <span data-i18n="Public key">Public key</span>
+                  <button id="copy-create-npub" type="button" data-i18n="Copy">Copy</button>
+                </div>
+                <code id="create-npub"></code>
+              </div>
+              <div class="key-card key-card--secret">
+                <div class="key-card-head">
+                  <span data-i18n="Private key (nsec)">Private key (nsec)</span>
+                  <button id="copy-create-nsec" type="button" data-i18n="Copy">Copy</button>
+                </div>
+                <code id="create-nsec"></code>
+              </div>
+              <p class="fine" data-i18n="auth.nsecWarning">
+                Anyone with this nsec can sign as you. Store it in a password
+                manager or offline backup. It cannot be recovered.
+              </p>
+              <label class="check-field">
+                <input id="create-saved" type="checkbox" />
+                <span data-i18n="auth.savedNsec">I saved my nsec somewhere safe</span>
+              </label>
+              <label class="check-field">
+                <input id="create-remember" type="checkbox" />
+                <span data-i18n="auth.rememberDevice">Remember this device (stores the key in localStorage)</span>
+              </label>
+              <button class="btn btn-primary btn-block" id="create-continue" type="button" data-i18n="Continue with this account" disabled>
+                Continue with this account
+              </button>
+              <button class="btn btn-ghost btn-block" id="create-again" type="button" data-i18n="Generate a different key">
+                Generate a different key
+              </button>
+            </div>
+            <p class="status-line" id="create-status" aria-live="polite"></p>
+          </section>
+
+          <p class="status-line" id="auth-status" aria-live="polite"></p>
+
+          <button class="btn btn-ghost btn-block" id="signout-btn" type="button" data-i18n="Sign out" hidden>
+            Sign out
+          </button>
+
+          <div class="readonly-note" data-i18n-html="auth.readonlyNote">
+            <strong>npub is read-only on its own.</strong> It is a public key,
+            not a password. Editing requires a signer that holds the private
+            key — a NIP-07 extension, a NIP-46 remote signer, or a local nsec
+            you keep on this device. A NIP-05 address
+            (<span class="mono">you@domain.com</span>) is only a human-readable
+            pointer to a key, not a login method. Never share your nsec with
+            anyone.
+          </div>
+
+          <details class="relay-settings">
+            <summary data-i18n="Relay settings">Relay settings</summary>
+            <p class="fine" data-i18n="auth.relayNote">
+              Used to read and publish your business page. One URL per line.
+            </p>
+            <textarea id="signin-relays" rows="4" spellcheck="false"></textarea>
+            <button class="btn btn-ghost btn-sm" id="save-signin-relays" type="button" data-i18n="Save relays">
+              Save relays
+            </button>
+          </details>
+        </div>
+      </div>
+    </dialog>
+
+
+    <!-- ==================== SHARE QR DIALOG ==================== -->
+    <dialog class="dialog dialog--qr" id="qr-dialog" aria-labelledby="qr-title">
+      <div class="dialog-card">
+        <div class="dialog-head">
+          <div>
+            <div class="kicker" data-i18n="Share">Share</div>
+            <h2 id="qr-title" data-i18n="Scan to open">Scan to open</h2>
+          </div>
+          <button
+            class="dialog-close"
+            type="button"
+            data-close="qr-dialog"
+            aria-label="Close"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="M18 6 6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="dialog-body qr-dialog-body">
+          <div class="qr-box" id="profile-qr" hidden></div>
+          <p class="qr-url mono" id="profile-qr-url"></p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" id="copy-profile-qr" type="button" data-i18n="Copy link">
+              Copy link
+            </button>
+            <button class="btn btn-ghost" type="button" data-close="qr-dialog" data-i18n="Close">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- ==================== LIGHTBOX ==================== -->
+    <dialog class="dialog dialog--lightbox" id="lightbox-dialog" aria-labelledby="lightbox-title">
+      <div class="lightbox">
+        <div class="lightbox-top">
+          <div class="lightbox-heading">
+            <span class="lightbox-count" id="lightbox-count" aria-live="polite"></span>
+            <h2 id="lightbox-title" data-i18n="Gallery">Gallery</h2>
+          </div>
+          <button
+            class="dialog-close"
+            type="button"
+            data-close="lightbox-dialog"
+            aria-label="Close gallery" data-i18n-aria="Close gallery"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M18 6 6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="lightbox-stage" id="lightbox-stage"></div>
+        <div class="lightbox-foot">
+          <button class="lightbox-nav" id="lightbox-prev" type="button" aria-label="Previous item" data-i18n-aria="Previous item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+          </button>
+          <p class="lightbox-caption" id="lightbox-caption"></p>
+          <button class="lightbox-nav" id="lightbox-next" type="button" aria-label="Next item" data-i18n-aria="Next item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <noscript>
+      <div class="noscript">
+        This business page needs JavaScript to resolve a Nostr key and render
+        the profile.
+      </div>
+    </noscript>
+
+    <script src="vendor/qrcode.js"></script>
+    <script type="module" src="js/app.js?v=15"></script>
+  </body>
+</html>

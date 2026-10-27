@@ -1,0 +1,510 @@
+/* ============================================================
+   Portfolio layouts
+   Each published style owns a layout, not just a palette.
+   #profile-view[data-layout] is set by profile-view.js.
+   ============================================================ */
+
+/* ============ Editorial ============ */
+#profile-view[data-layout="editorial"] {
+  --wrap: 1040px;
+}
+
+#profile-view[data-layout="editorial"] .wrap {
+  max-width: 1040px;
+}
+
+#profile-view[data-layout="editorial"] .profile-hero {
+  padding: clamp(54px, 7vw, 96px) 0 clamp(28px, 4vw, 44px);
+}
+
+#profile-view[data-layout="editorial"] .profile-banner img {
+  opacity: 0.18;
+}
+
+#profile-view[data-layout="editorial"] .hero-grid {
+  grid-template-columns: 1fr;
+  gap: clamp(24px, 3.5vw, 38px);
+}
+
+#profile-view[data-layout="editorial"] .id-top {
+  display: block;
+  margin-bottom: 18px;
+}
+
+#profile-view[data-layout="editorial"] .hexwrap {
+  width: 78px;
+  margin-bottom: 18px;
+}
+
+#profile-view[data-layout="editorial"] .id-name h1 {
+  font-family: var(--font-display);
+  font-size: clamp(42px, 6.4vw, 72px);
+  font-weight: 600;
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+}
+
+#profile-view[data-layout="editorial"] .headline {
+  font-family: var(--font-display);
+  font-size: clamp(17px, 1.9vw, 21px);
+  line-height: 1.5;
+  max-width: 56ch;
+  margin-top: 14px;
+}
+
+#profile-view[data-layout="editorial"] .trust-strip {
+  max-width: none;
+  border: 0;
+  border-left: 2px solid var(--nostr-line);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 6px 0 6px 16px;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+#profile-view[data-layout="editorial"] .meta-card {
+  position: static;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0 24px;
+  padding: 18px 0 0;
+  border: 0;
+  border-top: 1px solid var(--border-strong);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+#profile-view[data-layout="editorial"] .meta-card h3 {
+  grid-column: 1 / -1;
+  margin-bottom: 10px;
+}
+
+#profile-view[data-layout="editorial"] .strength {
+  grid-column: 1 / -1;
+}
+
+#profile-view[data-layout="editorial"] .hero-reel {
+  max-width: 760px;
+}
+
+#profile-view[data-layout="editorial"] .meta-row {
+  border-top: 0;
+  padding: 4px 0 10px;
+}
+
+#profile-view[data-layout="editorial"] .meta-ic {
+  display: none;
+}
+
+#profile-view[data-layout="editorial"] .meta-links {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin-top: 8px;
+  padding-top: 12px;
+}
+
+#profile-view[data-layout="editorial"] .section {
+  padding: clamp(38px, 5vw, 62px) 0;
+  border-top: 1px solid var(--glass-border);
+}
+
+#profile-view[data-layout="editorial"] .section-head {
+  margin-bottom: clamp(20px, 3vw, 30px);
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-strong);
+}
+
+#profile-view[data-layout="editorial"] .section-head h2 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.6vw, 42px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+#profile-view[data-layout="editorial"] .kicker {
+  color: var(--text-muted);
+}
+
+#profile-view[data-layout="editorial"] .bento {
+  display: block;
+}
+
+#profile-view[data-layout="editorial"] .bento .tile,
+#profile-view[data-layout="editorial"] .bento .tile.span2 {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
+  column-gap: clamp(20px, 3vw, 36px);
+  overflow: visible;
+  border: 0;
+  border-bottom: 1px solid var(--glass-border);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: clamp(20px, 3vw, 30px) 0;
+}
+
+#profile-view[data-layout="editorial"] .bento .tile:first-child {
+  padding-top: 0;
+}
+
+#profile-view[data-layout="editorial"] .bento .tile:nth-child(even) .case-media {
+  order: 1;
+}
+
+#profile-view[data-layout="editorial"] .bento .tile:hover {
+  transform: none;
+  border-color: var(--glass-border);
+  box-shadow: none;
+}
+
+#profile-view[data-layout="editorial"] .case-media {
+  aspect-ratio: auto;
+  min-height: 240px;
+  height: 100%;
+  border-radius: 2px;
+}
+
+#profile-view[data-layout="editorial"] .case-body {
+  padding: 0;
+  gap: 12px;
+}
+
+#profile-view[data-layout="editorial"] .case-body h3 {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.7vw, 31px);
+  font-weight: 600;
+  line-height: 1.14;
+}
+
+#profile-view[data-layout="editorial"] .case-body .desc {
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+#profile-view[data-layout="editorial"] .contrib {
+  margin-top: 4px;
+}
+
+#profile-view[data-layout="editorial"] .gallery-grid,
+#profile-view[data-layout="editorial"] .gallery-grid.count-many,
+#profile-view[data-layout="editorial"] .gallery-grid.count-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: auto;
+  grid-auto-flow: row;
+  gap: clamp(18px, 3vw, 30px);
+}
+
+#profile-view[data-layout="editorial"] .gallery-grid.count-1 {
+  grid-template-columns: 1fr;
+}
+
+#profile-view[data-layout="editorial"] .gallery-grid .gallery-tile:first-child {
+  grid-column: auto;
+  grid-row: auto;
+}
+
+#profile-view[data-layout="editorial"] .gallery-tile {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+#profile-view[data-layout="editorial"] .gallery-tile::after {
+  display: none;
+}
+
+#profile-view[data-layout="editorial"] .gallery-media {
+  position: relative;
+  inset: auto;
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+#profile-view[data-layout="editorial"] .gallery-media img {
+  position: absolute;
+  inset: 0;
+}
+
+#profile-view[data-layout="editorial"] .gallery-cap {
+  position: static;
+  padding: 10px 0 0;
+  background: none;
+  color: var(--text-secondary);
+  text-shadow: none;
+  font-size: 12.5px;
+}
+
+#profile-view[data-layout="editorial"] .gallery-grid.count-many .gallery-tile:first-child .gallery-cap {
+  padding: 10px 0 0;
+  font-size: 12.5px;
+}
+
+#profile-view[data-layout="editorial"] .gallery-tile:hover .gallery-media img {
+  transform: none;
+}
+
+#profile-view[data-layout="editorial"] .split-grid {
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+#profile-view[data-layout="editorial"] .tile-pad {
+  padding: 20px 0;
+  border: 0;
+  border-top: 1px solid var(--border-strong);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+#profile-view[data-layout="editorial"] .about-grid {
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.8fr);
+  gap: 24px;
+}
+
+#profile-view[data-layout="editorial"] .about-card {
+  padding: 20px 0;
+  border: 0;
+  border-top: 1px solid var(--border-strong);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+#profile-view[data-layout="editorial"] .about-bio {
+  font-family: var(--font-display);
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+/* ============ Dossier ============ */
+#profile-view[data-layout="dossier"] {
+  --wrap: 1440px;
+}
+
+#profile-view[data-layout="dossier"] .wrap {
+  max-width: 1440px;
+}
+
+#profile-view[data-layout="dossier"] .profile-hero {
+  padding: clamp(28px, 3vw, 44px) 0 clamp(18px, 2.5vw, 28px);
+}
+
+#profile-view[data-layout="dossier"] .hero-grid {
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: clamp(20px, 2.4vw, 34px);
+}
+
+#profile-view[data-layout="dossier"] .meta-card {
+  order: -1;
+  position: sticky;
+  top: 72px;
+  padding: 14px;
+  border-radius: var(--r-md);
+}
+
+#profile-view[data-layout="dossier"] .hero-side {
+  order: -1;
+}
+
+#profile-view[data-layout="dossier"] .hero-side .meta-card {
+  order: 0;
+}
+
+#profile-view[data-layout="dossier"] .id-name h1 {
+  font-size: clamp(26px, 3.2vw, 36px);
+}
+
+#profile-view[data-layout="dossier"] .headline {
+  max-width: 70ch;
+}
+
+#profile-view[data-layout="dossier"] .trust-strip {
+  max-width: none;
+}
+
+#profile-view[data-layout="dossier"] .section {
+  padding: clamp(26px, 3vw, 40px) 0;
+  border-top: 1px solid var(--glass-border);
+}
+
+#profile-view[data-layout="dossier"] .section-head {
+  margin-bottom: 16px;
+}
+
+#profile-view[data-layout="dossier"] .kicker {
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+}
+
+#profile-view[data-layout="dossier"] .bento {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+#profile-view[data-layout="dossier"] .bento .tile.span2 {
+  grid-column: span 1;
+}
+
+#profile-view[data-layout="dossier"] .case-media {
+  aspect-ratio: 16 / 7;
+}
+
+#profile-view[data-layout="dossier"] .case-body {
+  padding: 12px 14px 14px;
+  gap: 7px;
+}
+
+#profile-view[data-layout="dossier"] .case-body h3 {
+  font-family: var(--font-mono);
+  font-size: 14.5px;
+  letter-spacing: -0.02em;
+}
+
+#profile-view[data-layout="dossier"] .case-body .desc {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+#profile-view[data-layout="dossier"] .case-body h3 + .desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+#profile-view[data-layout="dossier"] .contrib {
+  padding-top: 9px;
+  margin-top: 2px;
+}
+
+#profile-view[data-layout="dossier"] .gallery-grid,
+#profile-view[data-layout="dossier"] .gallery-grid.count-many,
+#profile-view[data-layout="dossier"] .gallery-grid.count-2,
+#profile-view[data-layout="dossier"] .gallery-grid.count-1 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: clamp(120px, 13vw, 180px);
+  grid-auto-flow: row;
+  gap: 10px;
+}
+
+#profile-view[data-layout="dossier"] .gallery-grid .gallery-tile:first-child {
+  grid-column: auto;
+  grid-row: auto;
+}
+
+#profile-view[data-layout="dossier"] .gallery-cap {
+  padding: 24px 10px 9px;
+  font-size: 11px;
+}
+
+#profile-view[data-layout="dossier"] .split-grid {
+  gap: 10px;
+}
+
+#profile-view[data-layout="dossier"] .tile-pad {
+  padding: 14px;
+}
+
+#profile-view[data-layout="dossier"] .about-grid {
+  gap: 10px;
+}
+
+#profile-view[data-layout="dossier"] .about-card {
+  padding: 16px;
+}
+
+#profile-view[data-layout="dossier"] .about-bio {
+  font-size: 13.5px;
+  line-height: 1.7;
+}
+
+@media (max-width: 980px) {
+  #profile-view[data-layout="dossier"] .hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #profile-view[data-layout="dossier"] .hero-side {
+    order: 0;
+  }
+
+  #profile-view[data-layout="dossier"] .meta-card {
+    order: 0;
+    position: static;
+  }
+
+  #profile-view[data-layout="dossier"] .gallery-grid,
+  #profile-view[data-layout="dossier"] .gallery-grid.count-many,
+  #profile-view[data-layout="dossier"] .gallery-grid.count-2,
+  #profile-view[data-layout="dossier"] .gallery-grid.count-1 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  #profile-view[data-layout="editorial"] .about-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  #profile-view[data-layout="editorial"] .bento .tile,
+  #profile-view[data-layout="editorial"] .bento .tile.span2 {
+    grid-template-columns: 1fr;
+    row-gap: 16px;
+  }
+
+  #profile-view[data-layout="editorial"] .bento .tile:nth-child(even) .case-media {
+    order: 0;
+  }
+
+  #profile-view[data-layout="editorial"] .case-media {
+    min-height: 0;
+    aspect-ratio: 16 / 9;
+  }
+
+  #profile-view[data-layout="editorial"] .meta-card {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  #profile-view[data-layout="editorial"] .id-name h1 {
+    font-size: 40px;
+  }
+
+  #profile-view[data-layout="editorial"] .meta-card {
+    grid-template-columns: 1fr;
+  }
+
+  #profile-view[data-layout="editorial"] .gallery-grid,
+  #profile-view[data-layout="editorial"] .gallery-grid.count-many,
+  #profile-view[data-layout="editorial"] .gallery-grid.count-2,
+  #profile-view[data-layout="editorial"] .gallery-grid.count-1 {
+    grid-template-columns: 1fr;
+  }
+
+  #profile-view[data-layout="dossier"] .bento {
+    grid-template-columns: 1fr;
+  }
+
+  #profile-view[data-layout="dossier"] .gallery-grid,
+  #profile-view[data-layout="dossier"] .gallery-grid.count-many,
+  #profile-view[data-layout="dossier"] .gallery-grid.count-2,
+  #profile-view[data-layout="dossier"] .gallery-grid.count-1 {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 200px;
+  }
+}
