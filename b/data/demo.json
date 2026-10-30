@@ -147,10 +147,10 @@
       {
         "id": "md_mark",
         "type": "image",
-        "url": "https://bnos.space/assets/icons/icon.svg",
+        "url": "https://bnos.space/assets/icons/bnos-logo.svg",
         "poster": "",
         "caption": "BnOS mark",
-        "alt": "BnOS application icon",
+        "alt": "BnOS logo",
         "public": true
       },
       {

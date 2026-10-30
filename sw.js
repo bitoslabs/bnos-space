@@ -1,5 +1,5 @@
 // BnOS Relay Console — Service Worker
-const CACHE_NAME = 'bnos-relay-v10';
+const CACHE_NAME = 'bnos-relay-v11';
 const ASSETS = [
   './',
   './console.html',

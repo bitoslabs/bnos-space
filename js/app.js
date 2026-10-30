@@ -58,12 +58,18 @@ export function setLanguage(lang) {
   localStorage.setItem('bnos_lang', lang);
   document.documentElement.lang = lang;
   
-  // Update document title
-  document.title = translations[lang].meta.title;
-  
+  // Update document title (pages may override via <body data-page-title="…">)
+  const pageTitleKey = document.body && document.body.dataset.pageTitle;
+  document.title = pageTitleKey
+    ? getNestedTranslation(lang, pageTitleKey) || translations[lang].meta.title
+    : translations[lang].meta.title;
+
   // Update meta tags
   const metaDesc = document.querySelector('meta[name="description"]');
-  if (metaDesc) metaDesc.content = translations[lang].meta.description;
+  if (metaDesc) {
+    const pageDescKey = document.body && document.body.dataset.pageDesc;
+    metaDesc.content = (pageDescKey && getNestedTranslation(lang, pageDescKey)) || translations[lang].meta.description;
+  }
   
   const metaKey = document.querySelector('meta[name="keywords"]');
   if (metaKey) metaKey.content = translations[lang].meta.keywords;
@@ -103,13 +109,20 @@ export function setLanguage(lang) {
     if (text) el.title = text;
   });
 
-  // Update language switcher active class
-  document.querySelectorAll('.lang-switcher a').forEach(a => {
-    if (a.dataset.lang === lang) {
-      a.classList.add('active');
+  // Update every language selector (header dropdown + mobile menu)
+  const languageNames = { en: 'English', lo: 'ລາວ', th: 'ไทย' };
+  const languageLabel = (translations[lang].nav && translations[lang].nav.language) || 'Language';
+  document.querySelectorAll('[data-lang]').forEach(a => {
+    const isActive = a.dataset.lang === lang;
+    a.classList.toggle('active', isActive);
+    if (isActive) {
+      a.setAttribute('aria-current', 'true');
     } else {
-      a.classList.remove('active');
+      a.removeAttribute('aria-current');
     }
+  });
+  document.querySelectorAll('.lang-toggle').forEach(btn => {
+    btn.setAttribute('aria-label', `${languageLabel}: ${languageNames[lang] || lang.toUpperCase()}`);
   });
 
   // Apply font override if necessary (Thai/Lao need specific fonts)
@@ -120,6 +133,9 @@ export function setLanguage(lang) {
   } else {
     document.body.style.fontFamily = '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
   }
+
+  // Let dynamically rendered sections re-render their translated strings.
+  document.dispatchEvent(new CustomEvent('bnos:lang', { detail: { lang } }));
 }
 
 // Initialize on page load
@@ -136,8 +152,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Theme toggle
   initTheme();
 
-  // Setup click listeners for language switchers
-  document.querySelectorAll('.lang-switcher a').forEach(a => {
+  // Setup click listeners for every language selector
+  document.querySelectorAll('[data-lang]').forEach(a => {
     a.addEventListener('click', (e) => {
       e.preventDefault();
       const lang = a.dataset.lang;

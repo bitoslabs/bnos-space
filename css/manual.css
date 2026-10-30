@@ -118,11 +118,15 @@ body {
 .nav-logo-icon {
   display: grid;
   place-items: center;
+  padding: 4px 6px;
+  background: #fff;
+  border-radius: 8px;
 }
 
-.nav-logo-icon .bee-svg {
-  width: 30px;
-  height: 30px;
+.nav-logo-icon .brand-logo {
+  display: block;
+  width: 34px;
+  height: auto;
 }
 
 .nav-logo-text {

@@ -26,6 +26,18 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bnos.space/manual.html" />
   </url>
 
+  <!-- Business directory -->
+  <url>
+    <loc>https://bnos.space/businesses.html</loc>
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bnos.space/businesses.html?lang=en" />
+    <xhtml:link rel="alternate" hreflang="lo" href="https://bnos.space/businesses.html?lang=lo" />
+    <xhtml:link rel="alternate" hreflang="th" href="https://bnos.space/businesses.html?lang=th" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bnos.space/businesses.html" />
+  </url>
+
   <!-- Business presence app -->
   <url>
     <loc>https://bnos.space/b/</loc>

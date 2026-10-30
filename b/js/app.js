@@ -43,6 +43,7 @@ import {
 
 const state = {
   ref: "",
+  orgId: "",
   profile: null,
   profilePubkey: "",
   updatedAt: 0,
@@ -467,6 +468,8 @@ async function verifyNip05() {
 async function route() {
   const params = new URLSearchParams(location.search);
   state.editRequested = params.get("edit") === "1";
+  // `org` selects one specific GLO organization when a key owns several.
+  state.orgId = params.get("org") || "";
   if (params.get("demo") === "1") {
     state.editRequested = false;
     await loadDemo();
@@ -537,7 +540,8 @@ async function loadByRef(rawRef) {
 
   const result = await profileService.loadProfileFromRelays(
     resolved.pubkey,
-    state.relays
+    state.relays,
+    { orgId: state.orgId || "" }
   );
   if (token !== state.loadToken) return;
 

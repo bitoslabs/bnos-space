@@ -18,6 +18,12 @@ const translations = {
       faq: "FAQ",
       docs: "Documentation",
       businessPages: "Business pages",
+      businessPagesDesc: "Publish and manage your own page",
+      directory: "Directory",
+      directoryDesc: "Browse public business pages",
+      language: "Language",
+      menuOpen: "Open menu",
+      menuClose: "Close menu",
       getStarted: "Get Started"
     },
     hero: {
@@ -522,6 +528,33 @@ const translations = {
           { title: "No transaction cut", desc: "Payments settle straight to your wallet; we never take a fee." }
         ]
       }
+    },
+    businesses: {
+      nav: "Businesses",
+      tag: "Directory",
+      title: "Recently registered businesses",
+      subtitle: "Shops and organizations publishing their business page on BnOS — served straight from Nostr relays.",
+      pageTitle: "Businesses on BnOS",
+      pageSubtitle: "Browse public business pages published to Nostr. Open any card for the full profile.",
+      viewAll: "View all businesses",
+      searchLabel: "Search businesses",
+      searchPlaceholder: "Search name, location or NIP-05…",
+      refresh: "Refresh",
+      loadMore: "Load more",
+      backHome: "Back home",
+      loading: "Loading businesses…",
+      count: "{count} public businesses found.",
+      partial: "Some relays did not answer.",
+      empty: "No public businesses found yet.",
+      error: "Relays did not answer. Try again later.",
+      noResults: "No businesses match your search.",
+      viewPage: "Open business page",
+      updated: "Updated {time}",
+      business: "Business",
+      individual: "Individual",
+      new: "New",
+      unnamed: "Unnamed business",
+      relayNote: "Public pages and shops registered in BnOS, read from Nostr relays (kind 30078)."
     }
   },
   th: {
@@ -543,6 +576,12 @@ const translations = {
       faq: "ถาม-ตอบ",
       docs: "เอกสาร",
       businessPages: "หน้าธุรกิจ",
+      businessPagesDesc: "เผยแพร่และจัดการเพจของคุณ",
+      directory: "รายชื่อธุรกิจ",
+      directoryDesc: "เรียกดูหน้าธุรกิจที่เผยแพร่แล้ว",
+      language: "ภาษา",
+      menuOpen: "เปิดเมนู",
+      menuClose: "ปิดเมนู",
       getStarted: "เริ่มต้นใช้งาน"
     },
     hero: {
@@ -1047,6 +1086,33 @@ const translations = {
           { title: "ไม่หักค่าธรรมเนียม", desc: "การชำระเข้าสู่กระเป๋าของคุณโดยตรง เราไม่เคยเก็บค่าธรรมเนียม" }
         ]
       }
+    },
+    businesses: {
+      nav: "ธุรกิจ",
+      tag: "ไดเรกทอรี",
+      title: "ธุรกิจที่ลงทะเบียนล่าสุด",
+      subtitle: "ร้านค้าและองค์กรที่เผยแพร่หน้าธุรกิจบน BnOS — อ่านโดยตรงจาก relay ของ Nostr",
+      pageTitle: "ธุรกิจบน BnOS",
+      pageSubtitle: "เรียกดูหน้าธุรกิจสาธารณะที่เผยแพร่บน Nostr เลือกการ์ดใดก็ได้เพื่อดูโปรไฟล์เต็ม",
+      viewAll: "ดูธุรกิจทั้งหมด",
+      searchLabel: "ค้นหาธุรกิจ",
+      searchPlaceholder: "ค้นหาชื่อ ที่ตั้ง หรือ NIP-05…",
+      refresh: "รีเฟรช",
+      loadMore: "โหลดเพิ่ม",
+      backHome: "กลับหน้าแรก",
+      loading: "กำลังโหลดธุรกิจ…",
+      count: "พบธุรกิจสาธารณะ {count} รายการ",
+      partial: "relay บางตัวไม่ตอบสนอง",
+      empty: "ยังไม่พบธุรกิจสาธารณะ",
+      error: "relay ไม่ตอบสนอง กรุณาลองใหม่ภายหลัง",
+      noResults: "ไม่มีธุรกิจที่ตรงกับการค้นหา",
+      viewPage: "เปิดหน้าธุรกิจ",
+      updated: "อัปเดต {time}",
+      business: "ธุรกิจ",
+      individual: "บุคคล",
+      new: "ใหม่",
+      unnamed: "ธุรกิจไม่มีชื่อ",
+      relayNote: "เฉพาะหน้าสาธารณะและร้านที่ลงทะเบียนใน BnOS อ่านจาก relay ของ Nostr (kind 30078)"
     }
   },
   lo: {
@@ -1068,6 +1134,12 @@ const translations = {
       faq: "ຄໍາຖາມທີ່ພົບເລື້ອຍ",
       docs: "ເອກະສານ",
       businessPages: "ໜ້າທຸລະກິດ",
+      businessPagesDesc: "ເຜີຍແຜ່ ແລະ ຈັດການໜ້າຂອງທ່ານ",
+      directory: "ລາຍຊື່ທຸລະກິດ",
+      directoryDesc: "ເບິ່ງໜ້າທຸລະກິດທີ່ເຜີຍແຜ່",
+      language: "ພາສາ",
+      menuOpen: "ເປີດເມນູ",
+      menuClose: "ປິດເມນູ",
       getStarted: "ເລີ່ມຕົ້ນໃຊ້ງານ"
     },
     hero: {
@@ -1557,6 +1629,33 @@ const translations = {
           { title: "ບໍ່ຫັກຄ່າທຳນຽມ", desc: "ການຊຳລະເຂົ້າກະເປົາຂອງເຈົ້າໂດຍກົງ ພວກເຮົາບໍ່ເຄີຍເກັບຄ່າທຳນຽມ" }
         ]
       }
+    },
+    businesses: {
+      nav: "ທຸລະກິດ",
+      tag: "ລາຍຊື່ທຸລະກິດ",
+      title: "ທຸລະກິດທີ່ລົງທະບຽນຫຼ້າສຸດ",
+      subtitle: "ຮ້ານຄ້າ ແລະ ອົງກອນທີ່ເຜີຍແຜ່ໜ້າທຸລະກິດເທິງ BnOS — ອ່ານໂດຍກົງຈາກ relay ຂອງ Nostr",
+      pageTitle: "ທຸລະກິດເທິງ BnOS",
+      pageSubtitle: "ເບິ່ງໜ້າທຸລະກິດສາທາລະນະທີ່ເຜີຍແຜ່ເທິງ Nostr ເລືອກບັດໃດກໍ່ໄດ້ເພື່ອເບິ່ງໂປຣໄຟລ໌ເຕັມ",
+      viewAll: "ເບິ່ງທຸລະກິດທັງໝົດ",
+      searchLabel: "ຄົ້ນຫາທຸລະກິດ",
+      searchPlaceholder: "ຄົ້ນຫາຊື່, ສະຖານທີ່ ຫຼື NIP-05…",
+      refresh: "ໂຫຼດໃໝ່",
+      loadMore: "ໂຫຼດເພີ່ມ",
+      backHome: "ກັບໜ້າຫຼັກ",
+      loading: "ກຳລັງໂຫຼດທຸລະກິດ…",
+      count: "ພົບທຸລະກິດສາທາລະນະ {count} ລາຍການ",
+      partial: "relay ບາງຕົວບໍ່ຕອບສະໜອງ",
+      empty: "ຍັງບໍ່ພົບທຸລະກິດສາທາລະນະ",
+      error: "relay ບໍ່ຕອບສະໜອງ ກະລຸນາລອງໃໝ່ພາຍຫຼັງ",
+      noResults: "ບໍ່ມີທຸລະກິດທີ່ກົງກັບການຄົ້ນຫາ",
+      viewPage: "ເປີດໜ້າທຸລະກິດ",
+      updated: "ອັບເດດ {time}",
+      business: "ທຸລະກິດ",
+      individual: "ບຸກຄົນ",
+      new: "ໃໝ່",
+      unnamed: "ທຸລະກິດບໍ່ມີຊື່",
+      relayNote: "ໜ້າສາທາລະນະ ແລະ ຮ້ານທີ່ລົງທະບຽນໃນ BnOS ອ່ານຈາກ relay ຂອງ Nostr (kind 30078)"
     }
   }
 };
