@@ -221,6 +221,7 @@ async function discover({ limit, until }) {
  *   grid: HTMLElement,
  *   status?: HTMLElement|null,
  *   moreBtn?: HTMLElement|null,
+ *   retryBtn?: HTMLButtonElement|null,
  *   search?: HTMLInputElement|null,
  *   section?: HTMLElement|null,
  *   limit?: number,
@@ -231,6 +232,7 @@ export function initBusinessDirectory({
   grid,
   status = null,
   moreBtn = null,
+  retryBtn = null,
   search = null,
   section = null,
   limit = 6,
@@ -244,6 +246,7 @@ export function initBusinessDirectory({
   let started = false;
   let token = 0;
   let query = '';
+  let lastErrors = [];
 
   function setStatus(message, { error = false } = {}) {
     if (!status) return;
@@ -254,7 +257,9 @@ export function initBusinessDirectory({
   function setBusy(busy) {
     loading = busy;
     if (moreBtn) moreBtn.disabled = busy;
-    if (grid) grid.classList.toggle('is-busy', busy);
+    if (retryBtn) retryBtn.disabled = busy;
+    grid.classList.toggle('is-busy', busy);
+    grid.setAttribute('aria-busy', String(busy));
   }
 
   function filtered() {
@@ -296,9 +301,13 @@ export function initBusinessDirectory({
     if (moreBtn) moreBtn.hidden = !nextUntil || Boolean(query);
   }
 
-  function updateStatus(errors) {
+  function updateStatus(errors = lastErrors) {
     const list = filtered();
-    if (loading) return;
+    if (loading) {
+      setStatus(t('businesses.loading'));
+      return;
+    }
+    if (retryBtn) retryBtn.hidden = Boolean(items.length) && !errors.length;
     if (!items.length) {
       setStatus(
         errors && errors.length ? t('businesses.error') : t('businesses.empty'),
@@ -319,7 +328,8 @@ export function initBusinessDirectory({
     const requestToken = ++token;
     setBusy(true);
     if (moreBtn) moreBtn.hidden = true;
-    if (reset) setStatus(t('businesses.loading'));
+    setStatus(t('businesses.loading'));
+    if (reset && !items.length) renderSkeletons(grid);
 
     let result;
     try {
@@ -331,9 +341,14 @@ export function initBusinessDirectory({
     if (requestToken !== token) return;
     setBusy(false);
 
+    lastErrors = result.errors || [];
+    const failed = !result.items.length && lastErrors.length > 0;
     if (reset) {
-      items = result.items;
-      nextUntil = result.nextUntil;
+      // Keep useful cached results visible when a refresh cannot reach relays.
+      if (!failed) {
+        items = result.items;
+        nextUntil = result.nextUntil;
+      }
     } else {
       // One presence page per key, but every GLO organization is its own item.
       const seen = new Set(items.map((item) => (item.orgId ? `glo:${item.orgId}` : item.pubkey)));
@@ -343,7 +358,7 @@ export function initBusinessDirectory({
         seen.add(key);
         items.push(item);
       }
-      nextUntil = result.nextUntil;
+      if (!failed) nextUntil = result.nextUntil;
       // Keep the directory strictly newest-registered-first across pages.
       items.sort(
         (a, b) => (b.createdAt || b.updatedAt || 0) - (a.createdAt || a.updatedAt || 0),
@@ -351,8 +366,8 @@ export function initBusinessDirectory({
     }
 
     render();
-    updateStatus(result.errors);
-    if (items.length) writeCache(items, nextUntil);
+    updateStatus();
+    if (items.length && !lastErrors.length) writeCache(items, nextUntil);
   }
 
   function start() {
@@ -379,7 +394,7 @@ export function initBusinessDirectory({
     search.addEventListener('input', () => {
       query = search.value.trim();
       render();
-      updateStatus(null);
+      updateStatus();
     });
   }
 
@@ -387,10 +402,14 @@ export function initBusinessDirectory({
     moreBtn.addEventListener('click', () => load({ reset: false }));
   }
 
+  if (retryBtn) {
+    retryBtn.addEventListener('click', () => load({ reset: true }));
+  }
+
   document.addEventListener('bnos:lang', () => {
     if (!started) return;
-    render();
-    updateStatus(null);
+    if (!loading) render();
+    updateStatus();
   });
 
   if (immediate) {

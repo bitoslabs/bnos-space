@@ -206,6 +206,17 @@ php -S localhost:8000
 
 Then visit `http://localhost:8000`
 
+## Landing UX regression checks
+
+Run `node tests/landing-ux.mjs` with Node.js 22+ and Google Chrome installed.
+The default Chrome path is for macOS; set `CHROME_PATH` to use another installation.
+
+The dependency-free browser check covers JavaScript-disabled fallback content,
+manual links, directory loading/error/empty/partial/retry states, preservation of
+results on failed refresh, and English/Lao/Thai layouts in both themes at four widths.
+External services are blocked and relay discovery is stubbed; this does not test
+live relay connectivity or externally hosted fonts and icons.
+
 ## 📞 Support
 
 For questions about the website or translations, refer to the main [DEPLOYMENT.md](../../DEPLOYMENT.md) in the root directory.

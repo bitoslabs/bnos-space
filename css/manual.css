@@ -115,25 +115,94 @@ body {
   flex-shrink: 0;
 }
 
-.nav-logo-icon {
-  display: grid;
-  place-items: center;
-  padding: 4px 6px;
-  background: #fff;
-  border-radius: 8px;
+.brand-cover {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.nav-logo-icon .brand-logo {
+.brand-mark {
   display: block;
-  width: 34px;
+  width: 32px;
   height: auto;
+  overflow: visible;
+  animation: brand-fly 2.8s ease-in-out infinite;
 }
 
-.nav-logo-text {
-  font-size: 19px;
+.brand-name {
+  font-size: 18px;
   font-weight: 800;
-  letter-spacing: 1.5px;
-  color: #fff;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+
+.brand-word-bn {
+  color: #0a0a12;
+}
+
+.brand-word-os {
+  background: linear-gradient(135deg, #f7b506 0%, #f59f10 52%, #f28919 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+[data-theme="dark"] .brand-word-bn {
+  color: #f4f5fa;
+}
+
+[data-theme="dark"] .brand-body path {
+  fill: #f4f5fa;
+}
+
+.brand-wing {
+  transform-box: view-box;
+}
+
+.brand-wing-left {
+  transform-origin: 107.8px 61.6px;
+  animation: brand-flap-left 0.42s ease-in-out infinite alternate;
+}
+
+.brand-wing-right {
+  transform-origin: 132.5px 61.6px;
+  animation: brand-flap-right 0.42s ease-in-out infinite alternate;
+}
+
+@keyframes brand-fly {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-2px) rotate(-1.5deg);
+  }
+}
+
+@keyframes brand-flap-left {
+  from {
+    transform: rotate(-6deg);
+  }
+  to {
+    transform: rotate(6deg);
+  }
+}
+
+@keyframes brand-flap-right {
+  from {
+    transform: rotate(6deg);
+  }
+  to {
+    transform: rotate(-6deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-mark,
+  .brand-wing-left,
+  .brand-wing-right {
+    animation: none;
+  }
 }
 
 .nav-right {

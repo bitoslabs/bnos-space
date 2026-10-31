@@ -122,8 +122,8 @@ const translations = {
     },
     cta: {
       title: "Ready to Get Started?",
-      subtitle: "Join the waitlist and be among the first to experience the future of business operations.",
-      btn: "Join Waitlist"
+      subtitle: "Open BnOS to set up your shop, or explore the documentation first.",
+      btn: "Open BnOS"
     },
     footer: {
       desc: "Lightning-powered Point of Sale built on Nostr Protocol. Decentralized, sovereign, and privacy-first.",
@@ -542,6 +542,7 @@ const translations = {
       refresh: "Refresh",
       loadMore: "Load more",
       backHome: "Back home",
+      connectionNote: "The live directory needs JavaScript and a connection to Nostr relays.",
       loading: "Loading businesses…",
       count: "{count} public businesses found.",
       partial: "Some relays did not answer.",
@@ -680,8 +681,8 @@ const translations = {
     },
     cta: {
       title: "พร้อมที่จะเริ่มต้นแล้วหรือไม่?",
-      subtitle: "เข้าร่วมรายชื่อรอ และเป็นคนแรกที่ได้สัมผัสกับอนาคตของการดำเนินธุรกิจ",
-      btn: "เข้าร่วมรายชื่อรอ"
+      subtitle: "เปิด BnOS เพื่อตั้งค่าร้านค้าของคุณ หรืออ่านคู่มือก่อนเริ่มต้น",
+      btn: "เปิด BnOS"
     },
     footer: {
       desc: "ระบบจุดขายที่ใช้พลัง Lightning สร้างด้วยโปรโตคอล Nostr แบบกระจายอำนาจ เป็นเจ้าของเอง และให้ความสำคัญกับความเป็นส่วนตัวสำหรับธุรกิจสมัยใหม่",
@@ -1100,6 +1101,7 @@ const translations = {
       refresh: "รีเฟรช",
       loadMore: "โหลดเพิ่ม",
       backHome: "กลับหน้าแรก",
+      connectionNote: "รายชื่อธุรกิจแบบสดต้องใช้ JavaScript และการเชื่อมต่อกับรีเลย์ Nostr",
       loading: "กำลังโหลดธุรกิจ…",
       count: "พบธุรกิจสาธารณะ {count} รายการ",
       partial: "relay บางตัวไม่ตอบสนอง",
@@ -1238,8 +1240,8 @@ const translations = {
     },
     cta: {
       title: "ພ້ອມທີ່ຈະເລີ່ມຕົ້ນແລ້ວບໍ?",
-      subtitle: "ເຂົ້າຮ່ວມລາຍຊື່ລໍຖ້າ ແລະ ເປັນຄົນທຳອິດທີ່ໄດ້ສຳຜັດກັບອະນາຄົດຂອງການດຳເນີນທຸລະກິດ.",
-      btn: "ເຂົ້າຮ່ວມລາຍຊື່ລໍຖ້າ"
+      subtitle: "ເປີດ BnOS ເພື່ອຕັ້ງຄ່າຮ້ານຂອງເຈົ້າ ຫຼື ອ່ານຄູ່ມືກ່ອນເລີ່ມຕົ້ນ.",
+      btn: "ເປີດ BnOS"
     },
     footer: {
       desc: "ລະບົບຂາຍທີ່ໃຊ້ຄວາມສາມາດ Lightning ສ້າງຂຶ້ນດ້ວຍໂປຣໂຕຄອນ Nostr. ແບບກະຈາຍສູນ, ເປັນເຈົ້າຂອງຂໍ້ມູນເອງ ແລະ ມີຄວາມເປັນສ່ວນຕົວສຳລັບທຸລະກິດທີ່ທັນສະໄໝ.",
@@ -1643,6 +1645,7 @@ const translations = {
       refresh: "ໂຫຼດໃໝ່",
       loadMore: "ໂຫຼດເພີ່ມ",
       backHome: "ກັບໜ້າຫຼັກ",
+      connectionNote: "ລາຍຊື່ທຸລະກິດແບບສົດຕ້ອງໃຊ້ JavaScript ແລະ ການເຊື່ອມຕໍ່ກັບ relay ຂອງ Nostr",
       loading: "ກຳລັງໂຫຼດທຸລະກິດ…",
       count: "ພົບທຸລະກິດສາທາລະນະ {count} ລາຍການ",
       partial: "relay ບາງຕົວບໍ່ຕອບສະໜອງ",

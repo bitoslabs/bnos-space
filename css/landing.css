@@ -1,0 +1,205 @@
+/* Landing-only refinements; shared pages and the hero retain their existing styles. */
+.landing-page .reveal {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-ready .landing-page .reveal:not(.active) {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+}
+
+.landing-page .directory-retry {
+  display: flex;
+  justify-content: center;
+}
+
+.landing-page .use-card .text-link {
+  margin-top: 20px;
+  min-height: 44px;
+}
+.landing-page main > .section {
+  padding-block: clamp(64px, 7vw, 96px);
+}
+
+.landing-page .features-grid .card:first-child {
+  background: linear-gradient(145deg, var(--gold-soft), var(--surface));
+  border-color: var(--gold-border);
+}
+
+.landing-page main > .section .card:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.landing-page .platform-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.4fr);
+  grid-template-rows: min-content 1fr;
+  gap: 24px 64px;
+  align-items: start;
+}
+
+.landing-page .platform-layout .section-head {
+  margin: 0;
+  text-align: left;
+}
+
+.landing-page .platform-layout .section-foot {
+  grid-column: 1;
+  grid-row: 2;
+  margin: 0;
+  text-align: left;
+}
+
+.landing-page .platform-grid {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  gap: 16px;
+}
+
+.landing-page .platform-card {
+  padding: 26px;
+}
+
+.landing-page .steps-grid {
+  list-style: none;
+}
+
+.landing-page .step-card {
+  padding: 28px;
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--gold-border);
+  border-radius: 0;
+}
+
+.landing-page .step-num {
+  width: 48px;
+  height: 48px;
+  background: var(--gold-soft);
+  border: 1px solid var(--gold-border);
+  color: var(--gold);
+  font-variant-numeric: tabular-nums;
+}
+
+.landing-page .use-card {
+  background: transparent;
+  border-color: transparent;
+  border-top-color: var(--border-2);
+  border-radius: 0;
+}
+
+.landing-page .use-icon {
+  display: block;
+}
+
+.landing-page .faq-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.3fr);
+  align-items: start;
+  gap: 64px;
+}
+
+.landing-page .faq-layout .section-head {
+  margin: 0;
+  text-align: left;
+}
+
+.landing-page .faq-docs {
+  margin-top: 24px;
+}
+
+.landing-page .faq-item summary {
+  min-height: 68px;
+}
+
+.landing-page .faq-item summary:hover {
+  background: var(--surface-2);
+}
+
+/* Keep keyboard focus inside the clipped details panel. */
+.landing-page .faq-item summary:focus-visible {
+  outline-offset: -4px;
+}
+
+.landing-page .cta {
+  padding: clamp(56px, 7vw, 88px) 24px;
+  background: var(--bg);
+}
+
+.landing-page .cta::before {
+  display: none;
+}
+
+.landing-page .cta-inner {
+  padding: clamp(32px, 5vw, 64px);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius-lg);
+  background: radial-gradient(ellipse at top, var(--gold-soft), transparent 75%), var(--bg-alt);
+}
+
+.landing-page .cta-title {
+  line-height: 1.2;
+}
+
+@media (max-width: 900px) {
+  .landing-page .platform-layout,
+  .landing-page .faq-layout {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    gap: 32px;
+  }
+
+  .landing-page .platform-layout .section-head,
+  .landing-page .faq-layout .section-head {
+    max-width: 680px;
+  }
+
+  .landing-page .platform-grid,
+  .landing-page .platform-layout .section-foot {
+    grid-column: auto;
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .landing-page main > .section .section-head {
+    margin-bottom: 32px;
+  }
+
+  .landing-page .platform-layout .section-head,
+  .landing-page .faq-layout .section-head {
+    margin-bottom: 0;
+  }
+
+  .landing-page .step-card,
+  .landing-page .use-card {
+    padding: 24px 0;
+  }
+
+  .landing-page .steps-grid,
+  .landing-page .use-grid {
+    gap: 8px;
+  }
+
+  .landing-page .faq-item summary {
+    padding: 18px;
+    font-size: 16px;
+  }
+
+  .landing-page .faq-answer {
+    padding: 0 18px 20px;
+  }
+
+  .landing-page .cta-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .landing-page .cta-actions .btn {
+    white-space: normal;
+  }
+}

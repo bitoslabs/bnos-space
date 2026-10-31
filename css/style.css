@@ -1498,25 +1498,7 @@ html[lang="th"] .lang-current .lang-th {
   gap: 11px;
 }
 
-.footer-logo-icon {
-  display: grid;
-  place-items: center;
-  padding: 3px 5px;
-  background: #fff;
-  border-radius: 7px;
-}
 
-.footer-logo-icon .brand-logo {
-  display: block;
-  width: 28px;
-  height: auto;
-}
-
-.footer-logo-text {
-  font-size: 18px;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-}
 
 .footer-desc {
   color: var(--faint);
