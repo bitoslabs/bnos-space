@@ -1,0 +1,35 @@
+# BnOS
+
+> BnOS (Bitcoin Nostr Operating System) is an open-source, Lightning-powered point of sale and business operating system built on the Nostr protocol. Businesses accept Bitcoin payments, manage products, inventory, orders and reports without a central server. BnOS is a BitDigo project.
+
+BnOS is a static, local-first web app. Data is stored on the device and published to Nostr relays as replaceable events (kind 30078), so there is no vendor database and no transaction fee. The source is MIT-licensed.
+
+## Products
+
+- [BnOS](https://bnos.space/): Open-source business infrastructure for POS, ERP, CRM and decentralized commerce. Lightning payments, catalog and inventory, orders and customers, reports, team roles, offline-first operation.
+- [BitOS](https://bitos.space/): An open digital ecosystem for Nostr, Bitcoin and decentralized applications. The wider platform BnOS belongs to.
+- [BitDigo](https://bitdigo.com/): The organization that builds BitOS and BnOS.
+
+## Documentation
+
+- [User manual](https://bnos.space/manual.html): Setup, Nostr identity, the setup wizard, point of sale, products and inventory, orders, reports, staff and settings. Available in English, Lao and Thai via `?lang=en|lo|th`.
+- [Business directory](https://bnos.space/businesses.html): Public business pages published to Nostr relays.
+- [Business pages](https://bnos.space/b/): A business presence page addressed by a Nostr key (`/b/{npub or NIP-05}`). Owners sign in with NIP-07, NIP-46 or a local nsec.
+- [Credential verification demo](https://bnos.space/b/verify/): Synthetic demonstration of multi-dimensional credential checks. Not live verification.
+
+## Source code
+
+- [bnos-svelte on GitHub](https://github.com/bitoslabs/bnos-svelte): The BnOS console application (SvelteKit). MIT licensed.
+- [bnos-space on GitHub](https://github.com/bitoslabs/bnos-space): The landing site and business-page app in this repository.
+
+## Technology
+
+- Bitcoin and the Lightning Network for payments.
+- Nostr protocol for identity, storage and discovery.
+- Local-first architecture: works offline, syncs to relays when reconnected.
+- Progressive web app, installable, no account or email required.
+
+## Optional
+
+- [Relay console](https://bnos.space/console.html): Developer tool for inspecting Nostr relay traffic. Not part of the product.
+- [Full LLM context](https://bnos.space/llms-full.txt): Expanded description, feature list and FAQ for retrieval-augmented systems.

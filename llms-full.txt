@@ -1,0 +1,84 @@
+# BnOS — full context for LLMs
+
+> BnOS (Bitcoin Nostr Operating System) is an open-source, Lightning-powered point of sale and business operating system built on the Nostr protocol. It is a BitDigo project. This file expands on https://bnos.space/llms.txt with the full feature set, data model and FAQ.
+
+## What BnOS is
+
+BnOS is a web-based business operating system for small and medium merchants. It combines a point of sale (POS), catalog and inventory management, order and customer tracking, reporting, and staff roles in one local-first application.
+
+It is not a hosted SaaS. The app runs in the browser, stores data on the device, and publishes public records to Nostr relays. Payments settle directly to the merchant's Lightning wallet, so BnOS never holds funds and never takes a transaction cut.
+
+## Who builds it
+
+- BitDigo (https://bitdigo.com) is the organization.
+- BitOS (https://bitos.space) is the open digital ecosystem for Nostr, Bitcoin and decentralized applications.
+- BnOS (https://bnos.space) is the business infrastructure product: POS, ERP, CRM and decentralized commerce.
+
+## Features
+
+- Lightning payments: instant Bitcoin checkout with near-zero fees and direct settlement to the merchant wallet.
+- Non-custodial: the merchant holds the keys; BnOS never holds funds.
+- Decentralized storage: records are Nostr events on relays the merchant chooses.
+- Offline-first: sales continue without a connection and sync when back online.
+- Catalog and inventory: products, variants, images and live stock that update with each sale.
+- Orders and customers: end-to-end order tracking and per-customer history.
+- Reports and insights: sales, margins, trends and expense tracking in real time.
+- Team management: multi-user access with role-based permissions.
+- Use cases: retail, restaurants, services (salons, clinics, workshops), online and marketplace selling.
+
+## Data model
+
+- Public business pages and organizations are published as Nostr kind 30078 replaceable events.
+- The business-page app uses the `d` tag `bnos.space:business:v1`.
+- The BnOS console publishes GLO (Global Ledger of Businesses) organizations under the `org.bitos.glo` v1 spec with `d` tag `org.bitos.glo:v1:organization:<id>` and topic `glo:type:organization`.
+- Content is a JSON envelope `{ spec, version, type, id, scope, visibility, data }`.
+- Identity uses Nostr keys: NIP-07 browser extension, NIP-46 remote signer, or a local nsec.
+
+## Technology stack
+
+- Bitcoin and the Lightning Network.
+- Nostr protocol (NIP-01 events, NIP-05 identifiers, NIP-07/NIP-46 signing, NIP-78 app data).
+- Local-first web architecture with a service worker and PWA manifest.
+- SvelteKit for the console application; static HTML/CSS/JS for the landing site and business pages.
+
+## Languages
+
+The site and manual are available in English, Lao and Thai. Use `?lang=en`, `?lang=lo` or `?lang=th`.
+
+## FAQ
+
+### What is BnOS?
+BnOS (Bitcoin Nostr Operating System) is a decentralized, Lightning-powered point of sale and business operating system. It lets businesses accept Bitcoin payments and manage operations without intermediaries.
+
+### Is BnOS free to use?
+Yes. BnOS is open-source software under the MIT licence. There are no transaction fees on payments because funds go directly to the merchant wallet.
+
+### Do I need a bank account?
+No. BnOS operates on the Bitcoin Lightning Network, so the merchant controls their own funds.
+
+### How does offline mode work?
+BnOS is local-first. Data is stored on the device first, sales can be processed offline, and records sync to Nostr relays when the connection returns.
+
+### Where is my data stored?
+On your device and on the Nostr relays you configure. There is no central BnOS database.
+
+### Can I self-host it?
+Yes. The code is MIT-licensed and available on GitHub; you can run it anywhere.
+
+## Links
+
+- Landing page: https://bnos.space/
+- User manual: https://bnos.space/manual.html
+- Business directory: https://bnos.space/businesses.html
+- Business pages: https://bnos.space/b/
+- Console app: https://app.bnos.space
+- Source (console): https://github.com/bitoslabs/bnos-svelte
+- Source (site): https://github.com/bitoslabs/bnos-space
+- BitOS: https://bitos.space/
+- BitDigo: https://bitdigo.com/
+- Nostr profile: https://yakihonne.com/profile/bnos@nostrcheck.me
+- Discord: https://discord.gg/aNwEQQF3w8
+
+## Licence
+
+MIT. See the repository for details.

@@ -2,12 +2,63 @@
 
 User-agent: *
 Allow: /
+Disallow: /console.html
+Disallow: /b/verify/
 
 # Sitemaps
 Sitemap: https://bnos.space/sitemap.xml
 
+# LLM-friendly summary (llmstxt.org)
+# https://bnos.space/llms.txt
+# https://bnos.space/llms-full.txt
+
 # Crawl-delay
 Crawl-delay: 1
 
-# Disallow admin/private areas (if any in future)
-# Disallow: /admin/
+# ── AI / LLM crawlers are welcome ──
+# BnOS is public, open-source documentation and product information.
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: YouBot
+Allow: /

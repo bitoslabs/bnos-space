@@ -217,6 +217,24 @@ results on failed refresh, and English/Lao/Thai layouts in both themes at four w
 External services are blocked and relay discovery is stubbed; this does not test
 live relay connectivity or externally hosted fonts and icons.
 
+## SEO & LLM discovery
+
+- `sitemap.xml` — indexable pages with `hreflang` alternates for en/lo/th.
+- `robots.txt` — allows all crawlers, explicitly welcomes AI/LLM crawlers, and
+  disallows `/console.html` and `/b/verify/`.
+- `llms.txt` — concise [llmstxt.org](https://llmstxt.org/) index of the project,
+  products, docs and source.
+- `llms-full.txt` — expanded context (features, data model, FAQ) for
+  retrieval-augmented systems.
+- Structured data: `SoftwareApplication`, `WebSite`, `Organization` (with
+  `parentOrganization` BitDigo) and `FAQPage` on the landing page;
+  `CollectionPage` on `businesses.html`; `TechArticle` on `manual.html`.
+- `console.html`, `comming.html`, `manual-th.html`, `manual-lo.html` and
+  `b/verify/` are `noindex`.
+
+When adding a new public page, add it to `sitemap.xml` and, if it is a major
+product or doc entry point, to `llms.txt`.
+
 ## 📞 Support
 
 For questions about the website or translations, refer to the main [DEPLOYMENT.md](../../DEPLOYMENT.md) in the root directory.

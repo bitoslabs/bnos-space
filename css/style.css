@@ -1506,6 +1506,23 @@ html[lang="th"] .lang-current .lang-th {
   line-height: 1.7;
 }
 
+.footer-parent {
+  color: var(--faint);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.footer-parent a {
+  color: var(--gold-2);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.footer-parent a:hover {
+  color: var(--gold);
+  text-decoration: underline;
+}
+
 .footer-social {
   display: flex;
   gap: 10px;

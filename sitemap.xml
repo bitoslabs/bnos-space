@@ -5,7 +5,7 @@
   <!-- Homepage -->
   <url>
     <loc>https://bnos.space/</loc>
-    <lastmod>2026-10-08</lastmod>
+    <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://bnos.space/?lang=en" />
@@ -29,7 +29,7 @@
   <!-- Business directory -->
   <url>
     <loc>https://bnos.space/businesses.html</loc>
-    <lastmod>2026-10-27</lastmod>
+    <lastmod>2026-11-01</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://bnos.space/businesses.html?lang=en" />

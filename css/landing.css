@@ -20,6 +20,43 @@
   margin-top: 20px;
   min-height: 44px;
 }
+
+/* BitDigo family */
+.landing-page .family-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.landing-page .family-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 30px;
+}
+
+.landing-page .family-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.landing-page .family-head .card-icon {
+  margin-bottom: 0;
+}
+
+.landing-page .family-head .card-title {
+  margin-bottom: 0;
+  font-size: 22px;
+}
+
+.landing-page .family-card .card-desc {
+  flex: 1;
+}
+
+.landing-page .family-card .text-link {
+  min-height: 44px;
+}
 .landing-page main > .section {
   padding-block: clamp(64px, 7vw, 96px);
 }
@@ -201,5 +238,13 @@
 
   .landing-page .cta-actions .btn {
     white-space: normal;
+  }
+
+  .landing-page .family-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .landing-page .family-card {
+    padding: 24px;
   }
 }

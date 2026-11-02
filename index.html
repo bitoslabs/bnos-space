@@ -39,6 +39,7 @@
     <meta property="og:image" content="https://bnos.space/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="BnOS — open-source, Lightning-powered point of sale on Bitcoin and Nostr" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:locale:alternate" content="lo_LA" />
     <meta property="og:locale:alternate" content="th_TH" />
@@ -53,6 +54,7 @@
       content="Lightning-Powered Point of Sale built on Nostr Protocol. Decentralized, sovereign, and privacy-first."
     />
     <meta name="twitter:image" content="https://bnos.space/og-image.png" />
+    <meta name="twitter:image:alt" content="BnOS — open-source, Lightning-powered point of sale on Bitcoin and Nostr" />
     <meta name="twitter:site" content="@bnos_space" />
 
     <!-- Language Alternates -->
@@ -63,9 +65,10 @@
     <link rel="alternate" hreflang="x-default" href="https://bnos.space/" />
 
     <!-- Additional SEO -->
-    <meta name="robots" content="index, follow" />
-    <meta name="author" content="BnOS Team" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="author" content="BitDigo" />
     <meta name="theme-color" content="#0a0a12" />
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="https://bnos.space/sitemap.xml" />
 
     <link rel="icon" type="image/svg+xml" href="assets/icons/icon.svg" />
     <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png" />
@@ -99,6 +102,13 @@
           },
           "description": "Lightning-Powered Point of Sale System built on Nostr Protocol. Decentralized, sovereign, and privacy-first for modern businesses.",
           "url": "https://bnos.space",
+          "codeRepository": "https://github.com/bitoslabs/bnos-svelte",
+          "license": "https://opensource.org/licenses/MIT",
+          "isAccessibleForFree": true,
+          "sameAs": [
+            "https://bitos.space",
+            "https://bitdigo.com"
+          ],
           "featureList": [
             "Lightning Network Payments",
             "Non-Custodial Wallet",
@@ -115,8 +125,20 @@
           },
           "author": {
             "@type": "Organization",
-            "name": "BnOS Team",
-            "url": "https://bnos.space"
+            "name": "BitDigo",
+            "url": "https://bitdigo.com"
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "BnOS",
+          "url": "https://bnos.space",
+          "inLanguage": ["en", "lo", "th"],
+          "publisher": {
+            "@type": "Organization",
+            "name": "BitDigo",
+            "url": "https://bitdigo.com"
           }
         },
         {
@@ -125,7 +147,13 @@
           "name": "BnOS",
           "url": "https://bnos.space",
           "logo": "https://bnos.space/icon-192.png",
+          "parentOrganization": {
+            "@type": "Organization",
+            "name": "BitDigo",
+            "url": "https://bitdigo.com"
+          },
           "sameAs": [
+            "https://bitdigo.com",
             "https://github.com/bitoslabs/bnos-svelte",
             "https://twitter.com/bnos_space",
             "https://yakihonne.com/profile/bnos@nostrcheck.me"
@@ -720,6 +748,48 @@
         </div>
       </section>
 
+      <!-- BitDigo family -->
+      <section class="section alt" id="family">
+        <div class="container">
+          <div class="section-head reveal">
+            <span class="section-tag" data-i18n="landing.family.tag">The BitDigo family</span>
+            <h2 class="section-title" data-i18n="landing.family.title">Built by BitDigo</h2>
+            <p class="section-subtitle" data-i18n="landing.family.subtitle">
+              BitDigo builds open infrastructure for a sovereign internet — BitOS for people, BnOS
+              for business.
+            </p>
+          </div>
+          <div class="grid family-grid">
+            <article class="card family-card reveal reveal-delay-1">
+              <div class="family-head">
+                <div class="card-icon"><iconify-icon icon="solar:planet-2-linear"></iconify-icon></div>
+                <h3 class="card-title" data-i18n="landing.family.bitos.name">BitOS</h3>
+              </div>
+              <p class="card-desc" data-i18n="landing.family.bitos.desc">
+                An open digital ecosystem for Nostr, Bitcoin and decentralized applications.
+              </p>
+              <a class="text-link" href="https://bitos.space" target="_blank" rel="noopener">
+                <span data-i18n="landing.family.bitos.cta">Visit bitos.space</span>
+                <iconify-icon icon="solar:alt-arrow-right-linear" aria-hidden="true"></iconify-icon>
+              </a>
+            </article>
+            <article class="card family-card reveal reveal-delay-2">
+              <div class="family-head">
+                <div class="card-icon"><iconify-icon icon="solar:shop-2-linear"></iconify-icon></div>
+                <h3 class="card-title" data-i18n="landing.family.bnos.name">BnOS</h3>
+              </div>
+              <p class="card-desc" data-i18n="landing.family.bnos.desc">
+                Open-source business infrastructure for POS, ERP, CRM and decentralized commerce.
+              </p>
+              <a class="text-link" href="#get-started">
+                <span data-i18n="landing.family.bnos.cta">Explore BnOS</span>
+                <iconify-icon icon="solar:alt-arrow-right-linear" aria-hidden="true"></iconify-icon>
+              </a>
+            </article>
+          </div>
+        </div>
+      </section>
+
       <!-- FAQ -->
       <section class="section alt" id="faq">
         <div class="container faq-layout">
@@ -807,6 +877,9 @@
             </div>
           </div>
           <p class="footer-desc" data-i18n="footer.desc">Lightning-powered Point of Sale built on Nostr Protocol. Decentralized, sovereign, and privacy-first.</p>
+          <p class="footer-parent" data-i18n="footer.parent">
+            A <a href="https://bitdigo.com" target="_blank" rel="noopener">BitDigo</a> project.
+          </p>
           <div class="footer-social">
             <a href="https://discord.gg/aNwEQQF3w8" target="_blank" rel="noopener" title="Discord" aria-label="Discord">
               <svg viewBox="0 -28.5 256 256" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">

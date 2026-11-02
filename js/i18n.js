@@ -127,6 +127,7 @@ const translations = {
     },
     footer: {
       desc: "Lightning-powered Point of Sale built on Nostr Protocol. Decentralized, sovereign, and privacy-first.",
+      parent: 'A <a href="https://bitdigo.com" target="_blank" rel="noopener">BitDigo</a> project.',
       cols: {
         product: "Product",
         resources: "Resources",
@@ -527,6 +528,21 @@ const translations = {
           { title: "Your data, your relays", desc: "Everything lives on relays you control, not our servers." },
           { title: "No transaction cut", desc: "Payments settle straight to your wallet; we never take a fee." }
         ]
+      },
+      family: {
+        tag: "The BitDigo family",
+        title: "Built by BitDigo",
+        subtitle: "BitDigo builds open infrastructure for a sovereign internet — BitOS for people, BnOS for business.",
+        bitos: {
+          name: "BitOS",
+          desc: "An open digital ecosystem for Nostr, Bitcoin and decentralized applications.",
+          cta: "Visit bitos.space"
+        },
+        bnos: {
+          name: "BnOS",
+          desc: "Open-source business infrastructure for POS, ERP, CRM and decentralized commerce.",
+          cta: "Explore BnOS"
+        }
       }
     },
     businesses: {
@@ -686,6 +702,7 @@ const translations = {
     },
     footer: {
       desc: "ระบบจุดขายที่ใช้พลัง Lightning สร้างด้วยโปรโตคอล Nostr แบบกระจายอำนาจ เป็นเจ้าของเอง และให้ความสำคัญกับความเป็นส่วนตัวสำหรับธุรกิจสมัยใหม่",
+      parent: 'โปรเจกต์ของ <a href="https://bitdigo.com" target="_blank" rel="noopener">BitDigo</a>',
       cols: {
         product: "ผลิตภัณฑ์",
         resources: "แหล่งข้อมูล",
@@ -1086,6 +1103,21 @@ const translations = {
           { title: "ข้อมูลของคุณ relay ของคุณ", desc: "ทุกอย่างอยู่บน relay ที่คุณควบคุม ไม่ใช่เซิร์ฟเวอร์ของเรา" },
           { title: "ไม่หักค่าธรรมเนียม", desc: "การชำระเข้าสู่กระเป๋าของคุณโดยตรง เราไม่เคยเก็บค่าธรรมเนียม" }
         ]
+      },
+      family: {
+        tag: "ครอบครัว BitDigo",
+        title: "สร้างโดย BitDigo",
+        subtitle: "BitDigo สร้างโครงสร้างพื้นฐานเปิดสำหรับอินเทอร์เน็ตที่เป็นอธิปไตย — BitOS สำหรับผู้คน BnOS สำหรับธุรกิจ",
+        bitos: {
+          name: "BitOS",
+          desc: "ระบบนิเวศดิจิทัลเปิดสำหรับ Nostr, Bitcoin และแอปพลิเคชันแบบกระจายอำนาจ",
+          cta: "ไปที่ bitos.space"
+        },
+        bnos: {
+          name: "BnOS",
+          desc: "โครงสร้างพื้นฐานธุรกิจโอเพนซอร์สสำหรับ POS, ERP, CRM และการค้าแบบกระจายอำนาจ",
+          cta: "สำรวจ BnOS"
+        }
       }
     },
     businesses: {
@@ -1245,6 +1277,7 @@ const translations = {
     },
     footer: {
       desc: "ລະບົບຂາຍທີ່ໃຊ້ຄວາມສາມາດ Lightning ສ້າງຂຶ້ນດ້ວຍໂປຣໂຕຄອນ Nostr. ແບບກະຈາຍສູນ, ເປັນເຈົ້າຂອງຂໍ້ມູນເອງ ແລະ ມີຄວາມເປັນສ່ວນຕົວສຳລັບທຸລະກິດທີ່ທັນສະໄໝ.",
+      parent: 'ໂຄງການຂອງ <a href="https://bitdigo.com" target="_blank" rel="noopener">BitDigo</a>',
       cols: {
         product: "ຜະລິດຕະພັນ",
         resources: "ແຫຼ່ງຂໍ້ມູນ",
@@ -1630,6 +1663,21 @@ const translations = {
           { title: "ຂໍ້ມູນຂອງເຈົ້າ relay ຂອງເຈົ້າ", desc: "ທຸກຢ່າງຢູ່ເທິງ relay ທີ່ເຈົ້າຄວບຄຸມ ບໍ່ແມ່ນເຊີບເວີຂອງພວກເຮົາ" },
           { title: "ບໍ່ຫັກຄ່າທຳນຽມ", desc: "ການຊຳລະເຂົ້າກະເປົາຂອງເຈົ້າໂດຍກົງ ພວກເຮົາບໍ່ເຄີຍເກັບຄ່າທຳນຽມ" }
         ]
+      },
+      family: {
+        tag: "ຄອບຄົວ BitDigo",
+        title: "ສ້າງໂດຍ BitDigo",
+        subtitle: "BitDigo ສ້າງໂຄງສ້າງພື້ນຖານເປີດສຳລັບອິນເຕີເນັດທີ່ເປັນອະທິປະໄຕ — BitOS ສຳລັບຜູ້ຄົນ BnOS ສຳລັບທຸລະກິດ",
+        bitos: {
+          name: "BitOS",
+          desc: "ລະບົບນິເວດດິຈິຕອນເປີດສຳລັບ Nostr, Bitcoin ແລະ ແອັບພລິເຄຊັນແບບກະຈາຍສູນ",
+          cta: "ໄປທີ່ bitos.space"
+        },
+        bnos: {
+          name: "BnOS",
+          desc: "ໂຄງສ້າງພື້ນຖານທຸລະກິດໂອເພນຊອດສຳລັບ POS, ERP, CRM ແລະ ການຄ້າແບບກະຈາຍສູນ",
+          cta: "ສຳຫຼວດ BnOS"
+        }
       }
     },
     businesses: {
